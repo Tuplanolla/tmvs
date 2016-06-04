@@ -1,46 +1,63 @@
 digraph tmvs {
-  rankdir = LR
-
-  subgraph cluster_tmvs {
-    label = "Temperature and Moisture Visualization System"
+  subgraph cluster_cace {
+    label = "Operating System"
 
     node [shape = box]
-    matrix [label = "Matrix (Memory)"]
-    function [label = "Function (Memory)"]
-    plot [label = "Plot (Memory)"]
-    cache [label = "Cache File (Disk)"]
+    null [label = "Null Device"]
+    xls [label = "Excel File"]
+    csv [label = "Comma-Separated Value File"]
 
     node [shape = oval]
-    parse [label = "Parse"]
-    interpolate [label = "Interpolate"]
-    discretize [label = "Discretize"]
-    visualize [label = "Visualize"]
-    clear [label = "Clear"]
-    read [label = "Read"]
-    store [label = "Store"]
-    recall [label = "Recall"]
-    purge [label = "Purge"]
+    gnumeric [label = "Gnumeric"]
+
+    subgraph cluster_tmvs {
+      label = "Temperature and Moisture Visualization System"
+
+      subgraph cluster_ws {
+        label = "Working Set"
+
+        node [shape = box]
+        array [label = "Array"]
+        function [label = "Function"]
+        plot [label = "Plot"]
+
+        node [shape = oval]
+        parse [label = "Parse"]
+        interpolate [label = "Interpolate"]
+        discretize [label = "Discretize"]
+        visualize [label = "Visualize"]
+        clear [label = "Clear"]
+      }
+
+      subgraph cluster_cache {
+        label = "Cache"
+
+        node [shape = box]
+        cache [label = "Cache File"]
+
+        node [shape = oval]
+        fetch [label = "Fetch"]
+        lift [label = "Lift"]
+        store [label = "Store"]
+        recall [label = "Recall"]
+        purge [label = "Purge"]
+      }
+    }
   }
 
-  node [shape = box]
-  null [label = "Null Device"]
-  xls [label = "Excel File (Disk)"]
-  csv [label = "Comma-Separated Value File (Disk)"]
-
-  node [shape = oval]
-  gnumeric [label = "Gnumeric"]
-
   xls -> gnumeric -> csv
-  csv -> parse -> matrix
-  matrix -> interpolate -> function
-  function -> discretize -> matrix
-  matrix -> visualize -> plot
+  csv -> parse -> array
+  array -> interpolate -> function
+  function -> discretize -> array
+  array -> visualize -> plot
   null -> clear
-  clear -> matrix
+  clear -> array
   clear -> function
-  csv -> read -> matrix
-  cache -> read -> cache
-  matrix -> store -> cache
-  cache -> recall -> matrix
+  csv -> fetch -> array
+  cache -> fetch -> cache
+  csv -> lift -> function
+  cache -> lift -> cache
+  array -> store -> cache
+  cache -> recall -> array
   null -> purge -> cache
 }
