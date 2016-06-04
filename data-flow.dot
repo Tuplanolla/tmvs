@@ -1,4 +1,4 @@
-digraph tmvs {
+digraph {
   subgraph cluster_cace {
     label = "Operating System"
 
@@ -60,4 +60,6 @@ digraph tmvs {
   array -> store -> cache
   cache -> recall -> array
   null -> purge -> cache
+
+  csv -> null [style = invis]
 }
