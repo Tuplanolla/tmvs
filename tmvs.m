@@ -101,10 +101,6 @@ else
 end
 end
 
-function interps = tmvs_lift(file, cache = sprintf('%s.tmp', file))
-% TODO Implement or scrap.
-end
-
 function tmvs_store(file, arrays, format = '-mat', zip = true)
 if zip
   save(format, '-zip', file, 'arrays');

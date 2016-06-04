@@ -4,7 +4,7 @@ build: report.pdf data-flow.png
 	pdflatex $<
 
 %.tex: %.dot
-	dot2tex --autosize --codeonly --format tikz --texmode verbatim -o $@ $<
+	dot2tex --codeonly --format tikz --texmode verbatim -o $@ $<
 
 %.png: %.dot
 	dot -Efontname=sans -Gfontname=sans -Nfontname=sans $< > $@
