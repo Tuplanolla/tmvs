@@ -9,6 +9,7 @@ test('tmvs_fetch.m');
 test('tmvs_store.m');
 test('tmvs_recall.m');
 test('tmvs_purge.m');
+end
 
 % TODO Move tests elsewhere.
 file = 'excerpt/2010/118-0.csv';
@@ -29,4 +30,3 @@ fetched = tmvs_fetch(file, cache);
 toc
 
 % plotted = tmvs_visualize(fetched);
-end
