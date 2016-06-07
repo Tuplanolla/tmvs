@@ -1,0 +1,10 @@
+*.aux
+*.eps
+*.log
+*.out
+*.pdf
+*.png
+*.tar.gz
+*.tmp
+/data-flow.tex
+/raw.tex
