@@ -1,32 +1,45 @@
-% This is reserved for integration tests.
-function tmvs()
-test('tmvs_parse.m');
-test('tmvs_interpolate.m');
-test('tmvs_discretize.m');
-test('tmvs_visualize.m');
-test('tmvs_clear.m');
-test('tmvs_fetch.m');
-test('tmvs_store.m');
-test('tmvs_recall.m');
-test('tmvs_purge.m');
-end
+% This file is reserved for integration tests.
 
+% TODO Include uncertainties.
+% TODO Write structural data documentation.
 % TODO Move tests elsewhere.
-file = 'excerpt/2010/118-0.csv';
-cache = 'cache.tmp';
-parsed = tmvs_parse(file);
+filename = 'excerpt/2010/118-0.csv';
+cachename = 'cache.tmp';
+parsed = tmvs_parse(filename);
 interpolated = tmvs_interpolate(parsed);
 discretized = tmvs_discretize(interpolated);
 plotted = tmvs_visualize(discretized);
 
-% This takes half an hour.
-% tmvs_purge(file, cache);
-% file = '../data/2010/118-0.csv';
+% This takes 360 seconds.
+% tmvs_purge(filename, cachename);
+% filename = '../data/2010/118-0.csv';
 % tic
-% fetched = tmvs_fetch(file, cache);
+% fetched = tmvs_fetch(filename, cachename);
 % toc
-tic
-fetched = tmvs_fetch(file, cache);
-toc
+% This takes 0.2 seconds.
+% filename = '../data/2010/118-0.csv';
+% tic
+% fetched = tmvs_fetch(filename, cachename);
+% toc
 
 % plotted = tmvs_visualize(fetched);
+
+%!test
+%! filename = 'excerpt/2010/118-0.csv';
+%! fieldname = 'KoeRakQS118 - RH118 A1 180mm 160 PUR';
+%! assert(tmvs_parse(filename).(fieldname)(1, :), [734265, 37], 1);
+%! assert(tmvs_parse(filename).(fieldname)(2, :), [734383, 54], 1);
+
+%!test
+%! filename = 'excerpt/2010/118-0.csv';
+%! fieldname = 'KoeRakQS118 - RH118 A1 180mm 160 PUR';
+%! func = tmvs_interpolate(tmvs_parse(filename)).(fieldname);
+%! assert(func.function(734324), 46, 1);
+%! assert(func.limits, [734265, 734591], 1);
+
+%!test
+%! filename = 'excerpt/2010/118-0.csv';
+%! fieldname = 'KoeRakQS118 - RH118 A1 180mm 160 PUR';
+%! arrays = tmvs_discretize(tmvs_interpolate(tmvs_parse(filename)), 5);
+%! assert(tmvs_parse(filename).(fieldname)(1, :), [734265, 37], 1);
+%! assert(tmvs_parse(filename).(fieldname)(2, :), [734383, 54], 1);

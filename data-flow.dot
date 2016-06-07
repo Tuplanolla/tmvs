@@ -36,9 +36,9 @@ digraph {
         cache [label = "Cache File"]
 
         node [shape = oval]
-        fetch [label = "Fetch"]
         store [label = "Store"]
         recall [label = "Recall"]
+        fetch [label = "Fetch"]
         purge [label = "Purge"]
       }
     }
@@ -52,10 +52,10 @@ digraph {
   null -> clear
   clear -> array
   clear -> function
-  csv -> fetch -> array
-  cache -> fetch -> cache
   array -> store -> cache
   cache -> recall -> array
+  csv -> fetch -> array
+  cache -> fetch -> cache
   null -> purge -> cache
 
   csv -> null [style = invis]

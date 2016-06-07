@@ -1,13 +1,23 @@
-function arrays = tmvs_fetch(file, cache = sprintf('%s.tmp', file))
-% TODO Check for races.
-if exist(cache, 'file')
-  % TODO Also check cache date!
-  arrays = tmvs_recall(cache);
-else
-  arrays = tmvs_parse(file);
-  tmvs_store(cache, arrays);
-end
-end
+function arrays = tmvs_fetch(filename, cachename = sprintf('%s.tmp', filename))
+if exist(cachename, 'file')
+  [cacheinfo, err, msg] = stat(cachename);
+  if err ~= 0
+    error(msg);
+  end
 
-%!test
-%! assert(true);
+  [fileinfo, err, msg] = stat(filename);
+  if err ~= 0
+    error(msg);
+  end
+
+  if cacheinfo.mtime < fileinfo.mtime
+    arrays = tmvs_parse(filename);
+    tmvs_store(cachename, arrays);
+  else
+    arrays = tmvs_recall(cachename);
+  end
+else
+  arrays = tmvs_parse(filename);
+  tmvs_store(cachename, arrays);
+end
+end

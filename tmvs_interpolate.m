@@ -1,21 +1,21 @@
 function interps = tmvs_interpolate(arrays, method = 'linear')
-fields = fieldnames(arrays);
+names = fieldnames(arrays);
+
 interps = struct();
-for k = [1 : length(fields)]
-  field = fields{k};
-  array = getfield(arrays, field);
-  x = array(:, 1);
-  y = array(:, 2);
-  % TODO Ensure table not too short (zero or one element).
-  n = length(x);
+for i = [1 : length(names)]
+  name = names{i};
+
+  array = arrays.(name);
+  days = array(:, 1);
+  x = array(:, 2);
+
+  n = length(days);
   if n < 2
     error(sprintf('not enough data points: %d'), n);
   end
-  fun = @(time) interp1(x, y, time, method);
-  bunch = struct('function', fun, 'limits', [min(x), max(x)]);
-  interps = setfield(interps, field, bunch);
-end
-end
 
-%!test
-%! assert(true);
+  interps.(name) = struct( ...
+    'function', @(xi) interp1(days, x, xi, method), ...
+    'limits', [min(days), max(days)]);
+end
+end

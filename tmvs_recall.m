@@ -1,6 +1,3 @@
-function arrays = tmvs_recall(file)
-arrays = getfield(load(file, 'arrays'), 'arrays');
+function arrays = tmvs_recall(cachename)
+arrays = load(cachename, 'tmvs').tmvs;
 end
-
-%!test
-%! assert(true);

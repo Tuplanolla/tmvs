@@ -1,10 +1,9 @@
-function tmvs_store(file, arrays, format = '-mat', zip = true)
-if zip
-  save(format, '-zip', file, 'arrays');
-else
-  save(format, file, 'arrays');
-end
-end
+function tmvs_store(cachename, arrays, format = '-mat', zip = true)
+tmvs = arrays;
 
-%!test
-%! assert(true);
+if zip
+  save(format, '-zip', cachename, 'tmvs');
+else
+  save(format, cachename, 'tmvs');
+end
+end

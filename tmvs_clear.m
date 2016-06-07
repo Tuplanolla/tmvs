@@ -1,6 +1,3 @@
 function tmvs_clear()
-error('call clear yourself');
+error('nothing to clear');
 end
-
-%!test
-%! assert(true);

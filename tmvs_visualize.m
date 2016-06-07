@@ -1,3 +1,4 @@
+% TODO Do some work.
 function handle = tmvs_visualize(arrays)
 handle = figure(1);
 clf();
@@ -22,6 +23,3 @@ words = @(a, b) @(s) (@(n) s(n(a) + 1 : n(b + 1) - 1))([0, find(s == ' ')]);
 legend(cellfun(words(3, 5), fields, 'UniformOutput', false));
 hold('off');
 end
-
-%!test
-%! assert(true);
