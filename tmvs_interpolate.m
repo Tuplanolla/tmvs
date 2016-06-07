@@ -2,7 +2,7 @@ function interps = tmvs_interpolate(arrays, method = 'linear')
 names = fieldnames(arrays);
 
 interps = struct();
-for i = [1 : length(names)]
+for i = 1 : length(names)
   name = names{i};
 
   array = arrays.(name);

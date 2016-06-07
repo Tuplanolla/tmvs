@@ -5,7 +5,7 @@ digraph {
     node [shape = box]
     null [label = "Null Device"]
     xls [label = "Excel File"]
-    csv [label = "Comma-Separated Value File"]
+    csv [label = "Value File"]
 
     node [shape = oval]
     gnumeric [label = "Gnumeric"]
@@ -25,6 +25,8 @@ digraph {
         parse [label = "Parse"]
         interpolate [label = "Interpolate"]
         discretize [label = "Discretize"]
+        merge [label = "Merge"]
+        filter [label = "Filter"]
         visualize [label = "Visualize"]
         clear [label = "Clear"]
       }
@@ -48,6 +50,8 @@ digraph {
   csv -> parse -> array
   array -> interpolate -> function
   function -> discretize -> array
+  array -> merge -> array
+  array -> filter -> array
   array -> visualize -> plot
   null -> clear
   clear -> array

@@ -2,7 +2,7 @@ function arrays = tmvs_discretize(interps, n = 100)
 names = fieldnames(interps);
 
 arrays = struct();
-for i = [1 : length(names)]
+for i = 1 : length(names)
   name = names{i};
 
   interp = interps.(name);

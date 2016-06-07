@@ -1,18 +1,20 @@
 % This file is reserved for integration tests.
 
-% TODO Include uncertainties.
-% TODO Write structural data documentation.
-% TODO Move tests elsewhere.
 filename = 'excerpt/2010/118-0.csv';
-cachename = 'cache.tmp';
+cachename = 'excerpt.tmp';
 parsed = tmvs_parse(filename);
-interpolated = tmvs_interpolate(parsed);
+filename = 'excerpt/2011/118-0.csv';
+cachename = 'other-excerpt.tmp';
+fetched = tmvs_fetch(filename, cachename);
+merged = tmvs_merge(parsed, fetched);
+interpolated = tmvs_interpolate(merged);
 discretized = tmvs_discretize(interpolated);
-plotted = tmvs_visualize(discretized);
+tmvs_visualize(discretized);
 
 % This takes 360 seconds.
-% tmvs_purge(filename, cachename);
 % filename = '../data/2010/118-0.csv';
+% cachename = 'data.tmp';
+% tmvs_purge(filename, cachename);
 % tic
 % fetched = tmvs_fetch(filename, cachename);
 % toc
