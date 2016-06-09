@@ -1,10 +1,12 @@
-function tmvs_visualize(arrays, n = 1)
+% TODO This is incomplete due to missing requirements.
+function tmvs_visualize(arrays, n = 1, pat = false, string = 'Value')
+if pat
+  arrays = tmvs_filter(arrays, pat);
+end
+
 figure(n);
 clf();
 hold('on');
-
-% TODO This is sloppy.
-arrays = tmvs_filter(arrays, 'RH118');
 
 names = fieldnames(arrays);
 for i = 1 : length(names)
@@ -29,15 +31,16 @@ end
 form = 'yyyy-mm-dd';
 
 xlabel(sprintf('Date [%s]', form));
-ylabel('Relative Humidity [\%]');
+ylabel(string);
 
 datetick('x', form);
 
-words = @(a, b) @(s) (@(n) s(n(a) + 1 : n(b + 1) - 1))([0, find(s == ' ')]);
+shorten = @(s) strsplit(s, ' - '){2};
 
 % TODO This is too cluttered.
 % legend(names);
-legend(cellfun(words(3, 5), names, 'uniformoutput', false), 'location', 'northoutside');
+% legend(cellfun(shorten, names, ...
+%   'uniformoutput', false), 'location', 'northoutside');
 
 axis('tight');
 

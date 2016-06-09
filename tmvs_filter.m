@@ -1,3 +1,4 @@
+% TODO Maybe go higher-order here.
 function matches = tmvs_filter(arrays, pat)
 names = fieldnames(arrays);
 
