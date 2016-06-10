@@ -10,6 +10,6 @@ else
 end
 
 for i = j : length(names)
-  result = func(result, arrays.(names{i}));
+  result = func(result, name, arrays.(names{i}));
 end
 end

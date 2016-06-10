@@ -1,3 +1,4 @@
+% TODO Maybe generalize over the data scheme and merge with rooms.
 function tmvs_visualize_stations(arrays)
 tmvs_visualize(arrays, 1, '.ila', 'Temperature [^oC]');
 tmvs_visualize(arrays, 2, '.osteus', 'Relative Humidity [\%]');

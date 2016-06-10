@@ -26,7 +26,6 @@ digraph {
         interpolate [label = "Interpolate"]
         discretize [label = "Discretize"]
         merge [label = "Merge"]
-        filter [label = "Filter"]
         visualize [label = "Visualize"]
         clear [label = "Clear"]
       }
@@ -51,7 +50,6 @@ digraph {
   array -> interpolate -> function
   function -> discretize -> array
   array -> merge -> array
-  array -> filter -> array
   array -> visualize -> plot
   null -> clear
   clear -> array
