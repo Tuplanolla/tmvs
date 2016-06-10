@@ -1,8 +1,11 @@
 % TODO This is incomplete due to missing requirements.
-function tmvs_visualize(arrays, n = 1, pat = false, string = 'Value')
+function tmvs_visualize(arrays, n = 1, pat = false, string = '')
 if pat
   arrays = tmvs_filter(arrays, pat);
 end
+
+% TODO Elsewhere... and also humidity.
+arrays = tmvs_map(@(~, array) array(chauvenet(array(:, 2)), :), arrays);
 
 figure(n);
 clf();
