@@ -4,8 +4,9 @@ digraph {
 
     node [shape = box]
     null [label = "Null Device"]
-    xls [label = "Excel File"]
-    csv [label = "Value File"]
+    xlsr [label = "Excel File"]
+    csvr [label = "Value File"]
+    csvw [label = "Value File"]
 
     node [shape = oval]
     gnumeric [label = "Gnumeric"]
@@ -27,7 +28,7 @@ digraph {
         discretize [label = "Discretize"]
         merge [label = "Merge"]
         visualize [label = "Visualize"]
-        clear [label = "Clear"]
+        export [label = "Export"]
       }
 
       subgraph cluster_cache {
@@ -45,20 +46,19 @@ digraph {
     }
   }
 
-  xls -> gnumeric -> csv
-  csv -> parse -> array
+  xlsr -> gnumeric -> csvr
+  csvr -> parse -> array
   array -> interpolate -> function
   function -> discretize -> array
   array -> merge -> array
   array -> visualize -> plot
-  null -> clear
-  clear -> array
-  clear -> function
   array -> store -> cache
   cache -> recall -> array
-  csv -> fetch -> array
+  csvr -> fetch -> array
   cache -> fetch -> cache
   null -> purge -> cache
+  array -> export -> csvw
 
-  csv -> null [style = invis]
+  fetch -> parse [style = invis]
+  recall -> parse [style = invis]
 }
