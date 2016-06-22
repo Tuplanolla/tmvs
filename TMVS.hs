@@ -1,44 +1,59 @@
 module TMVS where
 
-import Data.Time
+import Data.Set (Set)
 
-data Measurement = Measurement
-  {source :: Source,
-   quantity :: Quantity,
-   time :: Observation UTCTime,
-   observation :: Observation Double}
+type TMVS = Set (Measurement (Uncertain Double))
+
+data Measurement a = Measurement
+  {msmtTime :: a,
+   msmtSource :: Source a}
   deriving (Eq, Ord, Read, Show)
 
-data Source = Building Laboratory | Station Location
+data Source a =
+  TestLab (TLPoint a) |
+  SmallWeatherStation (WSPoint a) | LargeWeatherStation (WSPoint a)
   deriving (Eq, Ord, Read, Show)
 
-data Laboratory = Laboratory
-  {site :: Char,
-   room :: Int,
-   orientation :: Orientation,
-   material :: Material,
-   depth :: Double}
+data TLPoint a = TLPoint
+  {tlpSite :: Char,
+   tlpRoom :: Int,
+   tlpDepth :: a,
+   tlpPlacement :: Placement,
+   tlpMaterial :: Material,
+   tlpQuantity :: Quantity a}
   deriving (Eq, Ord, Read, Show)
 
-data Orientation = Horizontal Level | Vertical Wall
+data WSPoint a = WSPoint
+  {wspCity :: City,
+   wspQuantity :: Quantity a}
   deriving (Eq, Ord, Read, Show)
 
-data Level = Floor | Ceiling
+data Placement =
+  Horizontal Level | Vertical Wall
   deriving (Eq, Ord, Read, Show)
 
-data Wall = High | Low
+data Material =
+  MineralWool | Polystyrene | Polyurethane
   deriving (Eq, Ord, Read, Show)
 
-data Material = Wool | Styrene | Urethane
+data City =
+  Autiolahti | Jyvaskyla
   deriving (Eq, Ord, Read, Show)
 
-data Location = Autiolahti | Jyvaskyla
+data Quantity a =
+  Temperature a | RelativeHumidity a | AbsolutHumidity a |
+  Pressure a | WindSpeed a | Precipitation a
   deriving (Eq, Ord, Read, Show)
 
-data Quantity = Temp | RelHum | AbsHum | Pressure | WindSpeed | Precip
+data Level =
+  Floor | Ceiling
   deriving (Eq, Ord, Read, Show)
 
-data Observation a = Observation
-  {value :: a,
-   uncertainty :: a}
+data Wall =
+  TopCorner | BottomCorner
+  deriving (Eq, Ord, Read, Show)
+
+data Uncertain a = Uncertain
+  {uncnValue :: a,
+   uncnError :: a}
   deriving (Eq, Ord, Read, Show)
