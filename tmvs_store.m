@@ -1,68 +1,27 @@
 % -*- texinfo -*-
-% @deftypefn  {Function File} {@var{c} =} nchoosek (@var{n}, @var{k})
-% @deftypefnx {Function File} {@var{c} =} nchoosek (@var{set}, @var{k})
+% @deftypefn {Function File} {@var{nothing} =} tmvs_store (@var{cachename}, @var{arrays})
+% @deftypefnx {Function File} tmvs_store (@var{cachename}, @var{arrays}, @var{format})
+% @deftypefnx {Function File} tmvs_store (@var{cachename}, @var{arrays}, @var{format}, @var{zip})
 %
-% Compute the binomial coefficient of @var{n} or list all possible
-% combinations of a @var{set} of items.
+% Cache the @var{arrays} data structure on disk,
+% into the file denoted by the @var{cachename} filepath.
 %
-% If @var{n} is a scalar then calculate the binomial coefficient
-% of @var{n} and @var{k} which is defined as
-% @tex
-% $$
-%  {n \choose k} = {n (n-1) (n-2) \cdots (n-k+1) \over k!}
-%                = {n! \over k! (n-k)!}
-% $$
-% @end tex
-% @ifnottex
+% The optional @var{format} parameter can be chosen
+% from the formats supported by @var{save} and
+% defaults to the MATLAB compatible @qcode{'-mat'}.
+% The other optional @var{zip} parameter determines
+% whether the cache file should be compressed and defaults to @var{true}.
 %
-% @example
-% @group
-%  /   \
-%  | n |    n (n-1) (n-2) @dots{} (n-k+1)       n!
-%  |   |  = ------------------------- =  ---------
-%  | k |               k!                k! (n-k)!
-%  \   /
-% @end group
-% @end example
-%
-% @end ifnottex
-% @noindent
-% This is the number of combinations of @var{n} items taken in groups of
-% size @var{k}.
-%
-% If the first argument is a vector, @var{set}, then generate all
-% combinations of the elements of @var{set}, taken @var{k} at a time, with
-% one row per combination.  The result @var{c} has @var{k} columns and
-% @w{@code{nchoosek (length (@var{set}), @var{k})}} rows.
-%
-% For example:
-%
-% How many ways can three items be grouped into pairs?
+% The following example is useless.
 %
 % @example
 % @group
-% nchoosek (3, 2)
-%    @result{} 3
+% @code{2 + 3}
+% @result{} 5
 % @end group
 % @end example
 %
-% What are the possible pairs?
-%
-% @example
-% @group
-% nchoosek (1:3, 2)
-%    @result{}  1   2
-%        1   3
-%        2   3
-% @end group
-% @end example
-%
-% Programming Note: When calculating the binomial coefficient @code{nchoosek}
-% works only for non-negative, integer arguments.  Use @code{bincoeff} for
-% non-integer and negative scalar arguments, or for computing many binomial
-% coefficients at once with vector inputs for @var{n} or @var{k}.
-%
-% @seealso{bincoeff, perms}
+% @seealso{tmvs, tmvs_recall, tmvs_fetch, tmvs_purge}
 % @end deftypefn
 function tmvs_store(cachename, arrays, format = '-mat', zip = true)
 tmvs = arrays;
