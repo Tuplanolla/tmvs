@@ -1,31 +1,59 @@
 module TMVS where
 
+import Data.Map (Map)
 import Data.Set (Set)
+import Data.Vector (Vector)
 
-type TMVS = Set (Measurement (Uncertain Double))
+type Collection = Map Id (Collected (Uncertain Double))
 
-data Measurement a = Measurement
-  {msmtTime :: a,
-   msmtSource :: Source a}
+data Collected a = Collected
+  {collTimes :: Vector a,
+   collQuantities :: Vector a}
   deriving (Eq, Ord, Read, Show)
 
-data Source a =
-  TestLab (TLPoint a) |
-  SmallWeatherStation (WSPoint a) | LargeWeatherStation (WSPoint a)
+data Id = Id
+  {idSource :: Source,
+   idSite :: Maybe Char,
+   idRoom :: Maybe Int,
+   idDepth :: Maybe Double,
+   idPlacement :: Maybe Placement,
+   idMaterial :: Maybe Material,
+   idCity :: Maybe City}
   deriving (Eq, Ord, Read, Show)
 
-data TLPoint a = TLPoint
+data Source =
+  TestLab | SmallWeatherStation | LargeWeatherStation
+  deriving (Eq, Ord, Read, Show)
+
+data Quantity =
+  Temperature | RelativeHumidity | AbsoluteHumidity |
+  Pressure | WindSpeed | Precipitation
+  deriving (Eq, Ord, Read, Show)
+
+type Measurement = Set (Measured (Uncertain Double))
+
+data Measured a = Measured
+  {measTime :: a,
+   measSource :: Sourced a}
+  deriving (Eq, Ord, Read, Show)
+
+data Sourced a =
+  TestLabbed (TLPointed a) |
+  SmallWeatherStationed (WSPointed a) | LargeWeatherStationed (WSPointed a)
+  deriving (Eq, Ord, Read, Show)
+
+data TLPointed a = TLPointed
   {tlpSite :: Char,
    tlpRoom :: Int,
-   tlpDepth :: a,
+   tlpDepth :: Double,
    tlpPlacement :: Placement,
    tlpMaterial :: Material,
-   tlpQuantity :: Quantity a}
+   tlpQuantity :: Quantified a}
   deriving (Eq, Ord, Read, Show)
 
-data WSPoint a = WSPoint
+data WSPointed a = WSPointed
   {wspCity :: City,
-   wspQuantity :: Quantity a}
+   wspQuantity :: Quantified a}
   deriving (Eq, Ord, Read, Show)
 
 data Placement =
@@ -40,9 +68,9 @@ data City =
   Autiolahti | Jyvaskyla
   deriving (Eq, Ord, Read, Show)
 
-data Quantity a =
-  Temperature a | RelativeHumidity a | AbsolutHumidity a |
-  Pressure a | WindSpeed a | Precipitation a
+data Quantified a =
+  Temperatured a | RelativeHumid a | AbsoluteHumid a |
+  Pressured a | WindSped a | Precipitated a
   deriving (Eq, Ord, Read, Show)
 
 data Level =
@@ -54,6 +82,6 @@ data Wall =
   deriving (Eq, Ord, Read, Show)
 
 data Uncertain a = Uncertain
-  {uncnValue :: a,
-   uncnError :: a}
+  {uncValue :: a,
+   uncError :: a}
   deriving (Eq, Ord, Read, Show)
