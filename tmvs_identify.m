@@ -8,11 +8,11 @@ if ~isempty(nm.quantity1)
   source = 'test lab';
 
   switch tolower(nm.quantity1)
-  case 'T'
+  case 't'
     quantity = 'temperature';
-  case 'RH'
+  case 'rh'
     quantity = 'relative humidity';
-  case 'AH'
+  case 'ah'
     quantity = 'absolute humidity';
   end
 
@@ -26,11 +26,11 @@ if ~isempty(nm.quantity1)
   depth = str2double(nm.depth);
 
   switch tolower(nm.placement)
-  case {'L', 'Lat'}
+  case {'l', 'lat'}
     placement = 'level floor';
-  case 'A'
+  case 'a'
     placement = 'wall bottom corner';
-  case 'Y'
+  case 'y'
     placement = 'wall top corner';
   end
 
