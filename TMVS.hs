@@ -78,7 +78,7 @@ data Level =
   deriving (Eq, Ord, Read, Show)
 
 data Wall =
-  TopCorner | BottomCorner
+  BottomCorner | TopCorner
   deriving (Eq, Ord, Read, Show)
 
 data Uncertain a = Uncertain
