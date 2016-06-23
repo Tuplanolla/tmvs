@@ -15,8 +15,9 @@ data Id = Id
    idQuantity :: Quantity,
    idSite :: Maybe Char,
    idRoom :: Maybe Int,
-   idDepth :: Maybe Double,
    idPlacement :: Maybe Placement,
+   idOrdinal :: Maybe Int,
+   idPosition :: Maybe Double,
    idMaterial :: Maybe Material,
    idRegion :: Maybe Region}
   deriving (Eq, Ord, Read, Show)
@@ -45,9 +46,10 @@ data Sourced a =
 data TLPointed a = TLPointed
   {tlpSite :: Char,
    tlpRoom :: Int,
-   tlpDepth :: Double,
    tlpPlacement :: Placement,
-   tlpMaterial :: Material,
+   tlpOrdinal :: Int,
+   tlpPosition :: Double,
+   tlpMaterial :: Maybe Material,
    tlpQuantity :: Quantified a}
   deriving (Eq, Ord, Read, Show)
 
