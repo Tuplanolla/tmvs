@@ -4,11 +4,10 @@ Character : ~[\t ] ;
 Space : [\t ]+ ;
 Break : [\r\n]+ ;
 
-id : (building | station) end? ;
+id : (building | station) ;
 
 building : buildingCoarse separator buildingFine ;
 station : stationCoarse separator stationFine ;
-end : '\r\n' | '\r' | '\n' ;
 
 buildingCoarse : name site orientation room (Space 'Meta')? ;
 separator : Space '-' Space ;
@@ -74,6 +73,6 @@ floor : 'L' 'at'? ;
 ceiling : 'K' 'at'? ;
 bottomCorner : 'A' ;
 topCorner : 'Y' ;
-mineralWool : 'villa' ;
+mineralWool : ('V' | 'v') 'illa' ;
 polystyrene : 'EPS' ;
 polyurethane : 'PUR' ;

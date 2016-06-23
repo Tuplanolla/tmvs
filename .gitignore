@@ -1,10 +1,13 @@
 *.aux
+*.class
 *.eps
+*.java
 *.log
 *.out
 *.pdf
 *.png
 *.tar.gz
 *.tmp
+*.tokens
 /data-flow.tex
 /raw.tex
