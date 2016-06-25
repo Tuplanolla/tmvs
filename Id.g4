@@ -15,7 +15,7 @@ buildingFine :
   shortQuantity room Space placement ordinal Space
   position (Space element)? | special ;
 stationCoarse : region Space kind ;
-stationFine : longQuantity (Space .+?)? ;
+stationFine : longQuantity (Space garbage)? ;
 
 name : testLab ;
 site : letter ;
@@ -35,6 +35,7 @@ longQuantity :
   (longTemperature | longRelativeHumidity | longAbsoluteHumidity |
    longPressure | longWindSpeed | longPrecipitation)
   (Space? longSuffix)* ;
+garbage : .+? ;
 
 testLab : 'KoeRak' ;
 letter :
