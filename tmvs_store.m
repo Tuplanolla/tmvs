@@ -23,12 +23,14 @@
 %
 % @seealso{tmvs, tmvs_recall, tmvs_fetch, tmvs_purge}
 % @end deftypefn
-function tmvs_store(cachename, arrays, format = '-mat', zip = true)
+function tmvs_store (cachename, arrays, format = '-mat', zip = true)
+
 tmvs = arrays;
 
 if zip
-  save(format, '-zip', cachename, 'tmvs');
+  save (format, '-zip', cachename, 'tmvs');
 else
-  save(format, cachename, 'tmvs');
+  save (format, cachename, 'tmvs');
 end
+
 end

@@ -1,7 +1,8 @@
 % Enumeration constructor.
-function y = tmvs_quantity(x)
-if ischar(x)
-  switch tolower(x)
+function y = tmvs_quantity (x)
+
+if ischar (x)
+  switch tolower (x)
   case {'t', 'temperature'}
     y = 1;
   case {'rh', 'relative humidity'}
@@ -15,11 +16,11 @@ if ischar(x)
   case {'h', 'precipitation'}
     y = 6;
   otherwise
-    error(sprintf('quantity ''%s'' not known', x));
+    error (sprintf ('quantity ''%s'' not known', x));
   end
 
-  y = int8(y);
-elseif isindex(x)
+  y = int8 (y);
+elseif isindex (x)
   switch x
   case 1
     y = 'temperature';
@@ -34,9 +35,10 @@ elseif isindex(x)
   case 6
     y = 'precipitation';
   otherwise
-    error(sprintf('quantity %d not known', x));
+    error (sprintf ('quantity %d not known', x));
   end
 else
-  error(sprintf('wrong type ''%s''', class(x)));
+  error (sprintf ('wrong type ''%s''', class (x)));
 end
+
 end

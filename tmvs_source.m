@@ -1,7 +1,8 @@
 % Enumeration constructor.
-function y = tmvs_source(x)
-if ischar(x)
-  switch tolower(x)
+function y = tmvs_source (x)
+
+if ischar (x)
+  switch tolower (x)
   case {'tl', 'test lab'}
     y = 1;
   case {'sws', 'small weather station'}
@@ -9,11 +10,11 @@ if ischar(x)
   case {'lws', 'large weather station'}
     y = 3;
   otherwise
-    error(sprintf('source ''%s'' not known', x));
+    error (sprintf ('source ''%s'' not known', x));
   end
 
-  y = int8(y);
-elseif isindex(x)
+  y = int8 (y);
+elseif isindex (x)
   switch x
   case 1
     y = 'test lab';
@@ -22,9 +23,10 @@ elseif isindex(x)
   case 3
     y = 'large weather station';
   otherwise
-    error(sprintf('source %d not known', x));
+    error (sprintf ('source %d not known', x));
   end
 else
-  error(sprintf('wrong type ''%s''', class(x)));
+  error (sprintf ('wrong type ''%s''', class (x)));
 end
+
 end

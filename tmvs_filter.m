@@ -1,13 +1,15 @@
 % TODO Maybe go higher-order here.
-function matches = tmvs_filter(arrays, pat)
-names = fieldnames(arrays);
+function matches = tmvs_filter (arrays, pat)
 
-matches = struct();
-for i = 1 : length(names)
+names = fieldnames (arrays);
+
+matches = struct ();
+for i = 1 : length (names)
   name = names{i};
 
-  if ~isempty(regexp(name, pat))
+  if ~isempty (regexp (name, pat))
     matches.(name) = arrays.(name);
   end
 end
+
 end

@@ -1,10 +1,12 @@
-function results = tmvs_map(func, arrays)
-names = fieldnames(arrays);
+function results = tmvs_map (func, arrays)
 
-results = struct();
-for i = 1 : length(names)
+names = fieldnames (arrays);
+
+results = struct ();
+for i = 1 : length (names)
   name = names{i};
 
-  results.(name) = func(name, arrays.(name));
+  results.(name) = func (name, arrays.(name));
 end
+
 end

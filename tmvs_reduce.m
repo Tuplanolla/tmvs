@@ -1,7 +1,8 @@
-function result = tmvs_reduce(func, arrays, init)
-names = fieldnames(arrays);
+function result = tmvs_reduce (func, arrays, init)
 
-if nargin() == 3
+names = fieldnames (arrays);
+
+if nargin () == 3
   j = 1;
   result = init;
 else
@@ -9,7 +10,8 @@ else
   result = arrays.(names{1});
 end
 
-for i = j : length(names)
-  result = func(result, name, arrays.(names{i}));
+for i = j : length (names)
+  result = func (result, name, arrays.(names{i}));
 end
+
 end

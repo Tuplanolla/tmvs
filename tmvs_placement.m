@@ -1,7 +1,8 @@
 % Enumeration constructor.
-function y = tmvs_placement(x)
-if ischar(x)
-  switch tolower(x)
+function y = tmvs_placement (x)
+
+if ischar (x)
+  switch tolower (x)
   case {'wbc', 'wall bottom corner'}
     y = 1;
   case {'wtc', 'wall top corner'}
@@ -11,11 +12,11 @@ if ischar(x)
   case {'lc', 'level ceiling'}
     y = 4;
   otherwise
-    error(sprintf('placement ''%s'' not known', x));
+    error (sprintf ('placement ''%s'' not known', x));
   end
 
-  y = int8(y);
-elseif isindex(x)
+  y = int8 (y);
+elseif isindex (x)
   switch x
   case 1
     y = 'wall bottom corner';
@@ -26,9 +27,10 @@ elseif isindex(x)
   case 4
     y = 'level ceiling';
   otherwise
-    error(sprintf('placement %d not known', x));
+    error (sprintf ('placement %d not known', x));
   end
 else
-  error(sprintf('wrong type ''%s''', class(x)));
+  error (sprintf ('wrong type ''%s''', class (x)));
 end
+
 end

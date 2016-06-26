@@ -1,7 +1,8 @@
 % Enumeration constructor.
-function y = tmvs_material(x)
-if ischar(x)
-  switch tolower(x)
+function y = tmvs_material (x)
+
+if ischar (x)
+  switch tolower (x)
   case {'mw', 'mineral wool'}
     y = 1;
   case {'pur', 'polyurethane'}
@@ -9,11 +10,11 @@ if ischar(x)
   case {'eps', 'polystyrene'}
     y = 3;
   otherwise
-    error(sprintf('material ''%s'' not known', x));
+    error (sprintf ('material ''%s'' not known', x));
   end
 
-  y = int8(y);
-elseif isindex(x)
+  y = int8 (y);
+elseif isindex (x)
   switch x
   case 1
     y = 'mineral wool';
@@ -22,9 +23,10 @@ elseif isindex(x)
   case 3
     y = 'polystyrene';
   otherwise
-    error(sprintf('placement %d not known', x));
+    error (sprintf ('placement %d not known', x));
   end
 else
-  error(sprintf('wrong type ''%s''', class(x)));
+  error (sprintf ('wrong type ''%s''', class (x)));
 end
+
 end
