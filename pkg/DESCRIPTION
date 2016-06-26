@@ -1,0 +1,9 @@
+Name: tmvs
+Version: 0.0.0
+Date: 2016-07-01
+Author: Sampsa Kiiskinen <tuplanolla@gmail.com>
+Maintainer: Sampsa Kiiskinen <tuplanolla@gmail.com>
+Title: Temperature and Moisture Visualization System
+Description: TMVS is a data analysis rig built around JAMK data. This is a fantastic description. More words go here later. Line breaks cause double spacing; do not use.
+Depends: octave (>= 3.8)
+License: GPL-3

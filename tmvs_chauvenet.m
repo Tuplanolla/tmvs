@@ -1,6 +1,6 @@
 % Chauvenet's criterion, returning indices of [inliers, outliers].
 % Expects vector, returns same shape.
-function [i, o] = chauvenet (x, mu = mean (x), sigma = std (x))
+function [i, o] = tmvs_chauvenet (x, mu = mean (x), sigma = std (x))
 
 if ~isvector (x)
   error ('input is not a vector');
