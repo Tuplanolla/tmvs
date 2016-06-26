@@ -6,7 +6,7 @@ if pat
 end
 
 % TODO Elsewhere... and also humidity.
-arrays = tmvs_map (@(~, array) array(chauvenet (array(:, 2)), :), arrays);
+% arrays = tmvs_map (@(~, array) array(chauvenet (array(:, 2)), :), arrays);
 
 figure (n);
 clf ();

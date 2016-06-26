@@ -45,3 +45,24 @@ end
 % tic
 % fetched = tmvs_fetch (filename, cachename);
 % toc
+
+function everything = tmvs (dirname)
+
+filename = canonicalize_file_name (dirname);
+if isempty (filename)
+  error (sprintf ('no such file or directory ''%s''', dirname));
+end
+
+if ~isdir (filename)
+  error (sprintf ('not a directory ''%s''', filename));
+end
+
+buildings = tmvs_glob (sprintf ('%s/*/[0-9]*.csv', filename));
+stations = tmvs_glob (sprintf ('%s/*/[a-z]*.csv', filename));
+everything = tmvs_merge (buildings, stations);
+% observatories = tmvs_glob (sprintf ('%s/*.csv', filename));
+% everything = tmvs_foldl (@tmvs_merge, {buildings, stations, observatories});
+
+tmvs_visualize (everything);
+
+end

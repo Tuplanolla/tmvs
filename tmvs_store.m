@@ -1,7 +1,7 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {@var{nothing} =} tmvs_store (@var{cachename}, @var{arrays})
-% @deftypefnx {Function File} tmvs_store (@var{cachename}, @var{arrays}, @var{format})
-% @deftypefnx {Function File} tmvs_store (@var{cachename}, @var{arrays}, @var{format}, @var{zip})
+% @defun {Function File} {@var{nothing} =} tmvs_store (@var{cachename}, @var{arrays})
+% @defunx {Function File} tmvs_store (@var{cachename}, @var{arrays}, @var{format})
+% @defunx {Function File} tmvs_store (@var{cachename}, @var{arrays}, @var{format}, @var{zip})
 %
 % Cache the @var{arrays} data structure on disk,
 % into the file denoted by the @var{cachename} filepath.
@@ -22,7 +22,8 @@
 % @end example
 %
 % @seealso{tmvs, tmvs_recall, tmvs_fetch, tmvs_purge}
-% @end deftypefn
+% @end defun
+
 function tmvs_store (cachename, arrays, format = '-mat', zip = true)
 
 tmvs = arrays;
