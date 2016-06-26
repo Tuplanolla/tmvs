@@ -1,9 +1,9 @@
 % -*- texinfo -*-
-% @defun {Function File} tmvs_x ()
+% @deftypefn {Function File} tmvs_x ()
 %
 % Good job.
 %
-% @end defun
+% @end deftypefn
 
 function tmvs_x ()
 

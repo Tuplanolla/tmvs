@@ -1,10 +1,37 @@
 tmvs >> Temperature and Moisture Visualization System
-Test
+Meta
+  tmvs
+Domain-Specific
+  tmvs_parse
+  tmvs_interpolate
+  tmvs_discretize
+  tmvs_merge
+  tmvs_visualize
+  # tmvs_export
+  tmvs_store
+  tmvs_recall
+  tmvs_fetch
+  tmvs_purge
+Constructors and Destructors
+  tmvs_source
+  tmvs_quantity
+  tmvs_site
+  tmvs_room
+  tmvs_placement
+  tmvs_material
+  tmvs_region
+Kind of Internal
+  tmvs_glob
+  tmvs_identify
+What Is This
+  tmvs_map
+  tmvs_reduce
+  tmvs_filter
+  tmvs_visualize_observatories
+  tmvs_visualize_rooms
+  tmvs_visualize_stations
   tmvs_x
-# Meta
-#   tmvs
-# Domain-Specific
-#  tmvs_fetch
-#  tmvs_purge
-# Generic
-#  tmvs_chauvenet
+Generic
+  tmvs_chauvenet
+  tmvs_foldl
+  tmvs_foldr

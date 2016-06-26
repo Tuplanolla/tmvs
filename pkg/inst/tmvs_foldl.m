@@ -1,17 +1,17 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {@var{y} =} tmvs_foldr (@var{f}, @var{x})
-% @deftypefnx {Function File} {@var{y} =} tmvs_foldr (@var{f}, @var{x}, @var{z})
+% @deftypefn {Function File} {@var{y} =} tmvs_foldl (@var{f}, @var{x})
+% @deftypefnx {Function File} {@var{y} =} tmvs_foldl (@var{f}, @var{x}, @var{z})
 %
 % Fold, also known as reduce, inject, accumulate, aggregate or cata,
 % breaks the data structure @var{x} down
 % by applying the function @var{f} to each of its elements
 % until only the result @var{y} is left.
-% The right fold in particular starts from the end of @var{x} and
-% works its way to the very beginning.
+% The left fold in particular starts from the beginning of @var{x} and
+% works its way to the very end.
 %
 % If the initial value @var{z} is supplied,
-% it is used as the second argument in the first function application
-% as if it was the last element in @var{x}.
+% it is used as the first argument in the first function application
+% as if it was the first element in @var{x}.
 %
 % The data structure @var{x} can be a matrix, a cell array or a structure.
 % With matrices and cell arrays the function @var{f} should take two arguments.
@@ -21,36 +21,36 @@
 % The following examples demonstrate basic usage.
 %
 % @example
-% @code{tmvs_foldr (@@plus, [1, 2, 3])}
+% @code{tmvs_foldl (@@plus, [1, 2, 3])}
 % @result{} 6
-% @code{tmvs_foldr (@@plus, [1, 2, 3], 4)}
+% @code{tmvs_foldl (@@plus, [1, 2, 3], 4)}
 % @result{} 10
-% @code{tmvs_foldr (@@(x, y) y / x, [2, 3, 6])}
+% @code{tmvs_foldl (@@(y, x) y / x, [6, 3, 2])}
 % @result{} 1
 % @end example
 %
 % Other types work in a similar fashion.
 %
 % @example
-% @code{tmvs_foldr (@@plus, {1, 2, 3})}
+% @code{tmvs_foldl (@@plus, @{1, 2, 3@})}
 % @result{} 6
-% @code{tmvs_foldr (@(x, ~, y) x + y, struct ('one', 1, 'two', 2, 'three', 3))}
+% @code{tmvs_foldl (@@(y, ~, x) y + x, struct ('one', 1, 'two', 2, 'three', 3))}
 % @result{} 6
 % @end example
 %
 % The following rule for matrices generalizes.
 %
 % @example
-% @code{tmvs_foldr (@@(x, y) sprintf ('f (x(%d), %s)', x, y), [1 : 3], 'z')}
-% @result{} 'f (x(1), f (x(2), f (x(3), z)))'
+% @code{tmvs_foldl (@@(y, x) sprintf ('f (%s, x(%d))', y, x), [1 : 3], 'z')}
+% @result{} 'f (f (f (z, x(1)), x(2)), x(3))'
 % @end example
 %
-% Programming note: This is slightly slower than @code{tmvs_foldl}.
+% Programming note: This is slightly faster than @code{tmvs_foldr}.
 %
-% @seealso{tmvs_foldl}
+% @seealso{tmvs_foldr}
 % @end deftypefn
 
-function y = tmvs_foldr (f, x, z)
+function y = tmvs_foldl (f, x, z)
 
 if isnumeric (x)
 elseif iscell (x)
@@ -66,31 +66,28 @@ if nargin () == 3
 else
   j = 2;
   if isnumeric (x)
-    y = x(end);
+    y = x(1);
   elseif iscell (x)
-    y = x{end};
+    y = x{1};
   elseif isstruct (x)
-    y = x.(s{end});
+    y = x.(s{1});
   else
     error (sprintf ('wrong type ''%s''', class (x)));
   end
 end
 
 if isnumeric (x)
-  n = length (x);
-  for i = j : n
-    y = f (x(n - i + 1), y);
+  for i = j : length (x)
+    y = f (y, x(i));
   end
 elseif iscell (x)
-  n = length (x);
-  for i = j : n
-    y = f (x{n - i + 1}, y);
+  for i = j : length (x)
+    y = f (y, x{i});
   end
 elseif isstruct (x)
-  n = length (s);
-  for i = j : n
-    k = s{n - i + 1};
-    y = f (k, x.(k), y);
+  for i = j : length (s)
+    k = s{i};
+    y = f (y, k, x.(k));
   end
 else
   error (sprintf ('wrong type ''%s''', class (x)));
