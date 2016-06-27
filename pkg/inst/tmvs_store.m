@@ -1,37 +1,33 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {@var{nothing} =} tmvs_store (@var{cachename}, @var{arrays})
-% @deftypefnx {Function File} tmvs_store (@var{cachename}, @var{arrays}, @var{format})
-% @deftypefnx {Function File} tmvs_store (@var{cachename}, @var{arrays}, @var{format}, @var{zip})
+% @deftypefn {Function File} tmvs_store (@var{cname}, @var{c})
+% @deftypefnx {Function File} tmvs_store (@var{cname}, @var{c}, @var{fmt})
+% @deftypefnx {Function File} tmvs_store (@var{cname}, @var{c}, @var{fmt}, @var{zip})
 %
-% Cache the @var{arrays} data structure on disk,
-% into the file denoted by the @var{cachename} filepath.
+% Writes the central data structure @var{c} into the cache file @var{cname}.
 %
-% The optional @var{format} parameter can be chosen
+% The optional storage format @var{fmt} can be chosen
 % from the formats supported by @var{save} and
-% defaults to the MATLAB compatible @qcode{'-mat'}.
+% defaults to the MATLAB-compatible @qcode{'-mat'}.
 % The other optional @var{zip} parameter determines
 % whether the cache file should be compressed and defaults to @var{true}.
 %
-% The following example is useless.
+% The following example demonstrates basic usage.
 %
 % @example
-% @group
-% @code{2 + 3}
-% @result{} 5
-% @end group
+% @code{tmvs_store ('/tmp/tmvs.tmp', tmvs_fetch ('excerpt/2011/118-0.csv'))}
 % @end example
 %
 % @seealso{tmvs, tmvs_recall, tmvs_fetch, tmvs_purge}
 % @end deftypefn
 
-function tmvs_store (cachename, arrays, format = '-mat', zip = true)
+function tmvs_store (cname, c, fmt = '-mat', zip = true)
 
-tmvs = arrays;
+tmvs = c;
 
 if zip
-  save (format, '-zip', cachename, 'tmvs');
+  save (fmt, '-zip', cname, 'tmvs');
 else
-  save (format, cachename, 'tmvs');
+  save (fmt, cname, 'tmvs');
 end
 
 end

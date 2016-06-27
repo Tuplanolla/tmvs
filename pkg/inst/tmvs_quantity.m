@@ -10,10 +10,11 @@
 % While defining them directly is not possible,
 % they can be simulated with a weak isomorphism.
 % Such a thing consists of two functions @var{f} and @var{g}
-% that satisfy @code{f (x) == f (g (f (x)))},
-% where @var{x} is any value from the set of interest
+% that satisfy @code{f (x) == f (g (f (x)))} and @code{g (y) == g (f (g (y)))},
+% where @var{x} is any value from the set of interest and
+% @var{y} is any value from the enumeration.
 % (the weakness comes from the fact that
-% @code{x == g (f (x))} is not guaranteed to hold).
+% @code{x == g (f (x))} or @code{y == f (g (y))} are not guaranteed to hold).
 %
 % Since the underlying type system is dynamic and
 % there is no need to enumerate integers (they enumerate themselves),

@@ -11,12 +11,12 @@ Basic
   tmvs_discretize
   tmvs_merge
   tmvs_visualize
-  # tmvs_export
+  tmvs_export
   tmvs_store
   tmvs_recall
   tmvs_fetch
   tmvs_purge
-Constructors and Destructors
+Enumerators
   tmvs_source
   tmvs_quantity
   tmvs_site

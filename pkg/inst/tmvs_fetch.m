@@ -1,3 +1,18 @@
+% -*- texinfo -*-
+% @deftypefn {Function File} tmvs_fetch (@var{fname})
+% @deftypefnx {Function File} tmvs_fetch (@var{fname}, @var{cname})
+%
+% Magic happens.
+%
+% The following example demonstrates basic usage.
+%
+% @example
+% @code{??}
+% @end example
+%
+% @seealso{tmvs, tmvs_store, tmvs_recall, tmvs_fetch, tmvs_purge}
+% @end deftypefn
+
 function arrays = tmvs_fetch (filename, cachename = sprintf ('%s.tmp', filename))
 
 [cacheinfo, err, msg] = stat (cachename);

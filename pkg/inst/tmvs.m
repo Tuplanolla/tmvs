@@ -1,66 +1,54 @@
-% This file is reserved for documentation.
-% Currently it holds integration tests.
+% -*- texinfo -*-
+% @deftypefn {Function File} {@var{c} =} tmvs (@var{dname})
+%
+% TMVS stands for Temperature and Moisture Visualization System.
+%
+% Look at this space.
+%
+% The following example demonstrates basic usage.
+%
+% @example
+% @code{
+% fname = 'excerpt/2010/118-0.csv';
+% cname = '2010-118.tmp';
+% parsed = tmvs_parse (fname);
+% fname = 'excerpt/2011/118-0.csv';
+% cname = '2011-118.tmp';
+% fetched = tmvs_fetch (fname, cname);
+% merged = tmvs_merge (parsed, fetched);
+% interpolated = tmvs_interpolate (merged);
+% discretized = tmvs_discretize (interpolated);
+% tmvs_visualize (discretized);
+% }
+% @result{} ??
+% @end example
+%
+% This procedure performs the commands shown in the previous example.
+%
+% @example
+% @code{tmvs ('excerpt')}
+% @result{} ??
+% @end example
+%
+% @seealso{tmvs_parse, tmvs_interpolate, tmvs_discretize, tmvs_merge, tmvs_visualize, tmvs_export, tmvs_store, tmvs_recall, tmvs_fetch, tmvs_purge}
+%
+% @end deftypefn
 
-filename = 'excerpt/2010/118-0.csv';
-cachename = '2010-118.tmp';
-parsed = tmvs_parse (filename);
-filename = 'excerpt/2011/118-0.csv';
-cachename = '2011-118.tmp';
-fetched = tmvs_fetch (filename, cachename);
-merged = tmvs_merge (parsed, fetched);
-interpolated = tmvs_interpolate (merged);
-discretized = tmvs_discretize (interpolated);
-tmvs_visualize (discretized);
+function everything = tmvs (dname)
 
-function tmvs_one_shot ()
-arrays = tmvs_glob ('excerpt/*/[0-9]*.csv');
-tmvs_store ('excerpt-rooms.tmp', arrays);
-disp (fieldnames (arrays));
-arrays = tmvs_glob ('excerpt/*/[a-z]*.csv');
-tmvs_store ('excerpt-stations.tmp', arrays);
-% arrays = tmvs_glob ('excerpt/*.csv');
-% tmvs_store ('excerpt-observatories.tmp', arrays);
+fname = canonicalize_file_name (dname);
+if isempty (fname)
+  error (sprintf ('no such file or directory ''%s''', dname));
 end
 
-function tmvs_one_shot_for_real ()
-arrays = tmvs_glob ('../data/*/[0-9]*.csv');
-tmvs_store ('data-rooms.tmp', arrays);
-disp (fieldnames (arrays));
-arrays = tmvs_glob ('../data/*/[a-z]*.csv');
-tmvs_store ('data-stations.tmp', arrays);
-% arrays = tmvs_glob ('../data/*/[a-z]*.csv');
-% tmvs_store ('data-observatories.tmp', arrays);
+if ~isdir (fname)
+  error (sprintf ('not a directory ''%s''', fname));
 end
 
-% This takes 360 seconds.
-% filename = '../data/2010/118-0.csv';
-% cachename = 'test.tmp';
-% tmvs_purge (filename, cachename);
-% tic
-% fetched = tmvs_fetch (filename, cachename);
-% toc
-% This takes 0.2 seconds.
-% filename = '../data/2010/118-0.csv';
-% cachename = 'test.tmp';
-% tic
-% fetched = tmvs_fetch (filename, cachename);
-% toc
-
-function everything = tmvs (dirname)
-
-filename = canonicalize_file_name (dirname);
-if isempty (filename)
-  error (sprintf ('no such file or directory ''%s''', dirname));
-end
-
-if ~isdir (filename)
-  error (sprintf ('not a directory ''%s''', filename));
-end
-
-buildings = tmvs_glob (sprintf ('%s/*/[0-9]*.csv', filename));
-stations = tmvs_glob (sprintf ('%s/*/[a-z]*.csv', filename));
+buildings = tmvs_glob (sprintf ('%s/*/[0-9]*.csv', fname));
+stations = tmvs_glob (sprintf ('%s/*/[a-z]*.csv', fname));
 everything = tmvs_merge (buildings, stations);
-% observatories = tmvs_glob (sprintf ('%s/*.csv', filename));
+% observatories = tmvs_glob (sprintf ('%s/*.csv', fname));
 % everything = tmvs_foldl (@tmvs_merge, {buildings, stations, observatories});
 
 tmvs_visualize (everything);
