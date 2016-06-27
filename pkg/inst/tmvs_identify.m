@@ -1,5 +1,7 @@
 function y = tmvs_identify (str)
 
+% See Id.g4 for the formal grammar.
+
 any = '.{1,2}';
 space = '[\t ]+';
 number = '[0-9]+';
