@@ -9,7 +9,7 @@ if (str = fgetl (fid)) == -1
 end
 
 while (str = fgetl(fid)) ~= -1
-  % TODO Still slow and wrong.
+  % TODO Use tmvs_csv right here.
   [name, time, value, ~, notes] = ...
     strread(str, '%s %s %f %f %s', 'delimiter', ',');
   [year, month, day, hour, minute, second] = ...
@@ -19,26 +19,6 @@ end
 
 if fclose(fid) == -1
   error (sprintf ('failed to close ''%s''', fname));
-end
-
-% See CSV.g4 for the formal grammar.
-
-pat = '"((?:""|[^"])*)"|([^\n\r|"]+)?';
-
-[~, ~, ~, ~, t] = regexp (line, pat, 'emptymatch');
-if isempty (t)
-  error (sprintf ('malformed data on line %d of ''%s''', 2, fname));
-end
-
-n = (length (t) - 1) / 2;
-c = cell (n, 1);
-for i = 1 : n
-  d = t{2 * i + 1};
-  if isempty (d)
-    c{i} = d;
-  else
-    c{i} = d{1};
-  end
 end
 
 [id, date, x, ~, ~] = ...

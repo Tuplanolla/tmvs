@@ -1,6 +1,6 @@
-function y = tmvs_identify (str)
+% The formal grammar is presented in the file @code{Id.g4}.
 
-% See Id.g4 for the formal grammar.
+function y = tmvs_identify (str)
 
 any = '.{1,2}';
 space = '[\t ]+';
