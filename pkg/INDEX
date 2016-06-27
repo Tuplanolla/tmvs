@@ -1,7 +1,11 @@
 tmvs >> Temperature and Moisture Visualization System
 Meta
   tmvs
-Domain-Specific
+Generic
+  tmvs_chauvenet
+  tmvs_foldl
+  tmvs_foldr
+Basic
   tmvs_parse
   tmvs_interpolate
   tmvs_discretize
@@ -20,10 +24,10 @@ Constructors and Destructors
   tmvs_placement
   tmvs_material
   tmvs_region
-Kind of Internal
+Internal
   tmvs_glob
   tmvs_identify
-What Is This
+Deprecated
   tmvs_map
   tmvs_reduce
   tmvs_filter
@@ -31,7 +35,3 @@ What Is This
   tmvs_visualize_rooms
   tmvs_visualize_stations
   tmvs_x
-Generic
-  tmvs_chauvenet
-  tmvs_foldl
-  tmvs_foldr
