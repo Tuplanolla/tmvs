@@ -1,4 +1,15 @@
-% Enumeration constructor.
+% -*- texinfo -*-
+% @deftypefn {Function File} {@var{y} =} tmvs_site (@var{x})
+%
+% Enumerates the case-insensitive measuring sites
+% from @qcode{'A'} to @qcode{'Z'}.
+%
+% See @code{tmvs_quantity} for a detailed treatise on functions of this kind.
+%
+% @seealso{tmvs, tmvs_source, tmvs_quantity, tmvs_room, tmvs_placement, tmvs_material, tmvs_region}
+%
+% @end deftypefn
+
 function y = tmvs_site (x)
 
 if ischar (x)

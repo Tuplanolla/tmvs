@@ -1,4 +1,15 @@
-% Enumeration constructor.
+% -*- texinfo -*-
+% @deftypefn {Function File} {@var{y} =} tmvs_material (@var{x})
+%
+% Enumerates the case-insensitive materials @qcode{'mineral wool'},
+% @qcode{'polyurethane'} and @qcode{'polystyrene'}.
+%
+% See @code{tmvs_quantity} for a detailed treatise on functions of this kind.
+%
+% @seealso{tmvs, tmvs_source, tmvs_quantity, tmvs_site, tmvs_room, tmvs_placement, tmvs_region}
+%
+% @end deftypefn
+
 function y = tmvs_material (x)
 
 if ischar (x)

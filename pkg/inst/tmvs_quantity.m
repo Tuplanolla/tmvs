@@ -1,4 +1,54 @@
-% Enumeration constructor.
+% -*- texinfo -*-
+% @deftypefn {Function File} {@var{y} =} tmvs_quantity (@var{x})
+%
+% Enumerates the case-insensitive physical quantities @qcode{'temperature'},
+% @qcode{'relative humidity'}, @qcode{'absolute humidity'},
+% @qcode{'pressure'}, @qcode{'wind speed'} and @qcode{'precipitation'}.
+%
+% Enumerations or tagged unions of unit types are a common and
+% useful technique for giving names to a fixed set of values.
+% While defining them directly is not possible,
+% they can be simulated with a weak isomorphism.
+% Such a thing consists of two functions @var{f} and @var{g}
+% that satisfy @code{f (x) == f (g (f (x)))},
+% where @var{x} is any value from the set of interest
+% (the weakness comes from the fact that
+% @code{x == g (f (x))} is not guaranteed to hold).
+%
+% Since the underlying type system is dynamic and
+% there is no need to enumerate integers (they enumerate themselves),
+% the same function @var{h} can serve as both @var{f} and @var{g}
+% by choosing the appropriate implementation
+% based on the type of the input argument.
+% Then @code{h (x) == h (h (h (x)))},
+% where @var{x} is any value from the set of interest or its enumeration.
+%
+% The whole ordeal is quite simply even if the description sounds complicated.
+% The basic idea is that a single function can be used as
+% a constructor-destructor, a parser-printer or a serializer-deserializer pair.
+%
+% The following example demonstrates basic usage.
+%
+% @example
+% @code{tmvs_quantity ('relative humidity')}
+% @result{} 2
+% @code{tmvs_quantity (2)}
+% @result{} 'relative humidity'
+% @end example
+%
+% Inputs can be abbreviated, but outputs are always long.
+%
+% @example
+% @code{tmvs_quantity ('rh')}
+% @result{} 2
+% @code{tmvs_quantity (tmvs_quantity ('rh'))}
+% @result{} 'relative humidity'
+% @end example
+%
+% @seealso{tmvs, tmvs_source, tmvs_site, tmvs_room, tmvs_placement, tmvs_material, tmvs_region}
+%
+% @end deftypefn
+
 function y = tmvs_quantity (x)
 
 if ischar (x)

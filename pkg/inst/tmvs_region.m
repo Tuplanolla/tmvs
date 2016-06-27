@@ -1,4 +1,15 @@
-% Enumeration constructor.
+% -*- texinfo -*-
+% @deftypefn {Function File} {@var{y} =} tmvs_x (@var{x})
+%
+% Enumerates the case-insensitive regions @qcode{'autiolahti'} and
+% @qcode{'jyvaskyla'}.
+%
+% See @code{tmvs_quantity} for a detailed treatise on functions of this kind.
+%
+% @seealso{tmvs, tmvs_source, tmvs_quantity, tmvs_site, tmvs_room, tmvs_placement, tmvs_material}
+%
+% @end deftypefn
+
 function y = tmvs_region (x)
 
 if ischar (x)
@@ -15,10 +26,12 @@ if ischar (x)
 elseif isindex (x)
   switch x
   case 1
-    y = 'Autiolahti';
+    y = 'autiolahti';
   case 2
-    % Use ASCII characters only to avoid potential compatibility problems.
-    y = 'Jyvaskyla';
+    % Special characters are represented by their ASCII approximations
+    % to avoid potential compatibility problems.
+    % Unfortunately UTF-8 does not yet permeate the universe.
+    y = 'jyvaskyla';
   otherwise
     error (sprintf ('region %d not known', x));
   end
