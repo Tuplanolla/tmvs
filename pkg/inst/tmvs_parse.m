@@ -62,8 +62,6 @@ while (str = fgetl (fid)) ~= -1
   end
 end
 
-tmvs_progress ();
-
 [err, msg] = ferror (fid);
 if err == -1
   error (sprintf ('failed to read ''%s'': %s', fname, msg));
@@ -86,7 +84,5 @@ for i = 1 : length (ustrs)
   c{i, 1} = tmvs_identify (ustrs{i});
   c{i, 2} = sortrows (pairs(j, :), 1);
 end
-
-tmvs_progress ();
 
 end

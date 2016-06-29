@@ -24,19 +24,19 @@ function tmvs_store (cname, c, fmt = '-mat', zip = true)
 
 if exist (cname, 'file')
   try
-    load (cname, 'tmvs_version').tmvs_version;
+    load (cname, 'tmvs_v').tmvs_v;
   catch
     error ('existing file ''%s'' is not a cache file', cname);
   end
 end
 
-tmvs_version = '1';
-tmvs = c;
+tmvs_v = tmvs_version ();
+tmvs_c = c;
 
 if zip
-  save (fmt, '-zip', cname, 'tmvs_version', 'tmvs');
+  save (fmt, '-zip', cname, 'tmvs_v', 'tmvs_c');
 else
-  save (fmt, cname, 'tmvs_version', 'tmvs');
+  save (fmt, cname, 'tmvs_v', 'tmvs_c');
 end
 
 end

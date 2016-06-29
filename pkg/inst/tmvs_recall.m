@@ -20,17 +20,17 @@ if ~exist (cname, 'file')
   error ('cache file ''%s'' does not exist', cname);
 end
 
-v = 1;
+s = struct ();
 try
-  v = load (cname, 'tmvs_version').tmvs_version;
-catch
+  s = load (cname, 'tmvs_v', 'tmvs_c');
+end
+
+if ~isfield (s, 'tmvs_v')
   warning ('cache file ''%s'' is unversioned', cname);
+elseif s.tmvs_v ~= tmvs_version ()
+  error ('cache file ''%s'' has incompatible version ''%s''', cname, s.tmvs_v);
 end
 
-if v ~= 1
-  error ('cache file ''%s'' has incompatible cache version %d', cname, v);
-end
-
-c = load (cname, 'tmvs').tmvs;
+c = s.tmvs_c;
 
 end

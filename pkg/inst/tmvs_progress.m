@@ -15,7 +15,7 @@ elseif mod (i, n) == 0
   otherwise
     c = '+';
   end
-  fprintf (fid, '%c (progress indicator)\r', c);
+  fprintf (fid, '%c\r', c);
   fflush (fid);
 end
 

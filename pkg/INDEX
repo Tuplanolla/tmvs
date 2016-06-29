@@ -1,10 +1,12 @@
 tmvs >> Temperature and Moisture Visualization System
 Meta
   tmvs
+  tmvs_version
 Generic
   tmvs_chauvenet
   tmvs_foldl
   tmvs_foldr
+  tmvs_progress
 Basic
   tmvs_parse
   tmvs_interpolate
@@ -28,7 +30,6 @@ Internal
   tmvs_glob
   tmvs_identify
   tmvs_csv
-  tmvs_progress
 Deprecated
   tmvs_map
   tmvs_reduce
