@@ -1,5 +1,10 @@
 function arrays = tmvs_merge (x, y)
 
+% TODO This.
+arrays = [x; y];
+
+return
+
 names = [(fieldnames (x)); (fieldnames (y))];
 
 arrays = struct ();

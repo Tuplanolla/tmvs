@@ -17,8 +17,8 @@ data Sourced a =
 
 data TLPointed a = TLPointed
   {tlpSite :: Char,
+   tlpSurface :: Surfaced Section,
    tlpRoom :: Int,
-   tlpPlacement :: Placement,
    tlpOrdinal :: Int,
    tlpPosition :: Double,
    tlpMaterial :: Maybe Material,
@@ -33,4 +33,8 @@ data WSPointed a = WSPointed
 data Quantified a =
   Temperatured a | RelativeHumid a | AbsoluteHumid a |
   Pressured a | WindSped a | Precipitated a
+  deriving (Eq, Ord, Read, Show)
+
+data Surfaced a =
+  Walled a | Floored | Ceilinged
   deriving (Eq, Ord, Read, Show)

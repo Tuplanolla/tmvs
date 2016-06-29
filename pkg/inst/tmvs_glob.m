@@ -2,7 +2,7 @@ function arrays = tmvs_glob (pattern)
 
 filenames = glob (pattern);
 
-arrays = struct ();
+arrays = cell ();
 for i = 1 : length (filenames)
   filename = filenames{i};
 

@@ -14,8 +14,9 @@ data Id = Id
   {idSource :: Source,
    idQuantity :: Quantity,
    idSite :: Maybe Char,
+   idSurface :: Maybe Surface,
    idRoom :: Maybe Int,
-   idPlacement :: Maybe Placement,
+   idSection :: Maybe Section,
    idOrdinal :: Maybe Int,
    idPosition :: Maybe Double,
    idMaterial :: Maybe Material,
@@ -29,4 +30,8 @@ data Source =
 data Quantity =
   Temperature | RelativeHumidity | AbsoluteHumidity |
   Pressure | WindSpeed | Precipitation
+  deriving (Eq, Ord, Read, Show)
+
+data Surface =
+  Wall | Floor | Ceiling
   deriving (Eq, Ord, Read, Show)

@@ -81,7 +81,7 @@ for i = 1 : length (ustrs)
 
   tmvs_progress (i, 1000);
 
-  c{i, 1} = tmvs_identify (ustrs{i});
+  c{i, 1} = tmvs_id (ustrs{i});
   c{i, 2} = sortrows (pairs(j, :), 1);
 end
 

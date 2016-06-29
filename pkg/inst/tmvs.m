@@ -45,6 +45,8 @@ if ~isdir (fname)
   error (sprintf ('not a directory ''%s''', fname));
 end
 
+% TODO Go through enumerations' seealsos.
+
 buildings = tmvs_glob (sprintf ('%s/*/[0-9]*.csv', fname));
 stations = tmvs_glob (sprintf ('%s/*/[a-z]*.csv', fname));
 everything = tmvs_merge (buildings, stations);

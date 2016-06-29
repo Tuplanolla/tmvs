@@ -2,7 +2,7 @@
 % @deftypefn {Function File} {@var{c} =} tmvs_csv (@var{s})
 %
 % Parses the string @var{s} containing a comma-separated value record
-% with the delimiter @qcode{'|'}.
+% with the delimiter @qcode{'|'} and produces the cell array @var{c}.
 % The formal grammar is presented in the file @code{CSV.g4}.
 %
 % The following example demonstrates basic usage.

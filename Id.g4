@@ -9,21 +9,21 @@ id : (building | station) ;
 building : buildingCoarse separator buildingFine ;
 station : stationCoarse separator stationFine ;
 
-buildingCoarse : name site orientation room (Space 'Meta')? ;
+buildingCoarse : name site surface room (Space 'Meta')? ;
 separator : Space '-' Space ;
 buildingFine :
-  shortQuantity room Space placement ordinal Space
+  shortQuantity room Space section ordinal Space
   position (Space element)? | special ;
 stationCoarse : region Space kind ;
 stationFine : longQuantity (Space garbage)? ;
 
 name : testLab ;
 site : letter ;
-orientation : horizontal | vertical ;
+surface : wall | floor | ceiling ;
 room : number ;
 shortQuantity :
   shortTemperature | shortRelativeHumidity | shortAbsoluteHumidity ;
-placement : level | wall ;
+section : verticalSection | horizontalSection ;
 ordinal : number ;
 position : number millimetre ;
 element : number Space? material ;
@@ -42,14 +42,15 @@ letter :
   'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' |
   'J' | 'K' | 'L' | 'M' | 'N' | 'O' | 'P' | 'Q' | 'R' |
   'S' | 'T' | 'U' | 'V' | 'W' | 'X' | 'Y' | 'Z' ;
-horizontal : 'L' ;
-vertical : 'S' ;
+wall : 'S' ;
+floor : 'L' ;
+ceiling : 'K' ;
 number : ('0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9')+ ;
 shortTemperature : 'T' ;
 shortRelativeHumidity : 'RH' ;
 shortAbsoluteHumidity : 'AH' ;
-level : floor | ceiling ;
-wall : bottomCorner | topCorner ;
+verticalSection : bottomCorner | topCorner ;
+horizontalSection : centerFloor | centerCeiling ;
 millimetre : 'mm' ;
 material : mineralWool | polystyrene | polyurethane ;
 magicNumber : 'lisa140' ;
@@ -70,10 +71,10 @@ longPrecipitation :
   ('S' | 's') ('ade' | 'ateen') (Space? ('M' | 'm') . . 'r' .)? ;
 longSuffix : ('A' | 'a') 'rvo' | ('M' | 'm') 'ittaus' ;
 
-floor : 'L' 'at'? ;
-ceiling : 'K' 'at'? ;
 bottomCorner : 'A' ;
 topCorner : 'Y' ;
+centerFloor : 'L' 'at'? ;
+centerCeiling : 'K' 'at'? ;
 mineralWool : ('V' | 'v') 'illa' ;
 polystyrene : 'EPS' ;
 polyurethane : 'PUR' ;
