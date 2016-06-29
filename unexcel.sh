@@ -10,7 +10,7 @@ then
   echo "where '\$name' is the original name and"
   echo "'\$sheet' is the sheet number (starting from 0 and counting up)."
   echo
-  echo 'Examples:'
+  echo 'The following examples are equivalent except for the output location.'
   echo
   echo '    $ unexcel.sh data/2010/118.xlsx'
   echo '    $ cd data/2010 && unexcel 118.xlsx'

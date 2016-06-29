@@ -1,12 +1,12 @@
 % The formal grammar is presented in the file @code{Id.g4}.
 
-function y = tmvs_identify (str)
+function c = tmvs_identify (str)
 
 any = '.{1,2}';
 space = '[\t ]+';
 number = '[0-9]+';
 
-pat2 = strcat('^', ...
+pat = strcat('^', ...
   '(?<id>', ...
   '(?<buildingCoarse>', ...
   '(?<testLab>KoeRak)', ...
@@ -44,81 +44,84 @@ pat2 = strcat('^', ...
   '(?<garbage>(?:', any, ')+?))?))', ...
   '$');
 
-[~, ~, ~, ~, ~, nm] = regexpi (str, pat2)
-
-% TODO Ha ha! Regular expressions!
-pat = ['^(KoeRak(?<site>[A-Z])(?<level>L|S)(?<room1>[0-9]+)( Meta)? - ((?<quantity1>T|RH|AH)(?<room2>[0-9]+) (?<placement>L(at)?|A|Y)(?<number>[0-9]+) (?<depth>[0-9]+)mm.*|lisa140)|', ...
-       '(?<region>Autiolah|Jyv)[^-]* - [^ ]*(?<quantity2>tila|kosteus|paine|tuul|sade).*)$'];
 [~, ~, ~, ~, ~, nm] = regexpi (str, pat);
 
-if ~isempty (nm.quantity1)
-  source = 'test lab';
-
-  switch tolower (nm.quantity1)
-  case 't'
+if ~isempty (nm.testLab)
+  if ~isempty (nm.shortTemperature)
     quantity = 'temperature';
-  case 'rh'
+  elseif ~isempty (nm.shortRelativeHumidity)
     quantity = 'relative humidity';
-  case 'ah'
+  elseif ~isempty (nm.shortAbsoluteHumidity)
     quantity = 'absolute humidity';
   end
 
-  site = nm.site;
-
-  if nm.room1 ~= nm.room2
-    error ('malformed identifier');
-  end
-  room = nm.room1;
-
-  depth = str2double (nm.depth);
-
-  switch tolower (nm.placement)
-  case {'l', 'lat'}
-    placement = 'level floor';
-  case 'a'
-    placement = 'wall bottom corner';
-  case 'y'
-    placement = 'wall top corner';
+  if ~isempty (nm.site)
+    site = nm.site;
   end
 
-  % TODO This.
-  material = 'mineral wool';
+  if ~isempty (nm.room1) && ~isempty (nm.room2) && nm.room1 == nm.room2
+    room = nm.room1;
+  end
 
-  y = struct ('source', tmvs_source (source), ...
+  if ~isempty (nm.position)
+    position = str2double (nm.position);
+  end
+
+  if ~isempty (nm.horizontal)
+    if ~isempty (nm.floor)
+      placement = 'level floor';
+    elseif ~isempty (nm.ceiling)
+      placement = 'level ceiling';
+    end
+  elseif ~isempty (nm.vertical)
+    if ~isempty (nm.bottomCorner)
+      placement = 'wall bottom corner';
+    elseif ~isempty (nm.topCorner)
+      placement = 'wall top corner';
+    end
+  end
+
+  if ~isempty (nm.mineralWool)
+    material = 'mineral wool';
+  elseif ~isempty (nm.polystyrene)
+    material = 'polystyrene';
+  elseif ~isempty (nm.polyurethane)
+    material = 'polyurethane';
+  end
+
+  c = struct ('source', tmvs_source ('test lab'), ...
               'quantity', tmvs_quantity (quantity), ...
               'site', tmvs_site (site), ...
               'room', tmvs_room (room), ...
-              'depth', depth, ...
+              'position', position, ...
               'placement', tmvs_placement (placement), ...
               'material', tmvs_material (material));
-elseif ~isempty (nm.quantity2)
-  source = 'small weather station';
-
-  switch tolower (nm.quantity2)
-  case 'tila'
+elseif ~isempty (nm.weatherStation)
+  if ~isempty (nm.longTemperature)
     quantity = 'temperature';
-  case 'kosteus'
+  elseif ~isempty (nm.longRelativeHumidity)
     quantity = 'relative humidity';
-  case 'paine'
+  elseif ~isempty (nm.longAbsoluteHumidity)
+    quantity = 'absolute humidity';
+  elseif ~isempty (nm.longPressure)
     quantity = 'pressure';
-  case 'tuul'
+  elseif ~isempty (nm.longWindSpeed)
     quantity = 'wind speed';
-  case 'sade'
+  elseif ~isempty (nm.longPrecipitation)
     quantity = 'precipitation';
   end
 
-  switch tolower (nm.region)
-  case 'autiolah'
-    region = 'Autiolahti';
-  case 'jyv'
-    region = 'Jyvaskyla';
+  if ~isempty (nm.autiolahti)
+    region = 'autiolahti';
+  elseif ~isempty (nm.jyvaskyla)
+    region = 'jyvaskyla';
   end
 
-  y = struct ('source', tmvs_source (source), ...
+  c = struct ('source', tmvs_source ('weather station'), ...
               'quantity', tmvs_quantity (quantity), ...
               'region', tmvs_region (region));
 else
-  error ('malformed identifier');
+  error (sprintf ('unrecognized identifier ''%s''', str));
 end
 
 end

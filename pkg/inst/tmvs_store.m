@@ -17,17 +17,26 @@
 % @code{tmvs_store ('/tmp/tmvs.tmp', tmvs_fetch ('excerpt/2011/118-0.csv'))}
 % @end example
 %
-% @seealso{tmvs, tmvs_recall, tmvs_fetch, tmvs_purge}
+% @seealso{tmvs, tmvs_recall, tmvs_fetch, tmvs_purge, save}
 % @end deftypefn
 
 function tmvs_store (cname, c, fmt = '-mat', zip = true)
 
+if exist (cname, 'file')
+  try
+    load (cname, 'tmvs_version').tmvs_version;
+  catch
+    error ('existing file ''%s'' is not a cache file', cname);
+  end
+end
+
+tmvs_version = '1';
 tmvs = c;
 
 if zip
-  save (fmt, '-zip', cname, 'tmvs');
+  save (fmt, '-zip', cname, 'tmvs_version', 'tmvs');
 else
-  save (fmt, cname, 'tmvs');
+  save (fmt, cname, 'tmvs_version', 'tmvs');
 end
 
 end

@@ -15,7 +15,7 @@ function y = tmvs_site (x)
 if ischar (x)
   c = tolower (x);
   if c < 'a' || c > 'z'
-    error (sprintf ('site ''%s'' not known', x));
+    error (sprintf ('measuring site ''%s'' not known', x));
   else
     y = c - 'a' + 1;
   end
@@ -23,7 +23,7 @@ if ischar (x)
   y = int8 (y);
 elseif isindex (x)
   if c < 1 || c > 26
-    error (sprintf ('site %d not known', x));
+    error (sprintf ('measuring site %d not known', x));
   else
     y = c + 'a' - 1;
   end

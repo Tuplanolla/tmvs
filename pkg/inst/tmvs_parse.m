@@ -1,43 +1,92 @@
-function arrays = tmvs_parse (fname)
+% -*- texinfo -*-
+% @deftypefn {Function File} {@var{c} =} tmvs_parse (@var{fname}, @var{source})
+%
+% Parses the comma-separated value file @var{fname}
+% with the delimiter @qcode{'|'}.
+% The formal grammar is presented in the file @code{CSV.g4}
+% with the exception that records may not contain quoted line breaks.
+% The file should be formatted as expected of the data source @var{source}.
+%
+% While the data source could be detected automatically,
+% it would require detecting and parsing the header lines or
+% making an educated guess based on the first few records.
+% This is forgone to keep the parser simple and robust.
+%
+% The following example demonstrates basic usage.
+%
+% @example
+% @code{tmvs_parse ('excerpt/2011/118-0.csv')}
+% @end example
+%
+% @seealso{tmvs, tmvs_fetch, tmvs_csv}
+% @end deftypefn
 
-if (fid = fopen (name, 'r')) == -1
-  error (sprintf ('failed to open ''%s''', fname));
+function c = tmvs_parse (fname)
+
+fid = fopen (fname, 'r');
+if fid == -1
+  error (sprintf ('failed to open ''%s'' for reading', fname));
 end
 
-if (str = fgetl (fid)) == -1
-  error (sprintf ('failed to read ''%s''', fname));
+% TODO This is silly.
+strs = cell ();
+pairs = nan (1, 2);
+
+i = 1;
+washeader = true;
+while (str = fgetl (fid)) ~= -1
+  csv = tmvs_csv (str);
+
+  try
+    % TODO Identification should happen here.
+
+    [year, month, day, hour, minute, second] = ...
+      datevec (csv{2}, 'yyyy/mm/dd HH:MM:SS');
+    days = datenum (year, month, day, hour, minute, second);
+
+    value = str2double (csv{3});
+
+    washeader = false;
+
+    strs{i} = csv{1};
+    pairs(i, 1) = days;
+    pairs(i, 2) = value;
+
+    tmvs_progress (i, 1000);
+
+    i = i + 1;
+  catch e
+    if ~washeader
+      error (sprintf ('malformed record ''%s'': %s', str, e.message));
+    end
+  end
 end
 
-while (str = fgetl(fid)) ~= -1
-  % TODO Use tmvs_csv right here.
-  [name, time, value, ~, notes] = ...
-    strread(str, '%s %s %f %f %s', 'delimiter', ',');
-  [year, month, day, hour, minute, second] = ...
-    datevec(time, 'yyyy/mm/dd HH:MM:SS');
-  secs = datenum(year, month, day, hour, minute, second);
+tmvs_progress ();
+
+[err, msg] = ferror (fid);
+if err == -1
+  error (sprintf ('failed to read ''%s'': %s', fname, msg));
 end
 
-if fclose(fid) == -1
+if fclose (fid) == -1
   error (sprintf ('failed to close ''%s''', fname));
 end
 
-[id, date, x, ~, ~] = ...
-  textread (fname, '%s %s %f %s %s', 'delimiter', '|', 'headerlines', 1);
+ustrs = unique (strs);
 
-n = rows (id);
+c = cell ();
 
-daysx = [(nan (n, 1)), x];
-for i = 1 : n
-  [year, month, day, hour, minute, second] = ...
-    datevec (strrep (date{i}, '"', ''), 'yyyy/mm/dd HH:MM:SS');
-  daysx(i, 1) = datenum (year, month, day, hour, minute, second);
+for i = 1 : length (ustrs)
+  % j = cellfun (@(id) isequaln (id, uids{i}), ids);
+  j = strcmp (strs, ustrs{i});
+
+  tmvs_progress (i, 1000);
+
+  c{i, 1} = tmvs_identify (ustrs{i});
+  c{i, 2} = sortrows (pairs(j, :), 1);
 end
 
-ids = unique (id);
-
-arrays = struct ();
-for i = 1 : length (ids)
-  arrays.(strrep (ids{i}, '"', '')) = sortrows (daysx(strcmp (id, ids{i}), :));
-end
+tmvs_progress ();
 
 end

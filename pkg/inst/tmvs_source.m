@@ -2,7 +2,7 @@
 % @deftypefn {Function File} {@var{y} =} tmvs_source (@var{x})
 %
 % Enumerates the case-insensitive data sources @qcode{'test lab'},
-% @qcode{'small weather station'} and @qcode{'large weather station'}.
+% @qcode{'weather station'} and @qcode{'large weather station'}.
 %
 % See @code{tmvs_quantity} for a detailed treatise on functions of this kind.
 %
@@ -16,7 +16,7 @@ if ischar (x)
   switch tolower (x)
   case {'tl', 'test lab'}
     y = 1;
-  case {'sws', 'small weather station'}
+  case {'ws', 'weather station'}
     y = 2;
   case {'lws', 'large weather station'}
     y = 3;
@@ -30,7 +30,7 @@ elseif isindex (x)
   case 1
     y = 'test lab';
   case 2
-    y = 'small weather station';
+    y = 'weather station';
   case 3
     y = 'large weather station';
   otherwise

@@ -24,7 +24,7 @@
 % Then @code{h (x) == h (h (h (x)))},
 % where @var{x} is any value from the set of interest or its enumeration.
 %
-% The whole ordeal is quite simply even if the description sounds complicated.
+% The whole ordeal is quite simple even if the description sounds complicated.
 % The basic idea is that a single function can be used as
 % a constructor-destructor, a parser-printer or a serializer-deserializer pair.
 %
@@ -67,7 +67,7 @@ if ischar (x)
   case {'h', 'precipitation'}
     y = 6;
   otherwise
-    error (sprintf ('quantity ''%s'' not known', x));
+    error (sprintf ('physical quantity ''%s'' not known', x));
   end
 
   y = int8 (y);
@@ -86,7 +86,7 @@ elseif isindex (x)
   case 6
     y = 'precipitation';
   otherwise
-    error (sprintf ('quantity %d not known', x));
+    error (sprintf ('physical quantity %d not known', x));
   end
 else
   error (sprintf ('wrong type ''%s''', class (x)));

@@ -27,6 +27,8 @@ Enumerators
 Internal
   tmvs_glob
   tmvs_identify
+  tmvs_csv
+  tmvs_progress
 Deprecated
   tmvs_map
   tmvs_reduce

@@ -9,11 +9,11 @@ then
   echo 'the number of header lines to include (default 1).'
   echo 'The first and only argument is the input file.'
   echo
-  echo 'Examples:'
+  echo 'The following examples demonstrate various sampling options.'
   echo
   echo '    $ sample data/2010/118-0.csv > excerpt/2010/118-0.csv'
   echo '    $ sample data/2010/118-0.csv 100 > excerpt/2010/118-0.csv'
-  echo '    $ sample data/2010/118-0.csv 100 1 > excerpt/2010/118-0.csv'
+  echo '    $ sample data/2010/118-0.csv 100 2 > excerpt/2010/118-0.csv'
   echo
   exit 22 # EINVAL
 elif test -r "$1"
