@@ -5,7 +5,7 @@ switch tmvs_quantity (id.quantity)
   case 'temperature'
     delta = 1;
   case 'relative humidity'
-    delta = 4;
+    delta = 10;
   case 'absolute humidity'
     delta = 1;
   case 'pressure'

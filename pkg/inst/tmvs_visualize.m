@@ -21,7 +21,7 @@ for i = 1 : length (names)
 
   x = array(:, 1);
   y = array(:, 2);
-  dy = 4e-2 * y;
+  dy = tmvs_uncertainty (struct ('quantity', tmvs_quantity ('relative humidity')), y);
   % fmt = sprintf ('.-%d', j);
   fmt = sprintf ('~%d', j);
   errorbar (x, y, dy, fmt);
