@@ -148,7 +148,8 @@ if ~isempty (nm.magicNumber)
   quantity = 'temperature';
   surface = 'floor';
   position = nan;
-else
+  ordinal = int8 (0);
+end
 
 if ~isempty (nm.autiolahti)
   region = 'autiolahti';
