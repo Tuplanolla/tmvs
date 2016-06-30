@@ -1,25 +1,25 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {@var{m} =} tmvs_id (@var{s})
+% @deftypefn {Function File} {@var{m} =} tmvs_id (@var{str})
 %
-% Parses the string @var{s} containing a record identifier and
+% Parses the string @var{str} containing a record identifier and
 % produces the metadata structure @var{m}.
-% The formal grammar is presented in the file @code{Id.g4}.
+% The formal grammar is presented in the file @qcode{'Id.g4'}.
 %
 % The following example demonstrates basic usage.
 %
 % @example
-% @code{tmvs_id ('KoeRakQS118 - RH118 A1 180mm 160 PUR')}
-% @result{} struct ('source', 1, 'quantity', 2, 'site', 17, ...
-%            'surface', 1, 'room', 118, 'section', 1, ...
-%            'ordinal', 1, 'position', 180, 'material', 2)
-% @code{tmvs_id ('Autiolahden saaasema - Ilmanpaine - mbar')}
-% @result{} struct ('source', 2, 'quantity', 4, 'region', 1)
+% @code{tmvs_id ('KoeRakPS120 - RH120 A1 180mm 160 EPS')}
+% @result{} struct ('source', 1, 'quantity', 2, 'site', 16, ...
+%            'surface', 1, 'room', 120, 'section', 1, ...
+%            'ordinal', 1, 'position', 180, 'material', 3)
+% @code{tmvs_id ('Autiolahden s??asema - Ilmankosteus')}
+% @result{} struct ('source', 2, 'quantity', 2, 'region', 1)
 % @end example
 %
 % @seealso{tmvs_parse, tmvs_csv, textscan, regexp}
 % @end deftypefn
 
-function m = tmvs_id (s)
+function m = tmvs_id (str)
 
 % This implementation is somewhat fragile
 % due to the way @code{regexp} handles named tokens.
@@ -70,7 +70,7 @@ pat = strcat('^', ...
   '(?<garbage>(?:', any, ')+?))?)', ...
   '$');
 
-nm = regexpi (s, pat, 'names');
+nm = regexpi (str, pat, 'names');
 
 if ~isempty (nm.testLab)
   source = 'test lab';
@@ -182,7 +182,7 @@ elseif ~isempty (nm.weatherStation)
               'quantity', tmvs_quantity (quantity), ...
               'region', tmvs_region (region));
 else
-  error (sprintf ('unrecognized identifier ''%s''', s));
+  error (sprintf ('unrecognized identifier ''%s''', str));
 end
 
 end

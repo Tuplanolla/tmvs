@@ -1,11 +1,12 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {@var{c} =} tmvs_parse (@var{fname}, @var{source})
+% @deftypefn {Function File} {@var{c} =} tmvs_parse (@var{src}, @var{fname})
 %
 % Parses the comma-separated value file @var{fname}
-% with the delimiter @qcode{'|'}.
+% with the delimiter @qcode{'|'} and
+% produces the central data structure @var{c}.
 % The formal grammar is presented in the file @code{CSV.g4}
 % with the exception that records may not contain quoted line breaks.
-% The file should be formatted as expected of the data source @var{source}.
+% The file should be formatted as expected of the data source @var{src}.
 %
 % While the data source could be detected automatically,
 % it would require detecting and parsing the header lines or
@@ -21,7 +22,12 @@
 % @seealso{tmvs, tmvs_fetch, tmvs_csv}
 % @end deftypefn
 
-function c = tmvs_parse (fname)
+function c = tmvs_parse (src, fname)
+
+% TODO All sources.
+if src ~= tmvs_source ('test lab') && src ~= tmvs_source ('weather station')
+  error (sprintf ('unsupported source %d', src));
+end
 
 fid = fopen (fname, 'r');
 if fid == -1
@@ -79,6 +85,8 @@ for i = 1 : length (ustrs)
   % j = cellfun (@(id) isequaln (id, uids{i}), ids);
   j = strcmp (strs, ustrs{i});
 
+  % TODO This should be single-pass even if such an thing is a bit slower;
+  % predictability trumps (almost) all.
   tmvs_progress (i, 1000);
 
   c{i, 1} = tmvs_id (ustrs{i});

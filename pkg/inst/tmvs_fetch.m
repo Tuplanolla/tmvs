@@ -13,33 +13,37 @@
 % @seealso{tmvs, tmvs_store, tmvs_recall, tmvs_fetch, tmvs_purge}
 % @end deftypefn
 
-function c = tmvs_fetch (filename, cachename = sprintf ('%s.tmp', filename))
+function c = tmvs_fetch (src, fname, cname = tmvs_cache_for (fname))
 
-[cacheinfo, err, msg] = stat (cachename);
+[cacheinfo, err, msg] = stat (cname);
 if err == -1
-  warning (sprintf ('cannot access cache file ''%s''', cachename));
+  warning (sprintf ('cannot access cache file ''%s''', cname));
   warning ('reading the original file (this can take a while)');
-  recall = false;
+
+  wasfine = false;
 else
-  [fileinfo, err, msg] = stat (filename);
+  [fileinfo, err, msg] = stat (fname);
   if err == -1
-    warning (sprintf ('cannot access original file ''%s''', filename));
+    warning (sprintf ('cannot access original file ''%s''', fname));
     warning ('falling back on the cache file');
-    recall = true;
+
+    wasfine = true;
   elseif cacheinfo.mtime < fileinfo.mtime
     warning ('cache file is stale');
     warning ('rereading the original file (this can take a while)');
-    recall = false;
+
+    wasfine = false;
   else
-    recall = true;
+
+    wasfine = true;
   end
 end
 
-if recall
-  c = tmvs_recall (cachename);
+if wasfine
+  c = tmvs_recall (cname);
 else
-  c = tmvs_parse (filename);
-  tmvs_store (cachename, c);
+  c = tmvs_parse (src, fname);
+  tmvs_store (cname, c);
 end
 
 end

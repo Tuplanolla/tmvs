@@ -1,9 +1,9 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {@var{c} =} tmvs_csv (@var{s})
+% @deftypefn {Function File} {@var{c} =} tmvs_csv (@var{str})
 %
-% Parses the string @var{s} containing a comma-separated value record
+% Parses the string @var{str} containing a comma-separated value record
 % with the delimiter @qcode{'|'} and produces the cell array @var{c}.
-% The formal grammar is presented in the file @code{CSV.g4}.
+% The formal grammar is presented in the file @qcode{'CSV.g4'}.
 %
 % The following example demonstrates basic usage.
 %
@@ -17,13 +17,13 @@
 % @seealso{tmvs_parse, textscan, regexp}
 % @end deftypefn
 
-function c = tmvs_csv (s)
+function c = tmvs_csv (str)
 
 pat = '"((?:""|[^"])*)"|([^\n\r|"]+)?';
 
-[~, ~, ~, ~, t] = regexp (s, pat, 'emptymatch');
+[~, ~, ~, ~, t] = regexp (str, pat, 'emptymatch');
 if isempty (t)
-  error (sprintf ('malformed record ''%s''', s));
+  error (sprintf ('malformed record ''%s''', str));
 end
 
 % These bounds are too optimistic when empty matches are present,

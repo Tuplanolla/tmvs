@@ -3,6 +3,12 @@
 %
 % TMVS stands for Temperature and Moisture Visualization System.
 %
+% If you are in a hurry or do not enjoy reading technical manuals,
+% jump straight to the examples at the end, try them out yourself and
+% explore the other procedures listed under 'see also'.
+% You can come back here and read the details
+% in case something does not seem to make sense.
+%
 % Look at this space.
 %
 % The following example demonstrates basic usage.
@@ -45,12 +51,10 @@ if ~isdir (fname)
   error (sprintf ('not a directory ''%s''', fname));
 end
 
-% TODO Go through enumerations' seealsos.
-
-buildings = tmvs_glob (sprintf ('%s/*/[0-9]*.csv', fname));
-stations = tmvs_glob (sprintf ('%s/*/[a-z]*.csv', fname));
+buildings = tmvs_glob (tmvs_source ('test lab'), sprintf ('%s/*/[0-9]*.csv', fname));
+stations = tmvs_glob (tmvs_source ('weather station'), sprintf ('%s/*/[a-z]*.csv', fname));
 everything = tmvs_merge (buildings, stations);
-% observatories = tmvs_glob (sprintf ('%s/*.csv', fname));
+% observatories = tmvs_glob (tmvs_source ('large weather station'), sprintf ('%s/*.csv', fname));
 % everything = tmvs_foldl (@tmvs_merge, {buildings, stations, observatories});
 
 tmvs_visualize (everything);

@@ -17,7 +17,7 @@
 function c = tmvs_recall (cname)
 
 if ~exist (cname, 'file')
-  error ('cache file ''%s'' does not exist', cname);
+  error ('file ''%s'' does not exist', cname);
 end
 
 s = struct ();
@@ -26,7 +26,7 @@ try
 end
 
 if ~isfield (s, 'tmvs_v')
-  warning ('cache file ''%s'' is unversioned', cname);
+  error ('not a cache file ''%s''', cname);
 elseif s.tmvs_v ~= tmvs_version ()
   error ('cache file ''%s'' has incompatible version ''%s''', cname, s.tmvs_v);
 end

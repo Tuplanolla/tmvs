@@ -2,8 +2,8 @@
 % @deftypefn {Function File} {@var{y} =} tmvs_foldr (@var{f}, @var{x})
 % @deftypefnx {Function File} {@var{y} =} tmvs_foldr (@var{f}, @var{x}, @var{z})
 %
-% Fold, also known as reduce, inject, accumulate, aggregate or cata,
-% breaks the data structure @var{x} down
+% Fold, also known as reduce, inject, accumulate, aggregate or
+% cata (for catamorphism), breaks the data structure @var{x} down
 % by applying the function @var{f} to each of its elements
 % until only the result @var{y} is left.
 % The right fold in particular starts from the end of @var{x} and
@@ -47,7 +47,7 @@
 %
 % Programming note: This is slightly slower than @code{tmvs_foldl}.
 %
-% @seealso{tmvs_foldl}
+% @seealso{tmvs_foldl, reduce}
 % @end deftypefn
 
 function y = tmvs_foldr (f, x, z)
@@ -55,7 +55,7 @@ function y = tmvs_foldr (f, x, z)
 if isnumeric (x)
 elseif iscell (x)
 elseif isstruct (x)
-  s = fieldnames (x);
+  c = fieldnames (x);
 else
   error (sprintf ('wrong type ''%s''', class (x)));
 end
@@ -70,7 +70,7 @@ else
   elseif iscell (x)
     y = x{end};
   elseif isstruct (x)
-    y = x.(s{end});
+    y = x.(c{end});
   else
     error (sprintf ('wrong type ''%s''', class (x)));
   end
@@ -87,9 +87,9 @@ elseif iscell (x)
     y = f (x{n - i + 1}, y);
   end
 elseif isstruct (x)
-  n = length (s);
+  n = length (c);
   for i = j : n
-    k = s{n - i + 1};
+    k = c{n - i + 1};
     y = f (k, x.(k), y);
   end
 else
