@@ -3,7 +3,7 @@ build: CSVParser.java IdParser.java data-flow.png report.pdf
 clean:
 	$(RM) *.aux *.log *.out
 	$(RM) *.class *.java *.tokens
-	# $(RM) *.tmp
+	$(RM) *.tmp
 
 %.pdf: %.tex data-flow.tex
 	pdflatex $<

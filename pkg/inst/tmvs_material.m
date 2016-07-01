@@ -24,7 +24,7 @@ if ischar (x)
     error (sprintf ('material ''%s'' not known', x));
   end
 
-  y = int8 (y);
+  y = uint32 (y);
 elseif isindex (x)
   switch x
   case 1

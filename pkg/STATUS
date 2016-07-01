@@ -14,12 +14,13 @@ Perfect
   tmvs_csv
 Almost Perfect
   tmvs_progress
-Works Well
   tmvs_id
+Works Well
   tmvs_parse_line
   tmvs_uncertainty
   tmvs_cache_for
   tmvs_is_cache
+  tmvs_insert
 Incomplete
   tmvs
   tmvs_parse

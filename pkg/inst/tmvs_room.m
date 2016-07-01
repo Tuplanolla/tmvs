@@ -19,7 +19,7 @@ if ischar (x)
     y = n;
   end
 
-  y = int8 (y);
+  y = uint32 (y);
 elseif isindex (x)
   y = sprintf ('%d', x);
 else

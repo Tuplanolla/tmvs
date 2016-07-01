@@ -20,7 +20,7 @@ if ischar (x)
     y = c - 'a' + 1;
   end
 
-  y = int8 (y);
+  y = uint32 (y);
 elseif isindex (x)
   if c < 1 || c > 26
     error (sprintf ('measuring site %d not known', x));
