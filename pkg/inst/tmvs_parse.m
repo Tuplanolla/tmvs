@@ -1,9 +1,8 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {@var{cds} =} tmvs_parse (@var{src}, @var{fname})
+% @deftypefn {Function File} {@var{a} =} tmvs_parse (@var{src}, @var{fname})
 %
 % Parses the comma-separated value file @var{fname}
-% with the delimiter @qcode{'|'} and
-% produces the central data structure @var{cds}.
+% with the delimiter @qcode{'|'} and produces the aggregate @var{a}.
 % The formal grammar is presented in the file @code{CSV.g4}
 % with the exception that records may not contain quoted line breaks.
 % The file should be formatted as expected of the data source @var{src}.
@@ -12,6 +11,10 @@
 % it would require detecting and parsing the header lines or
 % making an educated guess based on the first few records.
 % This is forgone to keep the parser simple and robust.
+%
+% It should be noted that this procedure is extremely slow
+% due to all the parsing and data integrity checking.
+% However there is a small progress indicator to entertain the user.
 %
 % The following example demonstrates basic usage.
 %
@@ -22,9 +25,9 @@
 % @seealso{tmvs, tmvs_fetch, tmvs_csv}
 % @end deftypefn
 
-function cds = tmvs_parse (src, fname)
+function a = tmvs_parse (src, fname)
 
-% TODO All sources.
+% TODO Read any source.
 if src ~= tmvs_source ('test lab') && src ~= tmvs_source ('weather station')
   error (sprintf ('unsupported source %d', src));
 end
@@ -34,7 +37,8 @@ if fid == -1
   error (sprintf ('failed to open ''%s'' for reading', fname));
 end
 
-cds = struct ('hash', {}, 'id', {}, 'pairs', {});
+% TODO Consider: read all, wrangle later.
+a = struct ('hash', {}, 'id', {}, 'pairs', {});
 
 i = 1;
 washeader = true;
@@ -52,8 +56,10 @@ while (str = fgetl (fid)) ~= -1
 
     washeader = false;
 
-    cds = tmvs_insert (cds, id, horzcat (t, x));
+    a = tmvs_insert (a, id, horzcat (t, x));
 
+    % There are no performance bottlenecks here.
+    % Everything is equally slow, so have patience.
     tmvs_progress (i, 100);
 
     i = i + 1;

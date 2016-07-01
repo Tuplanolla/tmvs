@@ -35,6 +35,11 @@ Internal
   tmvs_uncertainty
   tmvs_cache_for
   tmvs_is_cache
+  tmvs_insert
+  tmvs_hash
+  tmvs_getfield
+  tmvs_lookup
+  tmvs_search
 Deprecated
   tmvs_map
   tmvs_reduce

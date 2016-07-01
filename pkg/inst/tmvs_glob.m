@@ -1,12 +1,12 @@
-function arrays = tmvs_glob (src, pattern)
+function a = tmvs_glob (src, pattern)
 
 filenames = glob (pattern);
 
-arrays = cell ();
+a = struct ('hash', {}, 'id', {}, 'pairs', {});
 for i = 1 : length (filenames)
   filename = filenames{i};
 
-  arrays = tmvs_merge (arrays, tmvs_fetch (src, filename));
+  a = tmvs_merge (a, tmvs_fetch (src, filename));
 end
 
 end

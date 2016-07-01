@@ -21,6 +21,9 @@ Works Well
   tmvs_cache_for
   tmvs_is_cache
   tmvs_insert
+  tmvs_hash
+  tmvs_lookup
+  tmvs_search
 Incomplete
   tmvs
   tmvs_parse

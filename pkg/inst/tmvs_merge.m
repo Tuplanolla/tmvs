@@ -1,9 +1,11 @@
-function c = tmvs_merge (c, d)
+function a = tmvs_merge (a1, a2)
 
-n = rows (d);
+n = rows (a2);
 
 for i = 1 : n
-  c = tmvs_insert (c, d{i, 1}, d{i, 2});
+  a1 = tmvs_insert (a1, a2(i).id, a2(i).pairs);
 end
+
+a = a1;
 
 end

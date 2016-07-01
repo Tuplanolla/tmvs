@@ -1,13 +1,14 @@
-function cds = tmvs_insert (cds, id, pairs)
+function a = tmvs_insert (a, id, pairs)
 
-[i, p] = tmvs_lookup (cds, id);
+hash = tmvs_hash (id);
+
+[i, p] = tmvs_lookup (a, id, hash);
 
 if p
-  cds(i) = struct ('hash', tmvs_hash (id), 'id', id, ...
-    'pairs', sortrows (vertcat (cds(i).pairs, pairs)));
+  a(i).pairs = sortrows (vertcat (a(i).pairs, pairs));
 else
-  cds(i + 1 : end + 1) = cds(i : end);
-  cds(i) = struct ('hash', tmvs_hash (id), 'id', id, 'pairs', pairs);
+  a(i + 1 : end + 1) = a(i : end);
+  a(i) = struct ('hash', hash, 'id', id, 'pairs', pairs);
 end
 
 end

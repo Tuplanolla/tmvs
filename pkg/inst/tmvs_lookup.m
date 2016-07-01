@@ -1,12 +1,14 @@
 % Find element or insertion position.
 
-function [i, p] = tmvs_lookup (cds, id)
+function [i, p] = tmvs_lookup (a, id, hash = tmvs_hash (id))
 
-[i, j] = tmvs_search (cds, tmvs_hash (id));
+[i, j] = tmvs_search (a, hash);
 p = false;
 
 for k = i : j
-  if isequaln (cds(k).id, id)
+  % TODO Dirty speed hack!
+  % if isequaln (a(k).id, id)
+  if a(k).hash == hash
     i = k;
     p = true;
 

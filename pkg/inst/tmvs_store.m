@@ -1,9 +1,9 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} tmvs_store (@var{cname}, @var{c})
-% @deftypefnx {Function File} tmvs_store (@var{cname}, @var{c}, @var{fmt})
-% @deftypefnx {Function File} tmvs_store (@var{cname}, @var{c}, @var{fmt}, @var{zip})
+% @deftypefn {Function File} tmvs_store (@var{cname}, @var{a})
+% @deftypefnx {Function File} tmvs_store (@var{cname}, @var{a}, @var{fmt})
+% @deftypefnx {Function File} tmvs_store (@var{cname}, @var{a}, @var{fmt}, @var{zip})
 %
-% Writes the central data structure @var{c} into the cache file @var{cname}.
+% Writes the aggregate @var{a} into the cache file @var{cname}.
 %
 % The optional storage format @var{fmt} can be chosen
 % from the formats supported by @var{save} and
@@ -20,7 +20,7 @@
 % @seealso{tmvs, tmvs_recall, tmvs_fetch, tmvs_purge, save}
 % @end deftypefn
 
-function tmvs_store (cname, c, fmt = '-mat', zip = true)
+function tmvs_store (cname, a, fmt = '-mat', zip = true)
 
 if exist (cname, 'file')
   try
@@ -31,12 +31,12 @@ if exist (cname, 'file')
 end
 
 tmvs_v = tmvs_version ();
-tmvs_c = c;
+tmvs_a = rmfield (a, 'hash');
 
 if zip
-  save (fmt, '-zip', cname, 'tmvs_v', 'tmvs_c');
+  save (fmt, '-zip', cname, 'tmvs_v', 'tmvs_a');
 else
-  save (fmt, cname, 'tmvs_v', 'tmvs_c');
+  save (fmt, cname, 'tmvs_v', 'tmvs_a');
 end
 
 end

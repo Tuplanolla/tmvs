@@ -1,17 +1,17 @@
-% TODO Make not ugly (do not break though).
+% TODO Make less ugly (do not break though).
 
-function [i, j] = tmvs_search (cds, h)
+function [i, j] = tmvs_search (a, h)
 
 i = 1;
 j = 0;
 
 iind = 1;
-jind = length (cds);
+jind = length (a);
 
 while iind <= jind
   k = floor (iind + (jind - iind) / 2);
 
-  hk = cds(k).hash;
+  hk = a(k).hash;
 
   if hk < h
     iind = k + 1;
@@ -23,7 +23,7 @@ while iind <= jind
     while mid - lef > 1
       q = floor (lef + (mid - lef) / 2);
 
-      hk = cds(q).hash;
+      hk = a(q).hash;
 
       if hk < h
         lef = q + 1;
@@ -38,7 +38,7 @@ while iind <= jind
     while rig - mid > 1
       q = floor (mid + (rig - mid) / 2);
 
-      hk = cds(q).hash;
+      hk = a(q).hash;
 
       if hk > h
         rig = q;
