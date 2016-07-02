@@ -34,13 +34,14 @@ Incomplete
   tmvs_export
   tmvs_purge
   tmvs_filter
+  tmvs_hash
 Deprecated
   tmvs_map
   tmvs_reduce
   tmvs_visualize_observatories
   tmvs_visualize_rooms
   tmvs_visualize_stations
+  tmvs_getfield
   tmvs_insert
-  tmvs_hash
   tmvs_lookup
   tmvs_search

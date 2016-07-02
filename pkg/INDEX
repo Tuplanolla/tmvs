@@ -29,17 +29,13 @@ Enumerators
   tmvs_region
 Internal
   tmvs_glob
-  tmvs_id
-  tmvs_csv
+  tmvs_parse_name
+  tmvs_parse_csv
   tmvs_parse_line
   tmvs_uncertainty
   tmvs_cache_for
   tmvs_is_cache
-  tmvs_insert
   tmvs_hash
-  tmvs_getfield
-  tmvs_lookup
-  tmvs_search
 Deprecated
   tmvs_map
   tmvs_reduce
@@ -47,3 +43,7 @@ Deprecated
   tmvs_visualize_observatories
   tmvs_visualize_rooms
   tmvs_visualize_stations
+  tmvs_insert
+  tmvs_getfield
+  tmvs_lookup
+  tmvs_search
