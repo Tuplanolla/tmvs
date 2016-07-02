@@ -1,6 +1,6 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {@var{c} =} tmvs_fetch (@var{fname})
-% @deftypefnx {Function File} {@var{c} =} tmvs_fetch (@var{fname}, @var{cname})
+% @deftypefn {Function File} {@var{c} =} tmvs_fetch (@var{src}, @var{fname})
+% @deftypefnx {Function File} {@var{c} =} tmvs_fetch (@var{src}, @var{fname}, @var{cname})
 %
 % Magic happens.
 %
@@ -10,7 +10,7 @@
 % @code{??}
 % @end example
 %
-% @seealso{tmvs, tmvs_store, tmvs_recall, tmvs_fetch, tmvs_purge}
+% @seealso{tmvs, tmvs_import, tmvs_store, tmvs_recall, tmvs_purge}
 % @end deftypefn
 
 function c = tmvs_fetch (src, fname, cname = tmvs_cache_for (fname))
@@ -42,7 +42,7 @@ end
 if cached
   c = tmvs_recall (cname);
 else
-  c = tmvs_parse (src, fname);
+  c = tmvs_import (src, fname);
   tmvs_store (cname, c);
 end
 

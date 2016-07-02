@@ -23,7 +23,7 @@ digraph {
         plot [label = "Plot"]
 
         node [shape = oval]
-        parse [label = "Parse"]
+        import [label = "Import"]
         interpolate [label = "Interpolate"]
         discretize [label = "Discretize"]
         merge [label = "Merge"]
@@ -47,7 +47,7 @@ digraph {
   }
 
   xlsr -> gnumeric -> csvr
-  csvr -> parse -> array
+  csvr -> import -> array
   array -> interpolate -> function
   function -> discretize -> array
   array -> merge -> array
@@ -59,6 +59,6 @@ digraph {
   null -> purge -> cache
   array -> export -> csvw
 
-  fetch -> parse [style = invis]
-  recall -> parse [style = invis]
+  fetch -> import [style = invis]
+  recall -> import [style = invis]
 }

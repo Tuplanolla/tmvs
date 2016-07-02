@@ -7,8 +7,8 @@ p = false;
 
 for k = i : j
   % TODO Dirty speed hack!
-  % if isequaln (a(k).id, id)
-  if a(k).hash == hash
+  % if a(k).hash == hash
+  if isequaln (a(k).id, id)
     i = k;
     p = true;
 

@@ -17,10 +17,10 @@
 %
 % @example
 % @code{
-% fname = 'excerpt/2010/118-0.csv';
+% fname = 'excerpt/2010/120-0.csv';
 % cname = '2010-118.tmp';
-% parsed = tmvs_parse (fname);
-% fname = 'excerpt/2011/118-0.csv';
+% parsed = tmvs_import (fname);
+% fname = 'excerpt/2011/120-0.csv';
 % cname = '2011-118.tmp';
 % fetched = tmvs_fetch (fname, cname);
 % merged = tmvs_merge (parsed, fetched);
@@ -38,7 +38,7 @@
 % @result{} ??
 % @end example
 %
-% @seealso{tmvs_parse, tmvs_interpolate, tmvs_discretize, tmvs_merge, tmvs_visualize, tmvs_export, tmvs_store, tmvs_recall, tmvs_fetch, tmvs_purge}
+% @seealso{tmvs_import, tmvs_interpolate, tmvs_discretize, tmvs_merge, tmvs_visualize, tmvs_export, tmvs_store, tmvs_recall, tmvs_fetch, tmvs_purge}
 %
 % @end deftypefn
 

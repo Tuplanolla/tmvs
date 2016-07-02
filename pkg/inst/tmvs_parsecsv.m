@@ -1,23 +1,23 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {@var{c} =} tmvs_parse_csv (@var{str})
+% @deftypefn {Function File} {@var{c} =} tmvs_parsecsv (@var{str})
 %
 % Parses the string @var{str} containing a comma-separated value record
 % with the delimiter @qcode{'|'} and produces the cell array @var{c}.
 % A formal grammar is presented in the file @qcode{'CSV.g4'}.
 %
-% The following example demonstrates basic usage.
+% The following examples demonstrate basic usage.
 %
 % @example
-% @code{tmvs_parse_csv ('one|number two|"magic ""number"" three"')}
+% @code{tmvs_parsecsv ('one|number two|"magic ""number"" three"')}
 % @result{} @{'one', 'number two', 'magic ""number"" three'@}
-% @code{tmvs_parse_csv ('one|||number two|')}
+% @code{tmvs_parsecsv ('one|||number two|')}
 % @result{} @{'one', @{@}, @{@}, 'number two', @{@}@}
 % @end example
 %
-% @seealso{tmvs_parse, textscan, regexp}
+% @seealso{textscan, regexp}
 % @end deftypefn
 
-function c = tmvs_parse_csv (str)
+function c = tmvs_parsecsv (str)
 
 persistent pat
 if isempty (pat)
@@ -29,7 +29,7 @@ end
 
 [~, ~, ~, ~, t] = regexp (str, pat, 'emptymatch');
 if isempty (t)
-  error (sprintf ('malformed record ''%s''', str));
+  error (sprintf ('failed to parse record ''%s''', str));
 end
 
 % These bounds are too optimistic when empty matches are present,
@@ -39,19 +39,19 @@ n = length (t);
 c = cell (floor ((n + 1) / 2), 1);
 
 j = 1;
-wasempty = false;
+empty = false;
 for i = 1 : n
   matches = t{i};
   if isempty (matches)
-    if wasempty
+    if empty
       c{j} = matches;
       j = j + 1;
     end
-    wasempty = true;
+    empty = true;
   else
     c{j} = matches{1};
     j = j + 1;
-    wasempty = false;
+    empty = false;
   end
 end
 

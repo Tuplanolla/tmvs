@@ -1,5 +1,5 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {[@var{id}, @var{meta}] =} tmvs_parse_name (@var{str})
+% @deftypefn {Function File} {[@var{id}, @var{meta}] =} tmvs_parsename (@var{str})
 %
 % Parses the string @var{str} containing a record name and
 % produces the identifying structure @var{id} and
@@ -9,18 +9,18 @@
 % The following example demonstrates basic usage.
 %
 % @example
-% @code{[id, meta] = tmvs_parse_name ('KoeRakPS120 - RH120 A1 180mm 160 EPS')}
+% @code{[id, meta] = tmvs_parsename ('KoeRakPS120 - RH120 A1 180mm 160 EPS')}
 % @result{} id = struct ('source', 1, 'quantity', 2, 'site', 16, ...
 %                 'surface', 1, 'room', 120, 'section', 1, 'ordinal', 1)
 %    meta = struct ('position', 180, 'material', 3)
-% @code{tmvs_parse_name ('Autiolahden s??asema - Ilmankosteus')}
+% @code{tmvs_parsename ('Autiolahden s??asema - Ilmankosteus')}
 % @result{} struct ('source', 2, 'quantity', 2, 'region', 1)
 % @end example
 %
-% @seealso{tmvs_parse, tmvs_parse_csv, textscan, regexp}
+% @seealso{tmvs, tmvs_fetch, textscan, regexp}
 % @end deftypefn
 
-function [id, meta] = tmvs_parse_name (str)
+function [id, meta] = tmvs_parsename (str)
 
 % This implementation is somewhat fragile
 % due to the way @code{regexp} handles named tokens.
@@ -186,7 +186,7 @@ elseif ~isempty (nm.weatherStation)
                'region', tmvs_region (region));
   meta = struct ();
 else
-  error (sprintf ('unrecognized identifier ''%s''', str));
+  error (sprintf ('failed to parse identifier ''%s''', str));
 end
 
 end

@@ -8,7 +8,7 @@ Generic
   tmvs_foldr
   tmvs_progress
 Basic
-  tmvs_parse
+  tmvs_import
   tmvs_interpolate
   tmvs_discretize
   tmvs_merge
@@ -29,9 +29,8 @@ Enumerators
   tmvs_region
 Internal
   tmvs_glob
-  tmvs_parse_name
-  tmvs_parse_csv
-  tmvs_parse_line
+  tmvs_parsename
+  tmvs_parsecsv
   tmvs_uncertainty
   tmvs_cache_for
   tmvs_is_cache
@@ -44,6 +43,5 @@ Deprecated
   tmvs_visualize_rooms
   tmvs_visualize_stations
   tmvs_insert
-  tmvs_getfield
   tmvs_lookup
   tmvs_search

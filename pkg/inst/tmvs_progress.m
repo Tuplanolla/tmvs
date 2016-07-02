@@ -31,7 +31,7 @@
 % tmvs_progress ();}
 % @end example
 %
-% @seealso{fprintf}
+% @seealso{fprintf, fflush}
 % @end deftypefn
 
 function tmvs_progress (i, n = 1, fid = stdout)

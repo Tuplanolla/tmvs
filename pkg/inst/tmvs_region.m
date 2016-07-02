@@ -4,9 +4,10 @@
 % Enumerates the case-insensitive regions @qcode{'autiolahti'} and
 % @qcode{'jyvaskyla'}.
 %
-% Special characters are represented by their ASCII approximations
+% Special characters are accepted in inputs,
+% but in outputs they are represented by their ASCII approximations
 % to avoid potential compatibility problems.
-% Unfortunately UTF-8 does not yet permeate the universe.
+% Unfortunately UTF-8 does not permeate the fabric of the universe yet.
 %
 % See @code{tmvs_quantity} for a detailed treatise on functions of this kind.
 %
@@ -20,7 +21,7 @@ if ischar (x)
   switch tolower (x)
   case 'autiolahti'
     y = 1;
-  case {'jyvaskyla', 'jyväskylä'}
+  case {'jyvaskyla', 'jyväskylä', 'jyv?skyl?'}
     y = 2;
   otherwise
     error (sprintf ('region ''%s'' not known', x));

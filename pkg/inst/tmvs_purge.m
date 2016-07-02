@@ -12,8 +12,8 @@
 % The following example demonstrates basic usage.
 %
 % @example
-% @code{c = tmvs_fetch ('excerpt/2011/120-0.csv');
-% tmvs_purge ('excerpt/2011/120-0.csv')}
+% @code{c = tmvs_fetch ('excerpt/2011/120-0.csv');}
+% @code{tmvs_purge ('excerpt/2011/120-0.csv')}
 % @code{tmvs_store ('/tmp/tmvs.tmp', c)
 % tmvs_purge ('/tmp/tmvs.tmp')}
 % @end example

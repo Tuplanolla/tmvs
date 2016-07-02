@@ -1,6 +1,6 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {@var{a} =} tmvs_parse (@var{src}, @var{fname})
-% @deftypefnx {Function File} {@var{a} =} tmvs_parse (@var{src}, @var{fname}, @var{n})
+% @deftypefn {Function File} {@var{a} =} tmvs_import (@var{src}, @var{fname})
+% @deftypefnx {Function File} {@var{a} =} tmvs_import (@var{src}, @var{fname}, @var{n})
 %
 % Parses the comma-separated value file @var{fname}
 % with the delimiter @qcode{'|'} and
@@ -21,7 +21,7 @@
 % The following example demonstrates basic usage.
 %
 % @example
-% @code{a = tmvs_parse (tmvs_source ('test lab'), 'excerpt/2011/118-0.csv');}
+% @code{a = tmvs_import (tmvs_source ('test lab'), 'excerpt/2011/120-0.csv');}
 % @code{fieldnames (a)}
 % @result{} @{'id', 'meta', 'pairs'@}
 % @code{size (a)}
@@ -33,10 +33,10 @@
 % making an educated guess based on the first few records.
 % This is forgone to keep the parser simple and robust.
 %
-% @seealso{tmvs, tmvs_fetch, tmvs_source, tmvs_parse_csv}
+% @seealso{tmvs, tmvs_fetch, tmvs_source, tmvs_progress, csvread}
 % @end deftypefn
 
-function a = tmvs_parse (src, fname, n = 100)
+function a = tmvs_import (src, fname, n = 100)
 
 [fid, msg] = fopen (fname, 'r');
 if fid == -1
@@ -57,7 +57,7 @@ case {(tmvs_source ('test lab')), (tmvs_source ('weather station'))}
   j = nan (0);
   header = true;
   while (str = fgetl (fid)) ~= -1
-    csv = tmvs_parse_csv (str);
+    csv = tmvs_parsecsv (str);
 
     try
       k = find (ismember (csv1, csv{1}));
@@ -69,7 +69,7 @@ case {(tmvs_source ('test lab')), (tmvs_source ('weather station'))}
 
       if isempty (k)
         % Note: every id MUST HAVE same meta or one meta is lost.
-        [id, meta] = tmvs_parse_name (csv{1});
+        [id, meta] = tmvs_parsename (csv{1});
 
         z = 1;
         new = true;

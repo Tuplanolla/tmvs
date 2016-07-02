@@ -20,8 +20,8 @@
 % The following examples demonstrate basic usage.
 %
 % @example
-% @code{x = [4, 2, 1024, 0, 1];
-% [i, o] = tmvs_chauvenet (x)}
+% @code{x = [4, 2, 1024, 0, 1];}
+% @code{[i, o] = tmvs_chauvenet (x)}
 % @result{} i = [1, 2, 4, 5]
 %    o = [3]
 % @code{x(tmvs_chauvenet (x))}
