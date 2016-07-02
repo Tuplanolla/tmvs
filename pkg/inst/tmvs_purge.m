@@ -9,7 +9,7 @@
 % (this is a safety mechanism that should prevent accidental data loss).
 % To remove a corrupted cache file use @var{unlink} instead.
 %
-% The following example demonstrates basic usage.
+% The following examples demonstrate basic usage.
 %
 % @example
 % @code{c = tmvs_fetch ('excerpt/2011/120-0.csv');}
@@ -19,6 +19,7 @@
 % @end example
 %
 % @seealso{tmvs, tmvs_store, tmvs_recall, tmvs_fetch, unlink}
+%
 % @end deftypefn
 
 function tmvs_purge (name)

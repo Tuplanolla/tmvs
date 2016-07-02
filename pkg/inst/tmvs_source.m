@@ -2,7 +2,7 @@
 % @deftypefn {Function File} {@var{y} =} tmvs_source (@var{x})
 %
 % Enumerates the case-insensitive data sources @qcode{'test lab'},
-% @qcode{'weather station'} and @qcode{'large weather station'}.
+% @qcode{'weather station'} and @qcode{'weather observatory'}.
 %
 % See @code{tmvs_quantity} for a detailed treatise on functions of this kind.
 %
@@ -18,7 +18,7 @@ if ischar (x)
     y = 1;
   case {'ws', 'weather station'}
     y = 2;
-  case {'lws', 'large weather station'}
+  case {'wo', 'weather observatory'}
     y = 3;
   otherwise
     error (sprintf ('source ''%s'' not known', x));
@@ -30,7 +30,7 @@ elseif isindex (x)
   case 2
     y = 'weather station';
   case 3
-    y = 'large weather station';
+    y = 'weather observatory';
   otherwise
     error (sprintf ('source %d not known', x));
   end

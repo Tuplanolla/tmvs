@@ -3,7 +3,8 @@
 %
 % Enumerates the case-insensitive physical quantities @qcode{'temperature'},
 % @qcode{'relative humidity'}, @qcode{'absolute humidity'},
-% @qcode{'pressure'}, @qcode{'wind speed'} and @qcode{'precipitation'}.
+% @qcode{'pressure'}, @qcode{'wind speed'}, @qcode{'precipitation'} and
+% @qcode{'solar energy'}.
 %
 % Enumerations or tagged unions of unit types are a common and
 % useful technique for giving names to a fixed set of values.
@@ -67,6 +68,8 @@ if ischar (x)
     y = 5;
   case {'h', 'precipitation'}
     y = 6;
+  case {'i', 'solar energy'}
+    y = 7;
   otherwise
     error (sprintf ('physical quantity ''%s'' not known', x));
   end
@@ -84,6 +87,8 @@ elseif isindex (x)
     y = 'wind speed';
   case 6
     y = 'precipitation';
+  case 7
+    y = 'solar energy';
   otherwise
     error (sprintf ('physical quantity %d not known', x));
   end

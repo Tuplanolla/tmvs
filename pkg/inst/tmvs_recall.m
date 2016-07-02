@@ -17,6 +17,7 @@
 % @end example
 %
 % @seealso{tmvs, tmvs_store, tmvs_fetch, tmvs_purge, load}
+%
 % @end deftypefn
 
 function a = tmvs_recall (cname, force = false)

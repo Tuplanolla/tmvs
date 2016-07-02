@@ -12,6 +12,7 @@
 % @end example
 %
 % @seealso{tmvs}
+%
 % @end deftypefn
 
 function str = tmvs_version ()

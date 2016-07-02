@@ -19,6 +19,7 @@
 % @end example
 %
 % @seealso{tmvs, tmvs_quantity, tmvs_fetch}
+%
 % @end deftypefn
 
 function delta = tmvs_uncertainty (id, x = nan)

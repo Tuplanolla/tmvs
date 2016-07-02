@@ -1,9 +1,10 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{c} =} tmvs (@var{dname})
 %
-% TMVS stands for Temperature and Moisture Visualization System.
-% It is mostly a pedestrian data analysis system
-% although the author has tried to impose some categorical structure on it.
+% TMVS stands for Temperature and Moisture Visualization System and
+% is a simple data analysis system.
+% It is quite pedestrian
+% even though the author has tried to impose some categorical structure on it.
 %
 % If you are in a hurry or do not enjoy reading technical manuals,
 % jump straight to the examples at the end, try them out yourself and
@@ -55,9 +56,8 @@ end
 
 buildings = tmvs_glob (tmvs_source ('test lab'), sprintf ('%s/*/[0-9]*.csv', fname));
 stations = tmvs_glob (tmvs_source ('weather station'), sprintf ('%s/*/[a-z]*.csv', fname));
-everything = tmvs_merge (buildings, stations);
-% observatories = tmvs_glob (tmvs_source ('large weather station'), sprintf ('%s/*.csv', fname));
-% everything = tmvs_foldl (@tmvs_merge, {buildings, stations, observatories});
+% observatories = tmvs_glob (tmvs_source ('weather observatory'), sprintf ('%s/*.csv', fname));
+everything = tmvs_foldl (@tmvs_merge, {buildings, stations});
 
 tmvs_visualize (everything);
 

@@ -1,9 +1,9 @@
 Perfect
-++ tmvs_version
+++ tmvs_brsearch
 ++ tmvs_chauvenet
 ++ tmvs_foldl
 ++ tmvs_foldr
-++ tmvs_brsearch
+++ tmvs_version
 ++ tmvs_source
 ++ tmvs_quantity
 ++ tmvs_site
@@ -17,6 +17,8 @@ Perfect
 ++ tmvs_progress
 ++ tmvs_uncertainty
 Almost Perfect
+++ tmvs_import
++- tmvs_findid
 +- tmvs_store
 +- tmvs_recall
 +- tmvs_fetch
@@ -24,7 +26,6 @@ Almost Perfect
 +- tmvs_glob
 +- tmvs_purge
 Works Well
--+ tmvs_import
 -- tmvs_cache_for
 -- tmvs_is_cache
 Incomplete
@@ -41,5 +42,3 @@ Deprecated
 -- tmvs_visualize_observatories
 -- tmvs_visualize_rooms
 -- tmvs_visualize_stations
--- tmvs_insert
--- tmvs_lookup

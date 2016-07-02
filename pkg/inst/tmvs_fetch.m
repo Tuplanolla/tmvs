@@ -4,15 +4,17 @@
 %
 % Magic happens.
 %
-% The following example demonstrates basic usage.
+% The following examples demonstrate basic usage.
 %
 % @example
 % @code{??}
 % @end example
 %
 % @seealso{tmvs, tmvs_import, tmvs_store, tmvs_recall, tmvs_purge}
+%
 % @end deftypefn
 
+% TODO Think about these parameters.
 function c = tmvs_fetch (src, fname, cname = tmvs_cache_for (fname))
 
 [cacheinfo, err, msg] = stat (cname);
@@ -42,7 +44,7 @@ end
 if cached
   c = tmvs_recall (cname);
 else
-  c = tmvs_import (src, fname);
+  c = tmvs_import (fname, src);
   tmvs_store (cname, c);
 end
 

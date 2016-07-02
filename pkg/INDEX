@@ -3,6 +3,7 @@ Meta
   tmvs
   tmvs_version
 Generic
+  tmvs_brsearch
   tmvs_chauvenet
   tmvs_foldl
   tmvs_foldr
@@ -32,6 +33,7 @@ Internal
   tmvs_parsename
   tmvs_parsecsv
   tmvs_uncertainty
+  tmvs_findid
   tmvs_cache_for
   tmvs_is_cache
   tmvs_hash
@@ -42,6 +44,3 @@ Deprecated
   tmvs_visualize_observatories
   tmvs_visualize_rooms
   tmvs_visualize_stations
-  tmvs_insert
-  tmvs_lookup
-  tmvs_search

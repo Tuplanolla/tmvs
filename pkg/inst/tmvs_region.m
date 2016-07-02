@@ -1,5 +1,5 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {@var{y} =} tmvs_x (@var{x})
+% @deftypefn {Function File} {@var{y} =} tmvs_region (@var{x})
 %
 % Enumerates the case-insensitive regions @qcode{'autiolahti'} and
 % @qcode{'jyvaskyla'}.

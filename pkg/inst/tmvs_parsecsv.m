@@ -15,6 +15,7 @@
 % @end example
 %
 % @seealso{textscan, regexp}
+%
 % @end deftypefn
 
 function c = tmvs_parsecsv (str)

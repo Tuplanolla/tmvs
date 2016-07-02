@@ -10,13 +10,14 @@
 % The other optional @var{compress} parameter determines
 % whether the cache file should be compressed and defaults to @var{true}.
 %
-% The following example demonstrates basic usage.
+% The following examples demonstrate basic usage.
 %
 % @example
 % @code{tmvs_store ('/tmp/tmvs.tmp', tmvs_fetch ('excerpt/2011/120-0.csv'))}
 % @end example
 %
 % @seealso{tmvs, tmvs_recall, tmvs_fetch, tmvs_purge, save}
+%
 % @end deftypefn
 
 function tmvs_store (cname, a, fmt = '-mat', compress = true)

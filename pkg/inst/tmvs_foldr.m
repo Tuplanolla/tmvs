@@ -48,6 +48,7 @@
 % Programming note: This is slightly slower than @code{tmvs_foldl}.
 %
 % @seealso{tmvs_foldl, reduce}
+%
 % @end deftypefn
 
 function y = tmvs_foldr (f, x, z)

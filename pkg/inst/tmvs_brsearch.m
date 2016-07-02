@@ -16,11 +16,14 @@
 %
 % @example
 % @code{[i, j] = tmvs_brsearch ([0, 0, 1, 2], 0)}
-% @result{} [1, 2]
+% @result{} i = 1
+%    j = 2
 % @code{[i, j] = tmvs_brsearch ([-1, 0, 1, 2], 0)}
-% @result{} [2, 2]
+% @result{} i = 2
+%    j = 2
 % @code{[i, j] = tmvs_brsearch ([-2, -1, 1, 2], 0)}
-% @result{} [2, 1]
+% @result{} i = 2
+%    j = 1
 % @end example
 %
 % @seealso{find}

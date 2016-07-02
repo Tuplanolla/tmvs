@@ -6,7 +6,7 @@
 % the metadata structure @var{meta}.
 % The formal grammar is presented in the file @qcode{'Name.g4'}.
 %
-% The following example demonstrates basic usage.
+% The following examples demonstrate basic usage.
 %
 % @example
 % @code{[id, meta] = tmvs_parsename ('KoeRakPS120 - RH120 A1 180mm 160 EPS')}
@@ -18,6 +18,7 @@
 % @end example
 %
 % @seealso{tmvs, tmvs_fetch, textscan, regexp}
+%
 % @end deftypefn
 
 function [id, meta] = tmvs_parsename (str)

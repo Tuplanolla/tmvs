@@ -1,6 +1,18 @@
-function a = tmvs_glob (src, pattern)
+% -*- texinfo -*-
+% @deftypefn {Function File} {@var{y} =} tmvs_glob (@var{src}, @var{pat})
+%
+% Fetches and merges together the original files
+% matching the pattern @var{pat}.
+% The pattern @var{pat} can be written
+% according the formats supported by @var{glob}.
+%
+% @seealso{tmvs, tmvs_fetch, tmvs_merge, glob}
+%
+% @end deftypefn
 
-fnames = glob (pattern);
+function a = tmvs_glob (src, pat)
+
+fnames = glob (pat);
 
 a = struct ('id', {}, 'meta', {}, 'pairs', {});
 
