@@ -1,12 +1,12 @@
-function k = tmvs_hash (id)
+function k = tmvs_hash (s)
 
-c = sort (fieldnames (id));
+c = sort (fieldnames (s));
 
 n = 31;
 k = 1;
 
 for i = 1 : length (c)
-  x = id.(c{i});
+  x = s.(c{i});
 
   if isnumeric (x) && isfinite (x)
     k = mod (n * k + double (x), flintmax ());

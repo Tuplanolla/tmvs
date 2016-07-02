@@ -1,6 +1,6 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} tmvs_purge (@var{cname})
-% @deftypefnx {Function File} tmvs_purge (@var{fname})
+% @deftypefn {Function File} {} tmvs_purge (@var{cname})
+% @deftypefnx {Function File} {} tmvs_purge (@var{fname})
 %
 % Removes the cache file @var{cname} or
 % the cache file corresponding to the original file @var{fname}.

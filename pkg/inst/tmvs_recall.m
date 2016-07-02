@@ -33,8 +33,4 @@ end
 
 a = s.tmvs_a;
 
-for i = 1 : length (some)
-  a(i).hash = tmvs_hash (a(i).id);
-end
-
 end

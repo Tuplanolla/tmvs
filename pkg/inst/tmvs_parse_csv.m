@@ -1,25 +1,31 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {@var{c} =} tmvs_csv (@var{str})
+% @deftypefn {Function File} {@var{c} =} tmvs_parse_csv (@var{str})
 %
 % Parses the string @var{str} containing a comma-separated value record
 % with the delimiter @qcode{'|'} and produces the cell array @var{c}.
-% The formal grammar is presented in the file @qcode{'CSV.g4'}.
+% A formal grammar is presented in the file @qcode{'CSV.g4'}.
 %
 % The following example demonstrates basic usage.
 %
 % @example
-% @code{tmvs_csv ('one|number two|"magic ""number"" three"')}
+% @code{tmvs_parse_csv ('one|number two|"magic ""number"" three"')}
 % @result{} @{'one', 'number two', 'magic ""number"" three'@}
-% @code{tmvs_csv ('one|||number two|')}
+% @code{tmvs_parse_csv ('one|||number two|')}
 % @result{} @{'one', @{@}, @{@}, 'number two', @{@}@}
 % @end example
 %
 % @seealso{tmvs_parse, textscan, regexp}
 % @end deftypefn
 
-function c = tmvs_csv (str)
+function c = tmvs_parse_csv (str)
 
-pat = '"((?:""|[^"])*)"|([^\n\r|"]+)?';
+persistent pat
+if isempty (pat)
+  value = '([^\n\r|"]+)';
+  quote = '"((?:""|[^"])*)"';
+
+  pat = strcat (quote, '|', value, '?');
+end
 
 [~, ~, ~, ~, t] = regexp (str, pat, 'emptymatch');
 if isempty (t)

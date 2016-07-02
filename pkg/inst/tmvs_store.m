@@ -1,7 +1,7 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} tmvs_store (@var{cname}, @var{a})
-% @deftypefnx {Function File} tmvs_store (@var{cname}, @var{a}, @var{fmt})
-% @deftypefnx {Function File} tmvs_store (@var{cname}, @var{a}, @var{fmt}, @var{zip})
+% @deftypefn {Function File} {} tmvs_store (@var{cname}, @var{a})
+% @deftypefnx {Function File} {} tmvs_store (@var{cname}, @var{a}, @var{fmt})
+% @deftypefnx {Function File} {} tmvs_store (@var{cname}, @var{a}, @var{fmt}, @var{zip})
 %
 % Writes the aggregate @var{a} into the cache file @var{cname}.
 %
@@ -31,7 +31,7 @@ if exist (cname, 'file')
 end
 
 tmvs_v = tmvs_version ();
-tmvs_a = rmfield (a, 'hash');
+tmvs_a = a;
 
 if zip
   save (fmt, '-zip', cname, 'tmvs_v', 'tmvs_a');

@@ -4,6 +4,10 @@
 % Enumerates the case-insensitive regions @qcode{'autiolahti'} and
 % @qcode{'jyvaskyla'}.
 %
+% Special characters are represented by their ASCII approximations
+% to avoid potential compatibility problems.
+% Unfortunately UTF-8 does not yet permeate the universe.
+%
 % See @code{tmvs_quantity} for a detailed treatise on functions of this kind.
 %
 % @seealso{tmvs, tmvs_source, tmvs_quantity, tmvs_site, tmvs_surface, tmvs_room, tmvs_section, tmvs_material}
@@ -21,16 +25,11 @@ if ischar (x)
   otherwise
     error (sprintf ('region ''%s'' not known', x));
   end
-
-  y = uint32 (y);
 elseif isindex (x)
   switch x
   case 1
     y = 'autiolahti';
   case 2
-    % Special characters are represented by their ASCII approximations
-    % to avoid potential compatibility problems.
-    % Unfortunately UTF-8 does not yet permeate the universe.
     y = 'jyvaskyla';
   otherwise
     error (sprintf ('region %d not known', x));

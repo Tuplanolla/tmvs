@@ -1,12 +1,11 @@
 function a = tmvs_glob (src, pattern)
 
-filenames = glob (pattern);
+fnames = glob (pattern);
 
-a = struct ('hash', {}, 'id', {}, 'pairs', {});
-for i = 1 : length (filenames)
-  filename = filenames{i};
+a = struct ('id', {}, 'meta', {}, 'pairs', {});
 
-  a = tmvs_merge (a, tmvs_fetch (src, filename));
+for i = 1 : length (fnames)
+  a = tmvs_merge (a, tmvs_fetch (src, fnames{i}));
 end
 
 end

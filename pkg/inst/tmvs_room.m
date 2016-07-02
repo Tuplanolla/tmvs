@@ -18,8 +18,6 @@ if ischar (x)
   else
     y = n;
   end
-
-  y = uint32 (y);
 elseif isindex (x)
   y = sprintf ('%d', x);
 else

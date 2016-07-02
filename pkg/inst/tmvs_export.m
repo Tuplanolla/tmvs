@@ -1,5 +1,5 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} tmvs_export (@var{fname}, @var{a})
+% @deftypefn {Function File} {} tmvs_export (@var{fname}, @var{a})
 %
 % Exports the aggregate @var{a}
 % to the comma-separated value file @var{fname} with the delimiter @qcode{'|'}.

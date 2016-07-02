@@ -23,8 +23,6 @@ if ischar (x)
   otherwise
     error (sprintf ('surface ''%s'' not known', x));
   end
-
-  y = uint32 (y);
 elseif isindex (x)
   switch x
   case 1

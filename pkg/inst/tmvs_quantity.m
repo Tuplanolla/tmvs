@@ -37,7 +37,8 @@
 % @result{} 'relative humidity'
 % @end example
 %
-% Inputs can be abbreviated, but outputs are always long.
+% Inputs can be abbreviated for convenience,
+% but should not be used in programs.
 %
 % @example
 % @code{tmvs_quantity ('rh')}
@@ -69,8 +70,6 @@ if ischar (x)
   otherwise
     error (sprintf ('physical quantity ''%s'' not known', x));
   end
-
-  y = uint32 (y);
 elseif isindex (x)
   switch x
   case 1

@@ -7,7 +7,8 @@ import TMVS.Common
 type Aggregate = Map Id (Aggregated (Uncertain Double))
 
 newtype Aggregated a = Aggregated
-  {aggrPairs :: Array (Int, Int) (a, a)}
+  {aggrMeta :: Meta,
+   aggrPairs :: Array (Int, Int) (a, a)}
   deriving (Eq, Ord, Read, Show)
 
 data Id = Id
@@ -18,9 +19,12 @@ data Id = Id
    idRoom :: Maybe Int,
    idSection :: Maybe Section,
    idOrdinal :: Maybe Int,
-   idPosition :: Maybe Double,
-   idMaterial :: Maybe Material,
    idRegion :: Maybe Region}
+  deriving (Eq, Ord, Read, Show)
+
+data Meta = Meta
+  {idPosition :: Maybe Double,
+   idMaterial :: Maybe Material}
   deriving (Eq, Ord, Read, Show)
 
 data Source =

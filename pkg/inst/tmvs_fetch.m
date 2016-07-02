@@ -20,26 +20,26 @@ if err == -1
   warning (sprintf ('cannot access cache file ''%s''', cname));
   warning ('reading the original file (this can take a while)');
 
-  wasfine = false;
+  cached = false;
 else
   [fileinfo, err, msg] = stat (fname);
   if err == -1
     warning (sprintf ('cannot access original file ''%s''', fname));
     warning ('falling back on the cache file');
 
-    wasfine = true;
+    cached = true;
   elseif cacheinfo.mtime < fileinfo.mtime
     warning ('cache file is stale');
     warning ('rereading the original file (this can take a while)');
 
-    wasfine = false;
+    cached = false;
   else
 
-    wasfine = true;
+    cached = true;
   end
 end
 
-if wasfine
+if cached
   c = tmvs_recall (cname);
 else
   c = tmvs_parse (src, fname);

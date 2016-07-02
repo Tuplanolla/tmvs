@@ -11,32 +11,28 @@ Perfect
   tmvs_section
   tmvs_material
   tmvs_region
-  tmvs_csv
-Almost Perfect
+  tmvs_parse_csv
+  tmvs_parse_name
   tmvs_progress
-  tmvs_id
-Works Well
+Almost Perfect
   tmvs_parse_line
   tmvs_uncertainty
-  tmvs_cache_for
-  tmvs_is_cache
-  tmvs_insert
-  tmvs_hash
-  tmvs_lookup
-  tmvs_search
-Incomplete
-  tmvs
+Works Well
   tmvs_parse
-  tmvs_interpolate
-  tmvs_discretize
-  tmvs_merge
-  tmvs_visualize
-  tmvs_export
   tmvs_store
   tmvs_recall
   tmvs_fetch
-  tmvs_purge
+  tmvs_merge
   tmvs_glob
+  tmvs_cache_for
+  tmvs_is_cache
+Incomplete
+  tmvs
+  tmvs_interpolate
+  tmvs_discretize
+  tmvs_visualize
+  tmvs_export
+  tmvs_purge
   tmvs_filter
 Deprecated
   tmvs_map
@@ -44,3 +40,7 @@ Deprecated
   tmvs_visualize_observatories
   tmvs_visualize_rooms
   tmvs_visualize_stations
+  tmvs_insert
+  tmvs_hash
+  tmvs_lookup
+  tmvs_search

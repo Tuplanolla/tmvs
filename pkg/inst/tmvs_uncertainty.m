@@ -15,6 +15,7 @@ switch tmvs_quantity (id.quantity)
   case 'precipitation'
     delta = 1;
   otherwise
+    error (sprintf ('unknown quantity %d', id.quantity));
 case
 
 end
