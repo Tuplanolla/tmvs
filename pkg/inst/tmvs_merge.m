@@ -1,25 +1,26 @@
-function a = tmvs_merge (a1, a2)
+function aggr = tmvs_merge (aggr1, aggr2)
 
-a = a1;
+aggr = aggr1;
 
-n = rows (a2);
+n = length (aggr2);
 
 for i = 1 : n
-  id = a2(i).id;
+  id = aggr2(i).id;
 
-  j = tmvs_findid (a, id);
+  j = tmvs_findid (aggr, id);
 
   if j
-    a(j).pairs = [a(j).pairs; a2(i).pairs];
+    aggr(j).pairs = [aggr(j).pairs; aggr2(i).pairs];
   else
-    a(end + 1) = struct ('id', id, 'meta', a2(i).meta, 'pairs', a2(i).pairs);
+    aggr(end + 1) = struct ('id', id, ...
+                            'meta', aggr2(i).meta, ...
+                            'pairs', aggr2(i).pairs);
   end
 end
 
-i = 1;
-for j = 1 : length (a)
-  [~, k] = unique (a(j).pairs(:, 1));
-  a(j).pairs = a(j).pairs(k, :);
+for i = 1 : length (aggr)
+  [~, j] = unique (aggr(i).pairs(:, 1));
+  aggr(i).pairs = aggr(i).pairs(j, :);
 end
 
 end

@@ -27,6 +27,7 @@
 % @end example
 %
 % @seealso{find}
+%
 % @end deftypefn
 
 function [i, j] = tmvs_brsearch (a, x)

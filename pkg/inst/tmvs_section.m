@@ -19,7 +19,7 @@ if ischar (x)
   case {'tc', 'top corner'}
     y = 2;
   otherwise
-    error (sprintf ('section ''%s'' not known', x));
+    error ('section ''%s'' not known', x);
   end
 elseif isindex (x)
   switch x
@@ -28,10 +28,10 @@ elseif isindex (x)
   case 2
     y = 'top corner';
   otherwise
-    error (sprintf ('section %d not known', x));
+    error ('section %d not known', x);
   end
 else
-  error (sprintf ('wrong type ''%s''', class (x)));
+  error ('wrong type ''%s''', class (x));
 end
 
 end

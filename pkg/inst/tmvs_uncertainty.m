@@ -41,7 +41,7 @@ case 'wind speed'
 case 'precipitation'
   delta = 1;
 otherwise
-  error (sprintf ('uncertainty for physical quantity %d not known', quantity));
+  error ('uncertainty for physical quantity %d not known', quantity);
 end
 
 end

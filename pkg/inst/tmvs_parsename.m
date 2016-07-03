@@ -187,7 +187,7 @@ elseif ~isempty (nm.weatherStation)
                'region', tmvs_region (region));
   meta = struct ();
 else
-  error (sprintf ('failed to parse identifier ''%s''', str));
+  error ('failed to parse identifier ''%s''', str);
 end
 
 end

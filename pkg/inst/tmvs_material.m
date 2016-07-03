@@ -21,7 +21,7 @@ if ischar (x)
   case {'eps', 'polystyrene'}
     y = 3;
   otherwise
-    error (sprintf ('material ''%s'' not known', x));
+    error ('material ''%s'' not known', x);
   end
 elseif isindex (x)
   switch x
@@ -32,10 +32,10 @@ elseif isindex (x)
   case 3
     y = 'polystyrene';
   otherwise
-    error (sprintf ('placement %d not known', x));
+    error ('placement %d not known', x);
   end
 else
-  error (sprintf ('wrong type ''%s''', class (x)));
+  error ('wrong type ''%s''', class (x));
 end
 
 end

@@ -71,7 +71,7 @@ if ischar (x)
   case {'i', 'solar energy'}
     y = 7;
   otherwise
-    error (sprintf ('physical quantity ''%s'' not known', x));
+    error ('physical quantity ''%s'' not known', x);
   end
 elseif isindex (x)
   switch x
@@ -90,10 +90,10 @@ elseif isindex (x)
   case 7
     y = 'solar energy';
   otherwise
-    error (sprintf ('physical quantity %d not known', x));
+    error ('physical quantity %d not known', x);
   end
 else
-  error (sprintf ('wrong type ''%s''', class (x)));
+  error ('wrong type ''%s''', class (x));
 end
 
 end

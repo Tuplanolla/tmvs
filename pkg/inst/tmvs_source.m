@@ -21,7 +21,7 @@ if ischar (x)
   case {'wo', 'weather observatory'}
     y = 3;
   otherwise
-    error (sprintf ('source ''%s'' not known', x));
+    error ('source ''%s'' not known', x);
   end
 elseif isindex (x)
   switch x
@@ -32,10 +32,10 @@ elseif isindex (x)
   case 3
     y = 'weather observatory';
   otherwise
-    error (sprintf ('source %d not known', x));
+    error ('source %d not known', x);
   end
 else
-  error (sprintf ('wrong type ''%s''', class (x)));
+  error ('wrong type ''%s''', class (x));
 end
 
 end

@@ -58,7 +58,7 @@ elseif iscell (x)
 elseif isstruct (x)
   c = fieldnames (x);
 else
-  error (sprintf ('wrong type ''%s''', class (x)));
+  error ('wrong type ''%s''', class (x));
 end
 
 if nargin () == 3
@@ -73,7 +73,7 @@ else
   elseif isstruct (x)
     y = x.(c{end});
   else
-    error (sprintf ('wrong type ''%s''', class (x)));
+    error ('wrong type ''%s''', class (x));
   end
 end
 
@@ -94,7 +94,7 @@ elseif isstruct (x)
     y = f (k, x.(k), y);
   end
 else
-  error (sprintf ('wrong type ''%s''', class (x)));
+  error ('wrong type ''%s''', class (x));
 end
 
 end

@@ -21,7 +21,7 @@ if ischar (x)
   case {'c', 'ceiling'}
     y = 3;
   otherwise
-    error (sprintf ('surface ''%s'' not known', x));
+    error ('surface ''%s'' not known', x);
   end
 elseif isindex (x)
   switch x
@@ -32,10 +32,10 @@ elseif isindex (x)
   case 3
     y = 'ceiling';
   otherwise
-    error (sprintf ('surface %d not known', x));
+    error ('surface %d not known', x);
   end
 else
-  error (sprintf ('wrong type ''%s''', class (x)));
+  error ('wrong type ''%s''', class (x));
 end
 
 end

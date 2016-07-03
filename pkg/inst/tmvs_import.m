@@ -1,37 +1,34 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {@var{a} =} tmvs_import (@var{fname}, @var{src})
-% @deftypefnx {Function File} {@var{a} =} tmvs_import (@var{fname}, @var{src}, @var{reg})
+% @deftypefn {Function File} {@var{aggr} =} tmvs_import (@var{fname}, @var{src})
+% @deftypefnx {Function File} {@var{aggr} =} tmvs_import (@var{fname}, @var{src}, @var{varargin})
 %
 % Parses the comma-separated value file @var{fname}
 % with the delimiter @qcode{'|'} and
-% and produces the aggregate @var{a}.
-% The record format is expected
-% to be appropriate to the data source @var{src} and region @var{reg}.
+% and produces the aggregate @var{aggr}.
 % A formal grammar for the superstructure
 % is presented in the file @qcode{'CSV.g4'}
 % with the exception that quoted fields in records may not contain line breaks.
-% While the substructure depends on the data source,
-% a formal grammar for identification and metadata extraction
+% The record format is expected to be
+% suitable for the data source @var{src} and
+% any other specifications passed within @var{varargin}.
+% A formal grammar for some of the substructures
 % is presented in the file @qcode{'Name.g4'}.
-%
-% If this procedure takes a long time to complete,
-% a progress indicator will appear to entertain the user.
-% There are two passes, so the indicator counts up twice.
 %
 % The following examples demonstrate basic usage.
 %
 % @example
-% @code{a = tmvs_import ('excerpt/2011/120-0.csv', ...
-%                  tmvs_source ('test lab'));}
-% @code{fieldnames (a)}
+% @code{aggr = tmvs_import ('excerpt/2011/120-0.csv', ...
+%                     tmvs_source ('test lab'));}
+% @code{fieldnames (aggr)}
 % @result{} @{'id', 'meta', 'pairs'@}
-% @code{size (a)}
+% @code{size (aggr)}
 % @result{} [1, 11]
-% @code{a = tmvs_import ('excerpt/2011-2013-0.csv', ...
-%                  tmvs_source ('weather observatory'));}
-% @code{fieldnames (a)}
+% @code{aggr = tmvs_import ('excerpt/2011-2013-0.csv', ...
+%                     tmvs_source ('weather observatory'), ...
+%                     tmvs_region ('jyvaskyla'));}
+% @code{fieldnames (aggr)}
 % @result{} @{'id', 'meta', 'pairs'@}
-% @code{size (a)}
+% @code{size (aggr)}
 % @result{} [1, 6]
 % @end example
 %
@@ -44,38 +41,32 @@
 %
 % @end deftypefn
 
-function a = tmvs_import (fname, src, reg)
-
-n = 100;
-
-y = tmvs_source (src);
+function aggr = tmvs_import (fname, src, varargin)
 
 [fid, msg] = fopen (fname, 'r');
 if fid == -1
-  error (sprintf ('failed to open ''%s'' for reading: %s', fname, msg));
+  error ('failed to open ''%s'' for reading: %s', fname, msg);
 end
 
-switch y
+switch tmvs_source (src)
 case {'test lab', 'weather station'}
-  fmt = 'yyyy/mm/dd HH:MM:SS';
-
   c = cell (0);
   k = nan (0);
 
-  a = struct ('id', {}, 'meta', {}, 'pairs', {});
+  aggr = struct ('id', {}, 'meta', {}, 'pairs', {});
 
-  i = 1;
   header = true;
-  while (str = fgetl (fid)) ~= -1
+  while (line = fgetl (fid)) ~= -1
     try
-      csv = tmvs_parsecsv (str);
+      csv = tmvs_parsecsv (line);
 
       j = find (ismember (c, csv{1}));
 
-      [year, month, day, hour, minute, second] = datevec (csv{2}, fmt);
+      [year, month, day, ...
+       hour, minute, second] = datevec (csv{2}, 'yyyy/mm/dd HH:MM:SS');
       t = datenum (year, month, day, hour, minute, second);
       if isempty (t)
-        error (sprintf ('failed to parse date ''%s''', csv{2}));
+        error ('failed to parse date ''%s''', csv{2});
       end
 
       x = str2double (csv{3});
@@ -83,62 +74,54 @@ case {'test lab', 'weather station'}
       if isempty (j)
         [id, meta] = tmvs_parsename (csv{1});
 
-        j = tmvs_findid (a, id);
+        j = tmvs_findid (aggr, id);
 
         if j
-          a(j).pairs(end + 1, :) = [t, x];
+          aggr(j).pairs(end + 1, :) = [t, x];
 
           k(end + 1) = j;
         else
-          a(end + 1) = struct ('id', id, 'meta', meta, 'pairs', [t, x]);
+          aggr(end + 1) = struct ('id', id, 'meta', meta, 'pairs', [t, x]);
 
-          k(end + 1) = length (a);
+          k(end + 1) = length (aggr);
         end
 
         c{end + 1} = csv{1};
       else
-        a(k(j)).pairs(end + 1, :) = [t, x];
+        aggr(k(j)).pairs(end + 1, :) = [t, x];
       end
 
       header = false;
-
-      if n
-        tmvs_progress (i, n);
-
-        i = i + 1;
-      end
     catch err
       if ~header
         fclose (fid);
 
-        error (sprintf ('failed to parse ''%s'': %s', str, err.message));
+        error ('failed to parse ''%s'': %s', line, err.message);
       end
     end
   end
 case 'weather observatory'
-  fmt = 'dd.mm.yy';
+  reg = varargin{1};
 
   f = @(qty) struct ('source', src, 'quantity', qty, 'region', reg);
-
-  a = struct ('id', {(f (tmvs_quantity ('temperature'))), ...
-                     (f (tmvs_quantity ('relative humidity'))), ...
-                     (f (tmvs_quantity ('wind speed'))), ...
-                     (f (tmvs_quantity ('pressure'))), ...
-                     (f (tmvs_quantity ('precipitation'))), ...
-                     (f (tmvs_quantity ('solar energy')))}, ...
+  aggr = struct ('id', {(f (tmvs_quantity ('temperature'))), ...
+                        (f (tmvs_quantity ('relative humidity'))), ...
+                        (f (tmvs_quantity ('wind speed'))), ...
+                        (f (tmvs_quantity ('pressure'))), ...
+                        (f (tmvs_quantity ('precipitation'))), ...
+                        (f (tmvs_quantity ('solar energy')))}, ...
               'meta', repmat ({(struct ())}, 1, 6), ...
               'pairs', repmat ({[]}, 1, 6));
 
-  i = 1;
   header = true;
-  while (str = fgetl (fid)) ~= -1
+  while (line = fgetl (fid)) ~= -1
     try
-      csv = tmvs_parsecsv (str);
+      csv = tmvs_parsecsv (line);
 
-      [year, month, day, hour, minute, second] = datevec (csv{1}, fmt);
-      t = datenum (year, month, day, hour, minute, second);
+      [year, month, day] = datevec (csv{1}, 'dd.mm.yy');
+      t = datenum (year, month, day);
       if isempty (t)
-        error (sprintf ('failed to parse date ''%s''', csv{1}));
+        error ('failed to parse date ''%s''', csv{1});
       end
 
       T = str2double (csv{3});
@@ -151,54 +134,41 @@ case 'weather observatory'
       % TODO Should this be csv{21} instead?
       E = str2double (csv{22});
 
-      a(1).pairs(end + 1, :) = [t, T];
-      a(2).pairs(end + 1, :) = [t, R];
-      a(3).pairs(end + 1, :) = [t, v];
-      a(4).pairs(end + 1, :) = [t, p];
-      a(5).pairs(end + 1, :) = [t, h];
-      a(6).pairs(end + 1, :) = [t, E];
+      aggr(1).pairs(end + 1, :) = [t, T];
+      aggr(2).pairs(end + 1, :) = [t, R];
+      aggr(3).pairs(end + 1, :) = [t, v];
+      aggr(4).pairs(end + 1, :) = [t, p];
+      aggr(5).pairs(end + 1, :) = [t, h];
+      aggr(6).pairs(end + 1, :) = [t, E];
 
       header = false;
-
-      if n
-        tmvs_progress (i, n);
-
-        i = i + 1;
-      end
     catch err
       if ~header
         fclose (fid);
 
-        error (sprintf ('failed to parse ''%s'': %s', str, err.message));
+        error ('failed to parse ''%s'': %s', line, err.message);
       end
     end
   end
 otherwise
   fclose (fid);
 
-  error (sprintf ('data source ''%s'' not supported', y));
+  error ('data source ''%s'' not supported', tmvs_source ());
 end
 
 [err, msg] = ferror (fid);
 if err == -1
-  error (sprintf ('failed to read ''%s'': %s', fname, msg));
+  error ('failed to read ''%s'': %s', fname, msg);
 end
 
 if fclose (fid) == -1
-  error (sprintf ('failed to close ''%s''', fname));
+  error ('failed to close ''%s''', fname);
 end
 
-if ~isempty (a)
-  i = 1;
-  for j = 1 : length (a)
-    [~, k] = unique (a(j).pairs(:, 1));
-    a(j).pairs = a(j).pairs(k, :);
-
-    if n
-      tmvs_progress (i, n);
-
-      i = i + length (k);
-    end
+if ~isempty (aggr)
+  for i = 1 : length (aggr)
+    [~, j] = unique (aggr(i).pairs(:, 1));
+    aggr(i).pairs = aggr(i).pairs(j, :);
   end
 end
 

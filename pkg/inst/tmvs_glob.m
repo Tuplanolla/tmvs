@@ -1,24 +1,24 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {@var{y} =} tmvs_glob (@var{pat}, @var{src})
-% @deftypefnx {Function File} {@var{y} =} tmvs_glob (@var{pat}, @var{src}, @var{reg})
+% @deftypefn {Function File} {@var{aggr} =} tmvs_glob (@var{pat}, @var{src})
+% @deftypefnx {Function File} {@var{aggr} =} tmvs_glob (@var{pat}, @var{src}, @var{varargin})
 %
-% Fetches and merges together the original files
-% matching the pattern @var{pat}.
+% Fetches and merges together the files matching the pattern @var{pat} and
+% produces the aggregate @var{aggr}.
 % The pattern @var{pat} can be written
-% according the formats supported by @var{glob}.
+% according the format supported by @var{glob}.
 %
 % @seealso{tmvs, tmvs_fetch, tmvs_merge, glob}
 %
 % @end deftypefn
 
-function a = tmvs_glob (pat, varargin)
+function aggr = tmvs_glob (pat, src, varargin)
 
 fnames = glob (pat);
 
-a = struct ('id', {}, 'meta', {}, 'pairs', {});
+aggr = struct ('id', {}, 'meta', {}, 'pairs', {});
 
 for i = 1 : length (fnames)
-  a = tmvs_merge (a, tmvs_fetch (fnames{i}, varargin{:}));
+  aggr = tmvs_merge (aggr, tmvs_fetch (fnames{i}, src, varargin{:}));
 end
 
 end

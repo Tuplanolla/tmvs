@@ -24,7 +24,7 @@ if ischar (x)
   case {'jyvaskyla', 'jyväskylä', 'jyv?skyl?'}
     y = 2;
   otherwise
-    error (sprintf ('region ''%s'' not known', x));
+    error ('region ''%s'' not known', x);
   end
 elseif isindex (x)
   switch x
@@ -33,10 +33,10 @@ elseif isindex (x)
   case 2
     y = 'jyvaskyla';
   otherwise
-    error (sprintf ('region %d not known', x));
+    error ('region %d not known', x);
   end
 else
-  error (sprintf ('wrong type ''%s''', class (x)));
+  error ('wrong type ''%s''', class (x));
 end
 
 end

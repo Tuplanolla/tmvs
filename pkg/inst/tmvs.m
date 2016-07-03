@@ -1,5 +1,5 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {@var{c} =} tmvs (@var{dname})
+% @deftypefn {Function File} {@var{aggr} =} tmvs (@var{dname})
 %
 % TMVS stands for Temperature and Moisture Visualization System and
 % is a simple data analysis system.
@@ -47,17 +47,21 @@ function everything = tmvs (dname)
 
 fname = canonicalize_file_name (dname);
 if isempty (fname)
-  error (sprintf ('no such file or directory ''%s''', dname));
+  error ('no such file or directory ''%s''', dname);
 end
 
 if ~isdir (fname)
-  error (sprintf ('not a directory ''%s''', fname));
+  error ('not a directory ''%s''', fname);
 end
 
-buildings = tmvs_glob (tmvs_source ('test lab'), sprintf ('%s/*/[0-9]*.csv', fname));
-stations = tmvs_glob (tmvs_source ('weather station'), sprintf ('%s/*/[a-z]*.csv', fname));
-% observatories = tmvs_glob (tmvs_source ('weather observatory'), sprintf ('%s/*.csv', fname));
-everything = tmvs_foldl (@tmvs_merge, {buildings, stations});
+buildings = tmvs_glob (sprintf ('%s/*/[0-9]*.csv', fname), ...
+                       tmvs_source ('test lab'));
+stations = tmvs_glob (sprintf ('%s/*/[a-z]*.csv', fname), ...
+                      tmvs_source ('weather station'));
+observatories = tmvs_glob (sprintf ('%s/*.csv', fname), ...
+                           tmvs_source ('weather observatory'), ...
+                           tmvs_region ('jyvaskyla'));
+everything = tmvs_foldl (@tmvs_merge, {buildings, stations, observatories});
 
 tmvs_visualize (everything);
 

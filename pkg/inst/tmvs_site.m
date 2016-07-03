@@ -15,20 +15,20 @@ function y = tmvs_site (x)
 if ischar (x)
   c = tolower (x);
   if c < 'a' || c > 'z'
-    error (sprintf ('measuring site ''%s'' not known', x));
+    error ('measuring site ''%s'' not known', x);
   else
     y = c - 'a' + 1;
   end
 elseif isindex (x)
   if c < 1 || c > 26
-    error (sprintf ('measuring site %d not known', x));
+    error ('measuring site %d not known', x);
   else
     y = c + 'a' - 1;
   end
 
   y = char (y);
 else
-  error (sprintf ('wrong type ''%s''', class (x)));
+  error ('wrong type ''%s''', class (x));
 end
 
 end

@@ -30,7 +30,7 @@ end
 
 [~, ~, ~, ~, t] = regexp (str, pat, 'emptymatch');
 if isempty (t)
-  error (sprintf ('failed to parse record ''%s''', str));
+  error ('failed to parse record ''%s''', str);
 end
 
 % These bounds are too optimistic when empty matches are present,

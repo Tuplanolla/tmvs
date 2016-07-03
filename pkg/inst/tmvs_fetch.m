@@ -1,6 +1,6 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {@var{c} =} tmvs_fetch (@var{fname}, @var{src})
-% @deftypefnx {Function File} {@var{c} =} tmvs_fetch (@var{fname}, @var{src}, @var{reg})
+% @deftypefn {Function File} {@var{aggr} =} tmvs_fetch (@var{fname}, @var{src})
+% @deftypefnx {Function File} {@var{aggr} =} tmvs_fetch (@var{fname}, @var{src}, @var{varargin})
 %
 % Magic happens.
 %
@@ -14,7 +14,7 @@
 %
 % @end deftypefn
 
-function c = tmvs_fetch (fname, varargin)
+function aggr = tmvs_fetch (fname, src, varargin)
 
 cname = tmvs_cache_for (fname);
 
@@ -37,16 +37,15 @@ else
 
     cached = false;
   else
-
     cached = true;
   end
 end
 
 if cached
-  c = tmvs_recall (cname);
+  aggr = tmvs_recall (cname);
 else
-  c = tmvs_import (fname, varargin{:});
-  tmvs_store (cname, c);
+  aggr = tmvs_import (fname, src, varargin{:});
+  tmvs_store (cname, aggr);
 end
 
 end

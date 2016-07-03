@@ -1,7 +1,7 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {} tmvs_export (@var{fname}, @var{a}, @var{id})
+% @deftypefn {Function File} {} tmvs_export (@var{fname}, @var{aggr}, @var{id})
 %
-% Exports the data matching the identifier @var{id} from the aggregate @var{a}
+% Exports the data matching the identifier @var{id} from the aggregate @var{aggr}
 % to the comma-separated value file @var{fname} with the delimiter @qcode{'|'}.
 %
 % The following examples demonstrate basic usage.
@@ -14,7 +14,7 @@
 %
 % @end deftypefn
 
-function tmvs_export (fname, a, id)
+function tmvs_export (fname, aggr, id)
 
 error ('nope');
 

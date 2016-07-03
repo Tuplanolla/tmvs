@@ -1,9 +1,9 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {} tmvs_store (@var{cname}, @var{a})
-% @deftypefnx {Function File} {} tmvs_store (@var{cname}, @var{a}, @var{fmt})
-% @deftypefnx {Function File} {} tmvs_store (@var{cname}, @var{a}, @var{fmt}, @var{compress})
+% @deftypefn {Function File} {} tmvs_store (@var{cname}, @var{aggr})
+% @deftypefnx {Function File} {} tmvs_store (@var{cname}, @var{aggr}, @var{fmt})
+% @deftypefnx {Function File} {} tmvs_store (@var{cname}, @var{aggr}, @var{fmt}, @var{compress})
 %
-% Writes the aggregate @var{a} into the cache file @var{cname}.
+% Writes the aggregate @var{aggr} into the cache file @var{cname}.
 % The optional storage format @var{fmt} can be chosen
 % from the formats supported by @var{save} and
 % defaults to the MATLAB-compatible @qcode{'-mat'}.
@@ -20,23 +20,23 @@
 %
 % @end deftypefn
 
-function tmvs_store (cname, a, fmt = '-mat', compress = true)
+function tmvs_store (cname, aggr, fmt = '-mat', compress = true)
 
 if exist (cname, 'file')
   try
-    load (cname, 'tmvs_v').tmvs_v;
+    load (cname, 'tmvs_version').tmvs_version;
   catch
     error ('existing file ''%s'' is not a cache file', cname);
   end
 end
 
-tmvs_v = tmvs_version ();
-tmvs_a = a;
+tmvs_version = tmvs_version ();
+tmvs_aggregate = aggr;
 
 if compress
-  save (fmt, '-zip', cname, 'tmvs_v', 'tmvs_a');
+  save (fmt, '-zip', cname, 'tmvs_version', 'tmvs_aggregate');
 else
-  save (fmt, cname, 'tmvs_v', 'tmvs_a');
+  save (fmt, cname, 'tmvs_version', 'tmvs_aggregate');
 end
 
 end
