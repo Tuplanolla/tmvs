@@ -19,15 +19,15 @@ Perfect
 ++ tmvs_progress
 ++ tmvs_uncertainty
 Almost Perfect
-++ tmvs_import
 +- tmvs_findid
-+- tmvs_store
-+- tmvs_recall
-+- tmvs_fetch
-+- tmvs_merge
-+- tmvs_glob
+++ tmvs_import
 +- tmvs_purge
 Works Well
++- tmvs_store
++- tmvs_recall
++- tmvs_merge
++- tmvs_fetch
++- tmvs_fetchall
 +- tmvs_cache_for
 +- tmvs_is_cache
 Incomplete
@@ -36,6 +36,7 @@ Incomplete
 -- tmvs_discretize
 -- tmvs_visualize
 -- tmvs_export
+-- tmvs_exportall
 -- tmvs_filter
 +- tmvs_hash
 Deprecated
@@ -44,3 +45,19 @@ Deprecated
 -- tmvs_visualize_observatories
 -- tmvs_visualize_rooms
 -- tmvs_visualize_stations
+
+tmvs.m                    aggr = tmvs (dname) % ok
+tmvs_import.m             aggr = tmvs_import (fname, src, varargin) % ok
+tmvs_merge.m              aggr = tmvs_merge (varargin) % ok
+tmvs_purge.m                   = tmvs_purge (name) % ok
+tmvs_store.m                   = tmvs_store (cname, aggr, varargin) % accept fname
+tmvs_recall.m             aggr = tmvs_recall (cname, force = false) % accept fname
+tmvs_fetch.m              aggr = tmvs_fetch (fname, src, varargin) % accept cname
+tmvs_glob.m               aggr = tmvs_glob (pat, src, varargin) % ok
+tmvs_filter.m          matches = tmvs_filter (arrays, pat) % change to: aggr = tmvs_select (aggr, f : id*meta -> bool)
+                          aggr = tmvs_filter (aggr, f : double*double -> bool) % new
+tmvs_discretize.m       arrays = tmvs_discretize (interps, n = 100) % rename: arrays -> aggr, interps -> interp
+tmvs_interpolate.m     interps = tmvs_interpolate (arrays, method = 'linear') % rename: interps -> interp
+tmvs_visualize.m               = tmvs_visualize (arrays, n = 1, pat = false, string = '') % rename: arrays -> aggr
+tmvs_export.m                  = tmvs_export (fname, aggr, id)
+                               = tmvs_exportall (fname, aggr) % new

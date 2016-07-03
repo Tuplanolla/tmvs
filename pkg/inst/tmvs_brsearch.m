@@ -1,5 +1,6 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {[@var{i}, @var{j}] =} tmvs_brsearch (@var{a}, @var{x})
+% @deftypefnx {Function File} {[@var{i}, @var{j}] =} tmvs_brsearch (@var{a}, @var{x}, @var{f})
 %
 % Binary search, also known as half-interval search or logarithmic search,
 % is the most efficient way to find the index of an element in a sorted array.
@@ -11,6 +12,13 @@
 % (with the @code{a(i : end)} being pushed further) and
 % @code{[i, j]} will be a degenerate interval
 % (as in, the condition @code{j < i} will hold).
+%
+% The optional parameter @var{f} allows supplying a custom comparator,
+% which returns zero when the first argument is equal to the second,
+% a negative number when the first argument is smaller than the second and
+% a positive number when the first argument is greater than the second.
+% The default comparator is simply @code{@(x, y) x - y}.
+% or equivalently @code{@(x, y) (x > y) - (x < y)}.
 %
 % The following examples demonstrate basic usage.
 %
@@ -26,11 +34,20 @@
 %    j = 1
 % @end example
 %
+% A custom comparator makes the search very versatile.
+%
+% @example
+% @code{[i, j] = tmvs_brsearch ([-2, -1, 0, 1, 2], 0, ...
+%                         @@(x, y) (abs (x - y) > 1) * (x - y))}
+% @result{} i = 2
+%    j = 4
+% @end example
+%
 % @seealso{find}
 %
 % @end deftypefn
 
-function [i, j] = tmvs_brsearch (a, x)
+function [i, j] = tmvs_brsearch (a, x, f = @(x, y) x - y)
 
 i = 1;
 j = numel (a);
@@ -40,9 +57,10 @@ while i <= j
 
   y = a(k);
 
-  if y < x
+  c = f (y, x);
+  if c < 0
     i = k + 1;
-  elseif y > x
+  elseif c > 0
     j = k - 1;
   else
     n = i - 1;
@@ -53,7 +71,7 @@ while i <= j
 
       y = a(m);
 
-      if y < x
+      if f (y, x) < 0
         n = m;
       else
         i = m;
@@ -68,7 +86,7 @@ while i <= j
 
       y = a(m);
 
-      if y > x
+      if f (y, x) > 0
         n = m;
       else
         j = m;

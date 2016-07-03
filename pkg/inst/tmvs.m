@@ -43,7 +43,7 @@
 %
 % @end deftypefn
 
-function everything = tmvs (dname)
+function aggr = tmvs (dname)
 
 fname = canonicalize_file_name (dname);
 if isempty (fname)
@@ -54,15 +54,15 @@ if ~isdir (fname)
   error ('not a directory ''%s''', fname);
 end
 
-buildings = tmvs_glob (sprintf ('%s/*/[0-9]*.csv', fname), ...
+buildings = tmvs_fetchall (sprintf ('%s/*/[0-9]*.csv', fname), ...
                        tmvs_source ('test lab'));
-stations = tmvs_glob (sprintf ('%s/*/[a-z]*.csv', fname), ...
+stations = tmvs_fetchall (sprintf ('%s/*/[a-z]*.csv', fname), ...
                       tmvs_source ('weather station'));
-observatories = tmvs_glob (sprintf ('%s/*.csv', fname), ...
+observatories = tmvs_fetchall (sprintf ('%s/*.csv', fname), ...
                            tmvs_source ('weather observatory'), ...
                            tmvs_region ('jyvaskyla'));
-everything = tmvs_merge (buildings, stations, observatories);
+aggr = tmvs_merge (buildings, stations, observatories);
 
-tmvs_visualize (everything);
+tmvs_visualize (aggr);
 
 end

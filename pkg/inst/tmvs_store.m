@@ -1,14 +1,15 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {} tmvs_store (@var{cname}, @var{aggr})
-% @deftypefnx {Function File} {} tmvs_store (@var{cname}, @var{aggr}, @var{fmt})
-% @deftypefnx {Function File} {} tmvs_store (@var{cname}, @var{aggr}, @var{fmt}, @var{compress})
+% @deftypefn {Function File} {} tmvs_store (@var{cname}, @var{aggr}, @var{varargin})
 %
 % Writes the aggregate @var{aggr} into the cache file @var{cname}.
-% The optional storage format @var{fmt} can be chosen
-% from the formats supported by @var{save} and
-% defaults to the MATLAB-compatible @qcode{'-mat'}.
-% The other optional @var{compress} parameter determines
-% whether the cache file should be compressed and defaults to @var{true}.
+% The optional storage parameters @var{varargin} can be chosen
+% from the options supported by @var{save}.
+% They default to the compressed MATLAB-compatible format
+% @code{@{'-mat', '-zip'@}}.
+%
+% This procedure is safe to use in the sense that
+% it will not overwrite cache files it does not recognize.
+% Use @code{unlink} to get rid of existing files if they are in the way.
 %
 % The following examples demonstrate basic usage.
 %
@@ -20,7 +21,7 @@
 %
 % @end deftypefn
 
-function tmvs_store (cname, aggr, fmt = '-mat', compress = true)
+function tmvs_store (cname, aggr, varargin)
 
 if exist (cname, 'file')
   try
@@ -30,13 +31,12 @@ if exist (cname, 'file')
   end
 end
 
+if nargin <= 2
+  varargin = {'-mat', '-zip'};
+end
+
 tmvs_version = tmvs_version ();
 tmvs_aggregate = aggr;
-
-if compress
-  save (fmt, '-zip', cname, 'tmvs_version', 'tmvs_aggregate');
-else
-  save (fmt, cname, 'tmvs_version', 'tmvs_aggregate');
-end
+save (varargin{:}, cname, 'tmvs_version', 'tmvs_aggregate');
 
 end

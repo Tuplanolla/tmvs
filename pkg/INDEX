@@ -2,14 +2,6 @@ tmvs >> Temperature and Moisture Visualization System
 Meta
   tmvs
   tmvs_version
-Generic
-  tmvs_brsearch
-  tmvs_chauvenet
-  tmvs_foldl
-  tmvs_foldr
-  tmvs_mapl
-  tmvs_mapr
-  tmvs_progress
 Basic
   tmvs_import
   tmvs_interpolate
@@ -21,7 +13,12 @@ Basic
   tmvs_recall
   tmvs_fetch
   tmvs_purge
-Enumerators
+Convenient
+  tmvs_fetchall
+  tmvs_exportall
+  tmvs_select
+  tmvs_filter
+Enumerating
   tmvs_source
   tmvs_quantity
   tmvs_site
@@ -30,8 +27,15 @@ Enumerators
   tmvs_section
   tmvs_material
   tmvs_region
+Generic
+  tmvs_brsearch
+  tmvs_chauvenet
+  tmvs_foldl
+  tmvs_foldr
+  tmvs_mapl
+  tmvs_mapr
+  tmvs_progress
 Internal
-  tmvs_glob
   tmvs_parsename
   tmvs_parsecsv
   tmvs_uncertainty
@@ -40,9 +44,6 @@ Internal
   tmvs_is_cache
   tmvs_hash
 Deprecated
-  tmvs_map
-  tmvs_reduce
-  tmvs_filter
   tmvs_visualize_observatories
   tmvs_visualize_rooms
   tmvs_visualize_stations
