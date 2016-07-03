@@ -36,7 +36,7 @@ end
 % These bounds are too optimistic when empty matches are present,
 % but the resulting cell array can adapt to them by expanding.
 % The performance hit incurred by the expansion should be negligible too.
-n = length (t);
+n = numel (t);
 c = cell (floor ((n + 1) / 2), 1);
 
 j = 1;

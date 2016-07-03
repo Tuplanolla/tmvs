@@ -25,8 +25,8 @@
 % @result{} 6
 % @code{tmvs_foldr (@@plus, [1, 2, 3], 4)}
 % @result{} 10
-% @code{tmvs_foldr (@@(x, y) y / x, [2, 3, 6])}
-% @result{} 1
+% @code{tmvs_foldr (@@(x, y) y / x, [3, 6, 36])}
+% @result{} 2
 % @end example
 %
 % Other types work in a similar fashion.
@@ -54,47 +54,138 @@
 function y = tmvs_foldr (f, x, z)
 
 if isnumeric (x)
+  type = 1;
 elseif iscell (x)
+  type = 2;
 elseif isstruct (x)
-  c = fieldnames (x);
+  c = sort (fieldnames (x));
+  m = numel (c);
+
+  type = 3;
 else
-  error ('wrong type ''%s''', class (x));
+  type = 0;
 end
 
-if nargin () == 3
-  j = 1;
+if nargin () >= 3
+  k = 1;
   y = z;
 else
-  j = 2;
-  if isnumeric (x)
+  k = 2;
+  switch type
+  case 1
     y = x(end);
-  elseif iscell (x)
+  case 2
     y = x{end};
-  elseif isstruct (x)
-    y = x.(c{end});
-  else
-    error ('wrong type ''%s''', class (x));
+  case 3
+    y = x(end).(c{end});
+    for j = 2 : m
+      s = c{end - j + 1};
+      y = f (s, x(end).(s), y);
+    end
   end
 end
 
-if isnumeric (x)
-  n = length (x);
-  for i = j : n
+n = numel (x);
+
+switch type
+case 1
+  for i = k : n
     y = f (x(n - i + 1), y);
   end
-elseif iscell (x)
-  n = length (x);
-  for i = j : n
+case 2
+  for i = k : n
     y = f (x{n - i + 1}, y);
   end
-elseif isstruct (x)
-  n = length (c);
-  for i = j : n
-    k = c{n - i + 1};
-    y = f (k, x.(k), y);
+case 3
+  for i = k : n
+    for j = 1 : m
+      s = c{j};
+      y = f (s, x(n - i + 1).(s), y);
+    end
   end
-else
+otherwise
   error ('wrong type ''%s''', class (x));
 end
 
 end
+
+% These tests are based on the OEIS sequences A173501 and A000142.
+
+%!shared f, g
+%! f = @(x, y) y / x;
+%! g = @(s, x, y) str2double (s) * y / x;
+
+
+%!error
+%! tmvs_foldr (f, []);
+%!test
+%! assert (tmvs_foldr (f, [], 2), 2);
+
+%!test
+%! assert (tmvs_foldr (f, [2]), 2);
+%!test
+%! assert (tmvs_foldr (f, [3], 6), 2);
+
+%!test
+%! assert (tmvs_foldr (f, [3, 6]), 2);
+%!test
+%! assert (tmvs_foldr (f, [3, 6], 36), 2);
+%!test
+%! assert (tmvs_foldr (f, [3; 6]), 2);
+%!test
+%! assert (tmvs_foldr (f, [3; 6], 36), 2);
+
+%!test
+%! assert (tmvs_foldr (f, [3, 6; 36, 1296]), 2);
+%!test
+%! assert (tmvs_foldr (f, [3, 6; 36, 1296], 1679616), 2);
+
+
+%!error
+%! tmvs_foldr (f, {});
+%!test
+%! assert (tmvs_foldr (f, {}, 2), 2);
+
+%!test
+%! assert (tmvs_foldr (f, {2}), 2);
+%!test
+%! assert (tmvs_foldr (f, {3}, 6), 2);
+
+%!test
+%! assert (tmvs_foldr (f, {3, 6}), 2);
+%!test
+%! assert (tmvs_foldr (f, {3, 6}, 36), 2);
+%!test
+%! assert (tmvs_foldr (f, {3; 6}), 2);
+%!test
+%! assert (tmvs_foldr (f, {3; 6}, 36), 2);
+
+%!test
+%! assert (tmvs_foldr (f, {3, 6; 36, 1296}), 2);
+%!test
+%! assert (tmvs_foldr (f, {3, 6; 36, 1296}, 1679616), 2);
+
+
+%!error
+%! tmvs_foldr (g, struct ('1', {}));
+%!test
+%! assert (tmvs_foldr (g, struct ('1', {}), 2), 2);
+
+%!test
+%! assert (tmvs_foldr (g, struct ('1', {2})), 2);
+%!test
+%! assert (tmvs_foldr (g, struct ('1', {3}), 6), 2);
+
+%!test
+%! assert (tmvs_foldr (g, struct ('1', {3, 6})), 2);
+%!test
+%! assert (tmvs_foldr (g, struct ('1', {3, 6}), 36), 2);
+%!test
+%! assert (tmvs_foldr (g, struct ('1', {3}, '2', {6})), 2);
+%!test
+%! assert (tmvs_foldr (g, struct ('1', {3}, '2', {6}), 36), 4);
+
+%!test
+%! assert (tmvs_foldr (g, struct ('1', {3, 6}, '2', {36, 1296})), 4);
+%!test
+%! assert (tmvs_foldr (g, struct ('1', {3, 6}, '2', {36, 1296}), 1679616), 8);

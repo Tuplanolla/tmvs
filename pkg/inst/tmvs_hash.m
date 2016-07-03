@@ -1,13 +1,13 @@
 function k = tmvs_hash (s)
 
-c = sort (fieldnames (s));
-
-% This must be a prime number.
+% This is a prime number.
 n = 31;
+
+c = sort (fieldnames (s));
 
 k = 1;
 
-for i = 1 : length (c)
+for i = 1 : numel (c)
   x = s.(c{i});
 
   if isnumeric (x) && isfinite (x)

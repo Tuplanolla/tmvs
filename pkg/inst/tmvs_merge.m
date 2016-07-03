@@ -1,26 +1,28 @@
-function aggr = tmvs_merge (aggr1, aggr2)
+function aggr = tmvs_merge (varargin)
 
-aggr = aggr1;
+aggr = struct ('id', {}, 'meta', {}, 'pairs', {});
 
-n = length (aggr2);
+for i = 1 : numel (varargin)
+  aggri = varargin{i};
 
-for i = 1 : n
-  id = aggr2(i).id;
+  for j = 1 : numel (aggri)
+    id = aggri(j).id;
 
-  j = tmvs_findid (aggr, id);
+    k = tmvs_findid (aggr, id);
 
-  if j
-    aggr(j).pairs = [aggr(j).pairs; aggr2(i).pairs];
-  else
-    aggr(end + 1) = struct ('id', id, ...
-                            'meta', aggr2(i).meta, ...
-                            'pairs', aggr2(i).pairs);
+    if k
+      aggr(k).pairs = [aggr(k).pairs; aggri(j).pairs];
+    else
+      aggr(end + 1) = struct ('id', id, ...
+                              'meta', aggri(j).meta, ...
+                              'pairs', aggri(j).pairs);
+    end
   end
 end
 
-for i = 1 : length (aggr)
-  [~, j] = unique (aggr(i).pairs(:, 1));
-  aggr(i).pairs = aggr(i).pairs(j, :);
+for i = 1 : numel (aggr)
+  [~, k] = unique (aggr(i).pairs(:, 1));
+  aggr(i).pairs = aggr(i).pairs(k, :);
 end
 
 end

@@ -14,7 +14,7 @@
 % If these conditions are met,
 % the resulting @var{i} and @var{o} will be the indices of
 % the inliers and the outliers respectively,
-% satisfying @code{union (i, o) == [1 : length (a)]} and
+% satisfying @code{union (i, o) == [1 : numel (a)]} and
 % @code{intersect (i, o) == []}.
 %
 % The following examples demonstrate basic usage.
@@ -48,7 +48,7 @@ if sigma == 0
   i = ones (size (a));
   o = [];
 else
-  n = length (a);
+  n = numel (a);
 
   if iscolumn (a)
     i = nan (n, 1);

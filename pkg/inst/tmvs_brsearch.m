@@ -33,7 +33,7 @@
 function [i, j] = tmvs_brsearch (a, x)
 
 i = 1;
-j = length (a);
+j = numel (a);
 
 while i <= j
   k = floor (i + (j - i) / 2);

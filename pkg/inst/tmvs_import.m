@@ -51,7 +51,7 @@ end
 switch tmvs_source (src)
 case {'test lab', 'weather station'}
   c = cell (0);
-  k = nan (0);
+  j = nan (0);
 
   aggr = struct ('id', {}, 'meta', {}, 'pairs', {});
 
@@ -60,7 +60,7 @@ case {'test lab', 'weather station'}
     try
       csv = tmvs_parsecsv (line);
 
-      j = find (ismember (c, csv{1}));
+      k = find (ismember (c, csv{1}));
 
       [year, month, day, ...
        hour, minute, second] = datevec (csv{2}, 'yyyy/mm/dd HH:MM:SS');
@@ -71,24 +71,24 @@ case {'test lab', 'weather station'}
 
       x = str2double (csv{3});
 
-      if isempty (j)
+      if isempty (k)
         [id, meta] = tmvs_parsename (csv{1});
 
-        j = tmvs_findid (aggr, id);
+        k = tmvs_findid (aggr, id);
 
-        if j
-          aggr(j).pairs(end + 1, :) = [t, x];
+        if k
+          aggr(k).pairs(end + 1, :) = [t, x];
 
-          k(end + 1) = j;
+          j(end + 1) = k;
         else
           aggr(end + 1) = struct ('id', id, 'meta', meta, 'pairs', [t, x]);
 
-          k(end + 1) = length (aggr);
+          j(end + 1) = numel (aggr);
         end
 
         c{end + 1} = csv{1};
       else
-        aggr(k(j)).pairs(end + 1, :) = [t, x];
+        aggr(j(k)).pairs(end + 1, :) = [t, x];
       end
 
       header = false;
@@ -166,9 +166,9 @@ if fclose (fid) == -1
 end
 
 if ~isempty (aggr)
-  for i = 1 : length (aggr)
-    [~, j] = unique (aggr(i).pairs(:, 1));
-    aggr(i).pairs = aggr(i).pairs(j, :);
+  for i = 1 : numel (aggr)
+    [~, k] = unique (aggr(i).pairs(:, 1));
+    aggr(i).pairs = aggr(i).pairs(k, :);
   end
 end
 

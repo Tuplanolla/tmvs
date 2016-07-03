@@ -13,12 +13,7 @@
 
 function aggr = tmvs_glob (pat, src, varargin)
 
-fnames = glob (pat);
-
-aggr = struct ('id', {}, 'meta', {}, 'pairs', {});
-
-for i = 1 : length (fnames)
-  aggr = tmvs_merge (aggr, tmvs_fetch (fnames{i}, src, varargin{:}));
-end
+f = @(fname) tmvs_fetch (fname, src, varargin{:});
+aggr = tmvs_merge (cellfun (f, glob (pat), 'uniformoutput', false){:});
 
 end

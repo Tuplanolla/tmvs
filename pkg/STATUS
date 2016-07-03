@@ -3,6 +3,8 @@ Perfect
 ++ tmvs_chauvenet
 ++ tmvs_foldl
 ++ tmvs_foldr
+++ tmvs_mapl
+++ tmvs_mapr
 ++ tmvs_version
 ++ tmvs_source
 ++ tmvs_quantity
@@ -22,12 +24,12 @@ Almost Perfect
 +- tmvs_store
 +- tmvs_recall
 +- tmvs_fetch
--- tmvs_merge
++- tmvs_merge
 +- tmvs_glob
 +- tmvs_purge
 Works Well
--- tmvs_cache_for
--- tmvs_is_cache
++- tmvs_cache_for
++- tmvs_is_cache
 Incomplete
 -- tmvs
 -- tmvs_interpolate
@@ -35,7 +37,7 @@ Incomplete
 -- tmvs_visualize
 -- tmvs_export
 -- tmvs_filter
--- tmvs_hash
++- tmvs_hash
 Deprecated
 -- tmvs_map
 -- tmvs_reduce

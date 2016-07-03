@@ -25,8 +25,8 @@
 % @result{} 6
 % @code{tmvs_foldl (@@plus, [1, 2, 3], 4)}
 % @result{} 10
-% @code{tmvs_foldl (@@(y, x) y / x, [6, 3, 2])}
-% @result{} 1
+% @code{tmvs_foldl (@@(y, x) y / x, [36, 6, 3])}
+% @result{} 2
 % @end example
 %
 % Other types work in a similar fashion.
@@ -54,44 +54,136 @@
 function y = tmvs_foldl (f, x, z)
 
 if isnumeric (x)
+  type = 1;
 elseif iscell (x)
+  type = 2;
 elseif isstruct (x)
-  c = fieldnames (x);
+  c = sort (fieldnames (x));
+  m = numel (c);
+
+  type = 3;
 else
-  error ('wrong type ''%s''', class (x));
+  type = 0;
 end
 
-if nargin () == 3
-  j = 1;
+if nargin () >= 3
+  k = 1;
   y = z;
 else
-  j = 2;
-  if isnumeric (x)
+  k = 2;
+  switch type
+  case 1
     y = x(1);
-  elseif iscell (x)
+  case 2
     y = x{1};
-  elseif isstruct (x)
-    y = x.(c{1});
-  else
-    error ('wrong type ''%s''', class (x));
+  case 3
+    y = x(1).(c{1});
+    for j = 2 : m
+      s = c{j};
+      y = f (y, s, x(1).(s));
+    end
   end
 end
 
-if isnumeric (x)
-  for i = j : length (x)
+switch type
+case 1
+  for i = k : numel (x)
     y = f (y, x(i));
   end
-elseif iscell (x)
-  for i = j : length (x)
+case 2
+  for i = k : numel (x)
     y = f (y, x{i});
   end
-elseif isstruct (x)
-  for i = j : length (c)
-    k = c{i};
-    y = f (y, k, x.(k));
+case 3
+  for i = k : numel (x)
+    for j = 1 : m
+      s = c{j};
+      y = f (y, s, x(i).(s));
+    end
   end
-else
+otherwise
   error ('wrong type ''%s''', class (x));
 end
 
 end
+
+% These tests are based on the OEIS sequences A173501 and A000142.
+
+%!shared f, g
+%! f = @(y, x) y / x;
+%! g = @(y, s, x) str2double (s) * y / x;
+
+
+%!error
+%! tmvs_foldl (f, []);
+%!test
+%! assert (tmvs_foldl (f, [], 2), 2);
+
+%!test
+%! assert (tmvs_foldl (f, [2]), 2);
+%!test
+%! assert (tmvs_foldl (f, [3], 6), 2);
+
+%!test
+%! assert (tmvs_foldl (f, [6, 3]), 2);
+%!test
+%! assert (tmvs_foldl (f, [6, 3], 36), 2);
+%!test
+%! assert (tmvs_foldl (f, [6; 3]), 2);
+%!test
+%! assert (tmvs_foldl (f, [6; 3], 36), 2);
+
+%!test
+%! assert (tmvs_foldl (f, [1296, 36; 6, 3]), 2);
+%!test
+%! assert (tmvs_foldl (f, [1296, 36; 6, 3], 1679616), 2);
+
+
+%!error
+%! tmvs_foldl (f, {});
+%!test
+%! assert (tmvs_foldl (f, {}, 2), 2);
+
+%!test
+%! assert (tmvs_foldl (f, {2}), 2);
+%!test
+%! assert (tmvs_foldl (f, {3}, 6), 2);
+
+%!test
+%! assert (tmvs_foldl (f, {6, 3}), 2);
+%!test
+%! assert (tmvs_foldl (f, {6, 3}, 36), 2);
+%!test
+%! assert (tmvs_foldl (f, {6; 3}), 2);
+%!test
+%! assert (tmvs_foldl (f, {6; 3}, 36), 2);
+
+%!test
+%! assert (tmvs_foldl (f, {1296, 36; 6, 3}), 2);
+%!test
+%! assert (tmvs_foldl (f, {1296, 36; 6, 3}, 1679616), 2);
+
+
+%!error
+%! tmvs_foldl (g, struct ('1', {}));
+%!test
+%! assert (tmvs_foldl (g, struct ('1', {}), 2), 2);
+
+%!test
+%! assert (tmvs_foldl (g, struct ('1', {2})), 2);
+%!test
+%! assert (tmvs_foldl (g, struct ('1', {3}), 6), 2);
+
+%!test
+%! assert (tmvs_foldl (g, struct ('1', {6, 3})), 2);
+%!test
+%! assert (tmvs_foldl (g, struct ('1', {6, 3}), 36), 2);
+%!test
+%! assert (tmvs_foldl (g, struct ('1', {6}, '2', {3})), 4);
+%!test
+%! assert (tmvs_foldl (g, struct ('1', {6}, '2', {3}), 36), 4);
+
+%!test
+%! assert (tmvs_foldl (g, struct ('1', {1296, 36}, '2', {6, 3})), 8);
+%!test
+%! assert (tmvs_foldl (g, struct ('1', {1296, 36}, '2', {6, 3}), 1679616), 8);
