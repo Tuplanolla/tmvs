@@ -1,5 +1,6 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {@var{y} =} tmvs_glob (@var{src}, @var{pat})
+% @deftypefn {Function File} {@var{y} =} tmvs_glob (@var{pat}, @var{src})
+% @deftypefnx {Function File} {@var{y} =} tmvs_glob (@var{pat}, @var{src}, @var{reg})
 %
 % Fetches and merges together the original files
 % matching the pattern @var{pat}.
@@ -10,14 +11,14 @@
 %
 % @end deftypefn
 
-function a = tmvs_glob (src, pat)
+function a = tmvs_glob (pat, varargin)
 
 fnames = glob (pat);
 
 a = struct ('id', {}, 'meta', {}, 'pairs', {});
 
 for i = 1 : length (fnames)
-  a = tmvs_merge (a, tmvs_fetch (src, fnames{i}));
+  a = tmvs_merge (a, tmvs_fetch (fnames{i}, varargin{:}));
 end
 
 end

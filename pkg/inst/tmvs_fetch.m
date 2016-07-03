@@ -1,6 +1,6 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {@var{c} =} tmvs_fetch (@var{src}, @var{fname})
-% @deftypefnx {Function File} {@var{c} =} tmvs_fetch (@var{src}, @var{fname}, @var{cname})
+% @deftypefn {Function File} {@var{c} =} tmvs_fetch (@var{fname}, @var{src})
+% @deftypefnx {Function File} {@var{c} =} tmvs_fetch (@var{fname}, @var{src}, @var{reg})
 %
 % Magic happens.
 %
@@ -14,8 +14,9 @@
 %
 % @end deftypefn
 
-% TODO Think about these parameters.
-function c = tmvs_fetch (src, fname, cname = tmvs_cache_for (fname))
+function c = tmvs_fetch (fname, varargin)
+
+cname = tmvs_cache_for (fname);
 
 [cacheinfo, err, msg] = stat (cname);
 if err == -1
@@ -44,7 +45,7 @@ end
 if cached
   c = tmvs_recall (cname);
 else
-  c = tmvs_import (fname, src);
+  c = tmvs_import (fname, varargin{:});
   tmvs_store (cname, c);
 end
 
