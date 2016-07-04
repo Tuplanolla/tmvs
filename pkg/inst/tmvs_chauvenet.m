@@ -31,8 +31,8 @@
 % Working with matrices requires picking the interesting row or column first.
 %
 % @example
-% @code{v = [2, 4; 1, 2; 10, 1024; -1, 0; 0, 1];}
-% @code{v(tmvs_chauvenet (v(:, 2)), :)}
+% @code{m = [2, 4; 1, 2; 10, 1024; -1, 0; 0, 1];}
+% @code{m(tmvs_chauvenet (m(:, 2)), :)}
 % @result{} [2, 4; 1, 2; -1, 0; 0, 1]
 % @end example
 %
@@ -79,3 +79,25 @@ else
 end
 
 end
+
+%!shared u, v
+%! u = [2, 1, 10, -1, 0];
+%! v = [4, 2, 1024, 0, 1];
+
+%!test
+% [i, o] = tmvs_chauvenet (u);
+% assert (i, [1, 2, 4, 5]);
+% assert (o, [3]);
+%!test
+% [i, o] = tmvs_chauvenet (u');
+% assert (i, [1; 2; 4; 5]);
+% assert (o, [3]);
+
+%!test
+% [i, o] = tmvs_chauvenet (v);
+% assert (i, [1, 2, 3, 4, 5]);
+% assert (o, []);
+%!test
+% [i, o] = tmvs_chauvenet (v');
+% assert (i, [1; 2; 3; 4; 5]);
+% assert (o, []);

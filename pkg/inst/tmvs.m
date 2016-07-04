@@ -1,10 +1,26 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{aggr} =} tmvs (@var{dname})
 %
-% TMVS stands for Temperature and Moisture Visualization System and
-% is a simple data analysis system.
-% It is quite pedestrian
-% even though the author has tried to impose some categorical structure on it.
+% @example
+% @code{,-----------------.
+% |                 |\
+% |                 | |
+% `-----.     ,-----<.|  ,-----,----.    ,----.,-------.
+%  \    |     |       \ /      \     \  /     /         \
+%   `---|     |        '        |     \/     |    ------'\
+%       |     |    .       .    |\          / \        \  \
+%       |     |    |\     /|    | \        /.-------    |-'
+%       |     |    | `---' |    | |\      / \          / \
+%       `-----'----' |\   \`----' | `----'   `--------'   |
+%        \     \    \| `---'\    \|  \    \ / \        \ /
+%         `-----`----'       `----'   `----'   `--------'}
+% @end example
+%
+% Temperature and Moisture Visualization System or TMVS in short
+% is a simple data analysis and visualization system.
+% More words go here.
+% Even though the system itself is quite pedestrian,
+% the author has tried to impose some categorical structure on it.
 %
 % If you are in a hurry or do not enjoy reading technical manuals,
 % jump straight to the examples at the end, try them out yourself and
@@ -18,11 +34,9 @@
 %
 % @example
 % @code{
-% fname = 'excerpt/2010/120-0.csv';
-% cname = '2010-118.tmp';
+% fname = 'excerpt/2011/120-0.csv';
 % parsed = tmvs_import (fname);
 % fname = 'excerpt/2011/120-0.csv';
-% cname = '2011-118.tmp';
 % fetched = tmvs_fetch (fname, cname);
 % merged = tmvs_merge (parsed, fetched);
 % interpolated = tmvs_interpolate (merged);
