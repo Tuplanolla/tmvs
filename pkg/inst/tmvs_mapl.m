@@ -48,12 +48,10 @@
 
 function y = tmvs_mapl (f, x)
 
-if isnumeric (x)
+if isnumeric (x) || isstruct (x)
   type = 1;
 elseif iscell (x)
   type = 2;
-elseif isstruct (x)
-  type = 3;
 else
   type = 0;
 end
@@ -68,10 +66,6 @@ case 1
 case 2
   for i = 1 : numel (x)
     y{i} = f (x{i});
-  end
-case 3
-  for i = 1 : numel (x)
-    y(i) = f (x(i));
   end
 otherwise
   error ('wrong type ''%s''', class (x));

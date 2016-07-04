@@ -53,12 +53,10 @@
 
 function y = tmvs_foldr (f, x, z)
 
-if isnumeric (x)
+if isnumeric (x) || isstruct (x)
   type = 1;
 elseif iscell (x)
   type = 2;
-elseif isstruct (x)
-  type = 3;
 else
   type = 0;
 end
@@ -73,8 +71,6 @@ else
     y = x(end);
   case 2
     y = x{end};
-  case 3
-    y = x(end);
   end
 end
 
@@ -88,10 +84,6 @@ case 1
 case 2
   for i = k : n
     y = f (x{n - i + 1}, y);
-  end
-case 3
-  for i = k : n
-    y = f (x(n - i + 1), y);
   end
 otherwise
   error ('wrong type ''%s''', class (x));

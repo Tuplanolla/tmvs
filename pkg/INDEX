@@ -18,7 +18,6 @@ Convenient
   tmvs_fetchall
   tmvs_exportall
   tmvs_select
-  tmvs_filter
 Enumerating
   tmvs_source
   tmvs_quantity
@@ -37,6 +36,7 @@ Auxiliary
 Generic
   tmvs_brsearch
   tmvs_chauvenet
+  tmvs_filter
   tmvs_foldl
   tmvs_foldr
   tmvs_mapl

@@ -53,12 +53,10 @@
 
 function y = tmvs_foldl (f, x, z)
 
-if isnumeric (x)
+if isnumeric (x) || isstruct (x)
   type = 1;
 elseif iscell (x)
   type = 2;
-elseif isstruct (x)
-  type = 3;
 else
   type = 0;
 end
@@ -73,8 +71,6 @@ else
     y = x(1);
   case 2
     y = x{1};
-  case 3
-    y = x(1);
   end
 end
 
@@ -86,10 +82,6 @@ case 1
 case 2
   for i = k : numel (x)
     y = f (y, x{i});
-  end
-case 3
-  for i = k : numel (x)
-    y = f (y, x(i));
   end
 otherwise
   error ('wrong type ''%s''', class (x));

@@ -1,6 +1,7 @@
 Perfect
 ++ tmvs_brsearch
 ++ tmvs_chauvenet
+++ tmvs_filter
 ++ tmvs_foldl
 ++ tmvs_foldr
 ++ tmvs_mapl
@@ -37,7 +38,7 @@ Incomplete
 -- tmvs_visualize
 -- tmvs_export
 -- tmvs_exportall
--- tmvs_filter
+-- tmvs_filtrate
 -- tmvs_select
 
 % TODO These interface changes.
