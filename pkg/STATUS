@@ -18,18 +18,18 @@ Perfect
 ++ tmvs_parsename
 ++ tmvs_progress
 ++ tmvs_uncertainty
+++ tmvs_findid
+++ tmvs_cachename
+++ tmvs_iscache
 Almost Perfect
-+- tmvs_findid
 ++ tmvs_import
-+- tmvs_purge
+++ tmvs_purge
+++ tmvs_merge
 Works Well
-+- tmvs_store
-+- tmvs_recall
-+- tmvs_merge
-+- tmvs_fetch
-+- tmvs_fetchall
-+- tmvs_cache_for
-+- tmvs_is_cache
+-+ tmvs_fetch
+-+ tmvs_fetchall
+-+ tmvs_store
+-+ tmvs_recall
 Incomplete
 -- tmvs
 -- tmvs_interpolate
@@ -38,26 +38,11 @@ Incomplete
 -- tmvs_export
 -- tmvs_exportall
 -- tmvs_filter
-+- tmvs_hash
-Deprecated
--- tmvs_map
--- tmvs_reduce
--- tmvs_visualize_observatories
--- tmvs_visualize_rooms
--- tmvs_visualize_stations
+-- tmvs_select
 
-tmvs.m                    aggr = tmvs (dname) % ok
-tmvs_import.m             aggr = tmvs_import (fname, src, varargin) % ok
-tmvs_merge.m              aggr = tmvs_merge (varargin) % ok
-tmvs_purge.m                   = tmvs_purge (name) % ok
-tmvs_store.m                   = tmvs_store (cname, aggr, varargin) % accept fname
-tmvs_recall.m             aggr = tmvs_recall (cname, force = false) % accept fname
-tmvs_fetch.m              aggr = tmvs_fetch (fname, src, varargin) % accept cname
-tmvs_glob.m               aggr = tmvs_glob (pat, src, varargin) % ok
-tmvs_filter.m          matches = tmvs_filter (arrays, pat) % change to: aggr = tmvs_select (aggr, f : id*meta -> bool)
-                          aggr = tmvs_filter (aggr, f : double*double -> bool) % new
-tmvs_discretize.m       arrays = tmvs_discretize (interps, n = 100) % rename: arrays -> aggr, interps -> interp
-tmvs_interpolate.m     interps = tmvs_interpolate (arrays, method = 'linear') % rename: interps -> interp
-tmvs_visualize.m               = tmvs_visualize (arrays, n = 1, pat = false, string = '') % rename: arrays -> aggr
-tmvs_export.m                  = tmvs_export (fname, aggr, id)
-                               = tmvs_exportall (fname, aggr) % new
+% TODO These interface changes.
+         tmvs_store (cname, aggr, varargin) % accept fname
+  aggr = tmvs_recall (cname, force = false) % accept fname
+  aggr = tmvs_fetch (fname, src, varargin) % accept cname
+interp = tmvs_interpolate (aggr, varargin) % what return structure?
+         tmvs_visualize (aggr, n = 1, pat = false, string = '') % what what?

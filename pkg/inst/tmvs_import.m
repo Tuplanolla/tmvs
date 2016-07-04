@@ -14,6 +14,9 @@
 % A formal grammar for some of the substructures
 % is presented in the file @qcode{'Name.g4'}.
 %
+% If you simply want to load data from a file, use @code{tmvs_fetch} instead.
+% This procedure does not cache its results and is thus quite slow.
+%
 % The following examples demonstrate basic usage.
 %
 % @example

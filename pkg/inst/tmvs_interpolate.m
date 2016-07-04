@@ -1,8 +1,8 @@
-function interps = tmvs_interpolate (arrays, method = 'linear')
+function interp = tmvs_interpolate (aggr, varargin)
 
 names = fieldnames (arrays);
 
-interps = struct ();
+interp = struct ();
 for i = 1 : length (names)
   name = names{i};
 
@@ -15,8 +15,8 @@ for i = 1 : length (names)
     error (sprintf ('not enough data points: %d'), n);
   end
 
-  interps.(name) = struct ( ...
-    'function', @(xi) interp1 (days, x, xi, method), ...
+  interp.(name) = struct ( ...
+    'function', @(xi) interp1 (days, x, xi, varargin{:}), ...
     'limits', [(min (days)), (max (days))]);
 end
 

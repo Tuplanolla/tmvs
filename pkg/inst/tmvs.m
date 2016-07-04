@@ -65,4 +65,14 @@ aggr = tmvs_merge (buildings, stations, observatories);
 
 tmvs_visualize (aggr);
 
+% tmvs_visualize (aggr, 1, 'T[0-9]+', 'Temperature [^oC]');
+% tmvs_visualize (aggr, 2, 'RH[0-9]+', 'Relative Humidity [\%]');
+% tmvs_visualize (aggr, 3, 'AH[0-9]+', 'Absolute Humidity [g/m^3]');
+
+% tmvs_visualize (aggr, 1, '.ila', 'Temperature [^oC]');
+% tmvs_visualize (aggr, 2, '.osteus', 'Relative Humidity [\%]');
+% tmvs_visualize (aggr, 3, '.aine', 'Ambient Pressure [hPa]');
+% tmvs_visualize (aggr, 4, '.uul', 'Wind Speed [m/s]');
+% tmvs_visualize (aggr, 5, '.ade', 'Precipitation [mm/d]');
+
 end

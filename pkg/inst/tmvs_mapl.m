@@ -36,8 +36,8 @@
 % Mapping is structure-preserving, so the following is not allowed.
 %
 % @example
-% @code{tmvs_mapl (@(x) rmfield (x, 'two'), ...
-%            struct ('one', {1, 1}, 'two', {4, 4}))}
+% @code{tmvs_mapl (@@(x) rmfield (x, 'two'), ...
+%            struct ('one', @{1, 1@}, 'two', @{4, 4@}))}
 % @end example
 %
 % Programming note: This is slightly faster than @code{tmvs_mapr}.

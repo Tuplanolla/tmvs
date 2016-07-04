@@ -1,6 +1,5 @@
-% TODO Maybe go higher-order here.
-function faggr = tmvs_filter (aggr, f)
-% f : double*double -> bool
+function saggr = tmvs_select (aggr, f)
+% f : id*meta -> bool
 
 names = fieldnames (arrays);
 

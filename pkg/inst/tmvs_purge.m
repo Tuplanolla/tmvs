@@ -24,15 +24,15 @@
 
 function tmvs_purge (name)
 
-if tmvs_is_cache (name)
+if tmvs_iscache (name)
   [err, msg] = unlink (name);
   if err == -1
     error ('failed to remove cache file ''%s'': %s', name, msg);
   end
 else
-  cname = tmvs_cache_for (name);
+  cname = tmvs_cachename (name);
 
-  if tmvs_is_cache (cname)
+  if tmvs_iscache (cname)
     [err, msg] = unlink (cname);
     if err == -1
       error ('failed to remove cache file ''%s'': %s', cname, msg);

@@ -7,7 +7,19 @@
 % The following examples demonstrate basic usage.
 %
 % @example
-% @code{??}
+% @code{aggr = tmvs_fetch ('excerpt/2011/120-0.csv', ...
+%                    tmvs_source ('test lab'));}
+% @code{fieldnames (aggr)}
+% @result{} @{'id', 'meta', 'pairs'@}
+% @code{size (aggr)}
+% @result{} [1, 11]
+% @code{aggr = tmvs_fetch ('excerpt/2011-2013-0.csv', ...
+%                    tmvs_source ('weather observatory'), ...
+%                    tmvs_region ('jyvaskyla'));}
+% @code{fieldnames (aggr)}
+% @result{} @{'id', 'meta', 'pairs'@}
+% @code{size (aggr)}
+% @result{} [1, 6]
 % @end example
 %
 % @seealso{tmvs, tmvs_import, tmvs_store, tmvs_recall, tmvs_purge}
@@ -16,7 +28,7 @@
 
 function aggr = tmvs_fetch (fname, src, varargin)
 
-cname = tmvs_cache_for (fname);
+cname = tmvs_cachename (fname);
 
 [cacheinfo, err, msg] = stat (cname);
 if err == -1

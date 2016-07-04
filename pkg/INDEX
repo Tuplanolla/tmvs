@@ -4,6 +4,7 @@ Meta
   tmvs_version
 Basic
   tmvs_import
+  tmvs_uncertainty
   tmvs_interpolate
   tmvs_discretize
   tmvs_merge
@@ -27,6 +28,12 @@ Enumerating
   tmvs_section
   tmvs_material
   tmvs_region
+Auxiliary
+  tmvs_parsename
+  tmvs_parsecsv
+  tmvs_findid
+  tmvs_cachename
+  tmvs_iscache
 Generic
   tmvs_brsearch
   tmvs_chauvenet
@@ -35,15 +42,3 @@ Generic
   tmvs_mapl
   tmvs_mapr
   tmvs_progress
-Internal
-  tmvs_parsename
-  tmvs_parsecsv
-  tmvs_uncertainty
-  tmvs_findid
-  tmvs_cache_for
-  tmvs_is_cache
-  tmvs_hash
-Deprecated
-  tmvs_visualize_observatories
-  tmvs_visualize_rooms
-  tmvs_visualize_stations

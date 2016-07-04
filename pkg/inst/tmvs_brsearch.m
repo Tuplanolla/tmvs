@@ -1,15 +1,15 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {[@var{i}, @var{j}] =} tmvs_brsearch (@var{a}, @var{x})
-% @deftypefnx {Function File} {[@var{i}, @var{j}] =} tmvs_brsearch (@var{a}, @var{x}, @var{f})
+% @deftypefn {Function File} {[@var{i}, @var{j}] =} tmvs_brsearch (@var{v}, @var{x})
+% @deftypefnx {Function File} {[@var{i}, @var{j}] =} tmvs_brsearch (@var{v}, @var{x}, @var{f})
 %
 % Binary search, also known as half-interval search or logarithmic search,
 % is the most efficient way to find the index of an element in a sorted array.
 % Binary range search is a generalization of ordinary binary search and
 % finds the range of indices from @var{i} to @var{j} that
-% are equal to the element @var{x} in the array @var{a}.
-% If the element @var{x} is not present in @var{a},
+% are equal to the element @var{x} in the array @var{v}.
+% If the element @var{x} is not present in @var{v},
 % @var{i} will be the position where it could be inserted
-% (with the @code{a(i : end)} being pushed further) and
+% (with the @code{v(i : end)} being pushed further) and
 % @code{[i, j]} will be a degenerate interval
 % (as in, the condition @code{j < i} will hold).
 %
@@ -17,8 +17,8 @@
 % which returns zero when the first argument is equal to the second,
 % a negative number when the first argument is smaller than the second and
 % a positive number when the first argument is greater than the second.
-% The default comparator is simply @code{@(x, y) x - y}.
-% or equivalently @code{@(x, y) (x > y) - (x < y)}.
+% The default comparator is simply @code{@@(x, y) x - y}.
+% or equivalently @code{@@(x, y) (x > y) - (x < y)}.
 %
 % The following examples demonstrate basic usage.
 %
@@ -47,15 +47,15 @@
 %
 % @end deftypefn
 
-function [i, j] = tmvs_brsearch (a, x, f = @(x, y) x - y)
+function [i, j] = tmvs_brsearch (v, x, f = @(x, y) x - y)
 
 i = 1;
-j = numel (a);
+j = numel (v);
 
 while i <= j
   k = floor (i + (j - i) / 2);
 
-  y = a(k);
+  y = v(k);
 
   c = f (y, x);
   if c < 0
@@ -69,7 +69,7 @@ while i <= j
     while i - n > 1
       m = floor (n + (i - n) / 2);
 
-      y = a(m);
+      y = v(m);
 
       if f (y, x) < 0
         n = m;
@@ -84,7 +84,7 @@ while i <= j
     while n - j > 1
       m = floor (j + (n - j) / 2);
 
-      y = a(m);
+      y = v(m);
 
       if f (y, x) > 0
         n = m;

@@ -1,16 +1,16 @@
-function arrays = tmvs_discretize (interps, n = 100)
+function aggr = tmvs_discretize (interp, n = 100)
 
-names = fieldnames (interps);
+names = fieldnames (interp);
 
-arrays = struct ();
+aggr = struct ();
 for i = 1 : length (names)
   name = names{i};
 
-  interp = interps.(name);
+  interp = interp.(name);
 
   limits = interp.limits;
   days = linspace (limits(1), limits(2), n)';
-  arrays.(name) = [days, (interp.function (days))];
+  aggr.(name) = [days, (interp.function (days))];
 end
 
 end
