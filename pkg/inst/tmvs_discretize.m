@@ -1,3 +1,20 @@
+% -*- texinfo -*-
+% @deftypefn {Function File} {@var{aggr} =} tmvs_discretize (@var{interp})
+% @deftypefnx {Function File} {@var{aggr} =} tmvs_discretize (@var{interp}, @var{n})
+%
+% Does things.
+%
+% The following examples demonstrate basic usage.
+%
+% @example
+% @code{fieldnames (aggr)}
+% @result{} @{'id', 'meta', 'pairs'@}
+% @end example
+%
+% @seealso{tmvs, tmvs_interpolate}
+%
+% @end deftypefn
+
 function aggr = tmvs_discretize (interp, n = 100)
 
 names = fieldnames (interp);

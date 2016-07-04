@@ -1,3 +1,19 @@
+% -*- texinfo -*-
+% @deftypefn {Function File} {@var{interp} =} tmvs_interpolate (@var{aggr}, @var{varargin})
+%
+% Does things.
+%
+% The following examples demonstrate basic usage.
+%
+% @example
+% @code{fieldnames (aggr)}
+% @result{} @{'id', 'meta', 'pairs'@}
+% @end example
+%
+% @seealso{tmvs, tmvs_discretize}
+%
+% @end deftypefn
+
 function interp = tmvs_interpolate (aggr, varargin)
 
 names = fieldnames (arrays);
