@@ -7,10 +7,9 @@
 % The right map in particular starts from the end of @var{x} and
 % works its way to the very beginning.
 %
-% The data structure @var{x} can be a matrix, a cell array or a structure.
-% With matrices and cell arrays the function @var{f} should take one argument.
-% However with structures @var{f} should take two arguments,
-% because the field names are supplied alongside the corresponding elements.
+% The data structure @var{x} can be a matrix, a cell array or a structure and
+% the function @var{f} should take one argument.
+% In the case of structures, @var{f} must not add or remove fields.
 %
 % The following examples demonstrate basic usage.
 %
@@ -26,17 +25,18 @@
 % @example
 % @code{tmvs_mapr (@@sqrt, @{1, 4, 9@})}
 % @result{} @{1, 2, 3@}
-% @code{tmvs_mapr (@@(~, x) sqrt (x), struct ('one', 1, 'two', 4, 'three', 9))}
-% @result{} struct ('one', 1, 'two', 2, 'three', 3)
-% @code{tmvs_mapr (@@(~, x) sqrt (x), ...
-%            struct ('one', @{1, 1@}, 'two', @{4, 4@}, 'three', @{9, 9@}))}
-% @result{} struct ('one', @{1, 1@}, 'two', @{2, 2@}, 'three', @{3, 3@})
+% @code{tmvs_mapr (@@(s) setfield (s, 'two', 2 * s.one), ...
+%            struct ('one', 1, 'two', 4))}
+% @result{} struct ('one', 1, 'two', 2)
+% @code{tmvs_mapr (@@(s) setfield (s, 'two', 2 * s.one), ...
+%            struct ('one', @{1, 1@}, 'two', @{4, 4@}))}
+% @result{} struct ('one', @{1, 1@}, 'two', @{2, 2@})
 % @end example
 %
 % Mapping is structure-preserving, so the following is not allowed.
 %
 % @example
-% @code{tmvs_mapr (@@(x) rmfield (x, 'two'), ...
+% @code{tmvs_mapr (@@(s) rmfield (s, 'two'), ...
 %            struct ('one', @{1, 1@}, 'two', @{4, 4@}))}
 % @end example
 %
@@ -65,21 +65,18 @@ y = x;
 switch type
 case 1
   for i = 1 : n
-    y(n - i + 1) = f (x(n - i + 1));
+    j = n - i + 1;
+    y(j) = f (x(j));
   end
 case 2
   for i = 1 : n
-    y{n - i + 1} = f (x{n - i + 1});
+    j = n - i + 1;
+    y{j} = f (x{j});
   end
 case 3
-  c = sort (fieldnames (x));
-  m = numel (c);
-
   for i = 1 : n
-    for j = 1 : m
-      s = c{j};
-      y(n - i + 1).(s) = f (s, x(n - i + 1).(s));
-    end
+    j = n - i + 1;
+    y(j) = f (x(j));
   end
 otherwise
   error ('wrong type ''%s''', class (x));
@@ -89,7 +86,7 @@ end
 
 %!shared f, g
 %! f = @(x) -x;
-%! g = @(s, x) str2double (s) * f (x);
+%! g = @(s) setfield (s, '2', f (getfield (s, '1')));
 
 
 %!test
@@ -126,14 +123,16 @@ end
 %! assert (tmvs_mapr (g, struct ('1', {})), struct ('1', {}));
 
 %!test
-%! assert (tmvs_mapr (g, struct ('1', {1})), struct ('1', {-1}));
-
-%!test
-%! assert (tmvs_mapr (g, struct ('1', {-1, 1})), struct ('1', {1, -1}));
-%!test
 %! assert (tmvs_mapr (g, struct ('1', {-1}, '2', {1})), ...
-%!         struct ('1', {1}, '2', {-2}));
+%!         struct ('1', {-1}, '2', {1}));
 
 %!test
 %! assert (tmvs_mapr (g, struct ('1', {-2, -1}, '2', {1, 2})), ...
-%!         struct ('1', {2, 1}, '2', {-2, -4}));
+%!         struct ('1', {-2, -1}, '2', {2, 1}));
+%!test
+%! assert (tmvs_mapr (g, struct ('1', {-2; -1}, '2', {1; 2})), ...
+%!         struct ('1', {-2; -1}, '2', {2; 1}));
+
+%!test
+%! assert (tmvs_mapr (g, struct ('1', {-4, -3; -2, -1}, '2', {1, 2; 3, 4})), ...
+%!         struct ('1', {-4, -3; -2, -1}, '2', {4, 3; 2, 1}));

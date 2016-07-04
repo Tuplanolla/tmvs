@@ -14,6 +14,6 @@
 function aggr = tmvs_fetchall (pat, src, varargin)
 
 f = @(fname) tmvs_fetch (fname, src, varargin{:});
-aggr = tmvs_merge (cellfun (f, glob (pat), 'uniformoutput', false){:});
+aggr = tmvs_merge (tmvs_mapl (f, glob (pat)){:});
 
 end

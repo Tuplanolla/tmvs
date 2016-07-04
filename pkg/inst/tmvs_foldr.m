@@ -10,13 +10,12 @@
 % works its way to the very beginning.
 %
 % If the initial value @var{z} is supplied,
-% it is used as the second argument in the first function application
+% it is used as the initial value in the first function application
 % as if it was the last element in @var{x}.
 %
-% The data structure @var{x} can be a matrix, a cell array or a structure.
-% With matrices and cell arrays the function @var{f} should take two arguments.
-% However with structures @var{f} should take three arguments,
-% because the field names are supplied alongside the corresponding elements.
+% The data structure @var{x} can be a matrix, a cell array or a structure and
+% the function @var{f} should take two arguments.
+% The first argument is always the previous result.
 %
 % The following examples demonstrate basic usage.
 %
@@ -34,7 +33,8 @@
 % @example
 % @code{tmvs_foldr (@@plus, @{1, 2, 3@})}
 % @result{} 6
-% @code{tmvs_foldr (@@(x, ~, y) x + y, struct ('one', 1, 'two', 2, 'three', 3))}
+% @code{tmvs_foldl (@@(s, y) y + s.one, ...
+%             struct ('one', @{1, 2, 3@}, 'two', @{4, 5, 6@}), 0)}
 % @result{} 6
 % @end example
 %
@@ -58,9 +58,6 @@ if isnumeric (x)
 elseif iscell (x)
   type = 2;
 elseif isstruct (x)
-  c = sort (fieldnames (x));
-  m = numel (c);
-
   type = 3;
 else
   type = 0;
@@ -77,11 +74,7 @@ else
   case 2
     y = x{end};
   case 3
-    y = x(end).(c{end});
-    for j = 2 : m
-      s = c{end - j + 1};
-      y = f (s, x(end).(s), y);
-    end
+    y = x(end);
   end
 end
 
@@ -98,10 +91,7 @@ case 2
   end
 case 3
   for i = k : n
-    for j = 1 : m
-      s = c{j};
-      y = f (s, x(n - i + 1).(s), y);
-    end
+    y = f (x(n - i + 1), y);
   end
 otherwise
   error ('wrong type ''%s''', class (x));
@@ -113,7 +103,7 @@ end
 
 %!shared f, g
 %! f = @(x, y) y / x;
-%! g = @(s, x, y) str2double (s) * y / x;
+%! g = @(s, y) f (getfield (s, '1'), y);
 
 
 %!error
@@ -167,25 +157,18 @@ end
 
 
 %!error
-%! tmvs_foldr (g, struct ('1', {}));
+%! tmvs_foldr (g, struct ('1', {}, '2', {}));
 %!test
-%! assert (tmvs_foldr (g, struct ('1', {}), 2), 2);
+%! assert (tmvs_foldr (g, struct ('1', {}, '2', {}), 2), 2);
 
 %!test
-%! assert (tmvs_foldr (g, struct ('1', {2})), 2);
-%!test
-%! assert (tmvs_foldr (g, struct ('1', {3}), 6), 2);
+%! assert (tmvs_foldr (g, struct ('1', {3}, '2', {6}), 6), 2);
 
 %!test
-%! assert (tmvs_foldr (g, struct ('1', {3, 6})), 2);
+%! assert (tmvs_foldr (g, struct ('1', {3, 6}, '2', {6, 12}), 36), 2);
 %!test
-%! assert (tmvs_foldr (g, struct ('1', {3, 6}), 36), 2);
-%!test
-%! assert (tmvs_foldr (g, struct ('1', {3}, '2', {6})), 2);
-%!test
-%! assert (tmvs_foldr (g, struct ('1', {3}, '2', {6}), 36), 4);
+%! assert (tmvs_foldr (g, struct ('1', {3; 6}, '2', {6; 12}), 36), 2);
 
 %!test
-%! assert (tmvs_foldr (g, struct ('1', {3, 6}, '2', {36, 1296})), 4);
-%!test
-%! assert (tmvs_foldr (g, struct ('1', {3, 6}, '2', {36, 1296}), 1679616), 8);
+%! assert (tmvs_foldr (g, struct ('1', {3, 6; 36, 1296}, ...
+%!                                '2', {6, 12; 72, 2592}), 1679616), 2);
