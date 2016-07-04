@@ -18,7 +18,7 @@
 % @example
 % @code{tmvs_filter (@@(x) mod (x, 2) == 0, @{1, 2, 3, 4@})}
 % @result{} @{2, 4@}
-% @code{tmvs_filter (@(s) mod (s.one, 2) == 0, ...
+% @code{tmvs_filter (@@(s) mod (s.one, 2) == 0, ...
 %             struct ('one', @{1, 2, 3, 4@}, 'two', @{5, 6, 7, 8@}))}
 % @result{} struct ('one', @{2, 4@}, 'two', @{6, 8@})
 % @end example
@@ -27,7 +27,7 @@
 %
 % @example
 % @code{tmvs_filter (f, x)}
-% @code{tmvs_foldl (@(y, x) ifelse (f (x), [y, x], y), x, [])}.
+% @code{tmvs_foldl (@@(y, x) ifelse (f (x), [y, x], y), x, [])}.
 % @end example
 %
 % @seealso{tmvs_foldl, tmvs_foldr, find, ismember}
