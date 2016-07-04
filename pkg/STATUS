@@ -1,7 +1,8 @@
 Perfect
 ++ tmvs_brsearch
 ++ tmvs_chauvenet
-++ tmvs_filter
+++ tmvs_filters
+++ tmvs_filteru
 ++ tmvs_foldl
 ++ tmvs_foldr
 ++ tmvs_mapl

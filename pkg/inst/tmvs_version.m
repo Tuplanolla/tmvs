@@ -20,3 +20,7 @@ function str = tmvs_version ()
 str = '1.0.0';
 
 end
+
+%!test
+%! assert (regexp (tmvs_version (), ...
+%!                 '^(?:0|[1-9][0-9]*)(?:\.(?:0|[1-9][0-9]*)){2}$'));

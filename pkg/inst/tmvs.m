@@ -76,3 +76,27 @@ tmvs_visualize (aggr);
 % tmvs_visualize (aggr, 5, '.ade', 'Precipitation [mm/d]');
 
 end
+
+%!test
+%! test tmvs_version
+
+%!test
+%! test tmvs_source
+%! test tmvs_quantity
+%! test tmvs_site
+%! test tmvs_surface
+%! test tmvs_room
+%! test tmvs_section
+%! test tmvs_material
+%! test tmvs_region
+
+%!test
+%! test tmvs_brsearch
+%! test tmvs_chauvenet
+%! test tmvs_filters
+%! test tmvs_filteru
+%! test tmvs_foldl
+%! test tmvs_foldr
+%! test tmvs_mapl
+%! test tmvs_mapr
+%! test tmvs_progress

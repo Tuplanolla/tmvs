@@ -2,7 +2,7 @@
 % @deftypefn {Function File} {@var{y} =} tmvs_site (@var{x})
 %
 % Enumerates the case-insensitive measuring sites
-% from @qcode{'A'} to @qcode{'Z'}.
+% from @qcode{'a'} to @qcode{'z'}.
 %
 % See @code{tmvs_quantity} for a detailed treatise on functions of this kind.
 %
@@ -20,15 +20,24 @@ if ischar (x)
     y = c - 'a' + 1;
   end
 elseif isindex (x)
-  if c < 1 || c > 26
+  if x < 1 || x > 26
     error ('measuring site %d not known', x);
   else
-    y = c + 'a' - 1;
+    n = x + 'a' - 1;
   end
 
-  y = char (y);
+  y = char (n);
 else
   error ('wrong type ''%s''', class (x));
 end
 
 end
+
+%!shared f, n
+%! f = @tmvs_site;
+%! n = 26;
+
+%!test
+%! for i = 1 : n
+%!   assert (f (i), f (f (f (i))));
+%! end

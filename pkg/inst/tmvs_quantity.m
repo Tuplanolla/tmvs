@@ -97,3 +97,12 @@ else
 end
 
 end
+
+%!shared f, n
+%! f = @tmvs_quantity;
+%! n = 7;
+
+%!test
+%! for i = 1 : n
+%!   assert (f (i), f (f (f (i))));
+%! end

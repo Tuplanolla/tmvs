@@ -35,3 +35,12 @@ else
 end
 
 end
+
+%!shared f, n
+%! f = @tmvs_section;
+%! n = 2;
+
+%!test
+%! for i = 1 : n
+%!   assert (f (i), f (f (f (i))));
+%! end

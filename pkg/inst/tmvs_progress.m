@@ -57,3 +57,6 @@ elseif mod (i, n) == 0
 end
 
 end
+
+%!test
+%! tmvs_progress (1, 2);
