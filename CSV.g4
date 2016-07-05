@@ -1,4 +1,4 @@
-grammar CSV;
+grammar CSV ;
 
 Value : ~('\n' | '\r' | '|' | '"')+ ;
 Delimiter : '|' ;

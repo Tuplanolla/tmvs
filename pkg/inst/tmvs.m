@@ -26,7 +26,7 @@
 % jump straight to the examples at the end, try them out yourself and
 % explore the other procedures listed under 'see also'.
 % You can come back here and read the details
-% in case something does not seem to make sense.
+% in case you encounter something puzzling.
 %
 % Look at this space.
 %
@@ -35,22 +35,19 @@
 % @example
 % @code{
 % fname = 'excerpt/2011/120-0.csv';
-% parsed = tmvs_import (fname);
-% fname = 'excerpt/2011/120-0.csv';
-% fetched = tmvs_fetch (fname, cname);
-% merged = tmvs_merge (parsed, fetched);
+% imported = tmvs_import (fname);
+% fetched = tmvs_fetch (fname);
+% merged = tmvs_merge (imported, fetched);
 % interpolated = tmvs_interpolate (merged);
 % discretized = tmvs_discretize (interpolated);
 % tmvs_visualize (discretized);
 % }
-% @result{} ??
 % @end example
 %
 % This procedure performs the commands shown in the previous example.
 %
 % @example
 % @code{tmvs ('excerpt')}
-% @result{} ??
 % @end example
 %
 % @seealso{tmvs_import, tmvs_interpolate, tmvs_discretize, tmvs_merge, tmvs_visualize, tmvs_export, tmvs_store, tmvs_recall, tmvs_fetch, tmvs_purge}

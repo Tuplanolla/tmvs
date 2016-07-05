@@ -1,4 +1,4 @@
-build: CSVParser.java IdParser.java data-flow.png report.pdf
+build: CSVParser.java NameParser.java data-flow.png report.pdf
 
 clean:
 	$(RM) *.aux *.log *.out

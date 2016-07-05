@@ -1,4 +1,4 @@
-grammar Id;
+grammar Name ;
 
 Character : ~[\t ] ;
 Space : [\t ]+ ;
