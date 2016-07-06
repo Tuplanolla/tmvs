@@ -2,6 +2,7 @@
 % @deftypefn {Function File} {@var{interp} =} tmvs_interpolate (@var{aggr}, @var{varargin})
 %
 % Does things.
+% Mention: all vars.
 %
 % The following examples demonstrate basic usage.
 %

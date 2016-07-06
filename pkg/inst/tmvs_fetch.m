@@ -3,6 +3,7 @@
 % @deftypefnx {Function File} {@var{aggr} =} tmvs_fetch (@var{fname}, @var{src}, @var{varargin})
 %
 % Magic happens.
+% Mention: all vars.
 %
 % The following examples demonstrate basic usage.
 %

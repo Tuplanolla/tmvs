@@ -7,7 +7,7 @@
 % If the given file is not a cache file or
 % appears to be a corrupted cache file, it will not be removed
 % (this is a safety mechanism that should prevent accidental data loss).
-% To remove a corrupted cache file use @var{unlink} instead.
+% To remove a corrupted cache file use @code{unlink} instead.
 %
 % The following examples demonstrate basic usage.
 %

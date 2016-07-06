@@ -3,7 +3,7 @@
 %
 % Finds the index @var{i} of the identifier @var{id}
 % in the aggregate @var{aggr} or returns zero if the identifier is not present.
-% This is faster than simply using @var{find} or equivalent,
+% This is faster than simply using @code{find} or equivalent,
 % because of logical short circuiting.
 %
 % The following examples demonstrate basic usage.

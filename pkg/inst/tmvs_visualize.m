@@ -1,5 +1,21 @@
+% -*- texinfo -*-
+% @deftypefn {Function File} {} tmvs_visualize (@var{aggr})
+%
+% Mention: all vars.
+%
+% The following examples demonstrate basic usage.
+%
+% @example
+% @code{tmvs_visualize (tmvs_fetch ('excerpt/2011/120-0.csv', ...
+%                      tmvs_source ('test lab')))}
+% @end example
+%
+% @seealso{tmvs, tmvs_fetch}
+%
+% @end deftypefn
+
 % TODO This is incomplete due to missing requirements.
-function tmvs_visualize (arrays, n = 1, pat = false, string = '')
+function tmvs_visualize (aggr, n = 1, pat = false, string = '')
 
 if pat
   arrays = tmvs_filter (arrays, pat);

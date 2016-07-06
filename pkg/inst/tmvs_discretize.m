@@ -3,6 +3,7 @@
 % @deftypefnx {Function File} {@var{aggr} =} tmvs_discretize (@var{interp}, @var{n})
 %
 % Does things.
+% Mention: all vars.
 %
 % The following examples demonstrate basic usage.
 %

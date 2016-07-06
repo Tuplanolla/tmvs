@@ -3,7 +3,7 @@
 %
 % Writes the aggregate @var{aggr} into the cache file @var{cname}.
 % The optional storage parameters @var{varargin} can be chosen
-% from the options supported by @var{save}.
+% from the options supported by @code{save}.
 % They default to the compressed MATLAB-compatible format
 % @code{@{'-mat', '-zip'@}}.
 %

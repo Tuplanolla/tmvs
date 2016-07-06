@@ -27,7 +27,8 @@
 %
 % The whole ordeal is quite simple even if the description sounds complicated.
 % The idea is that a single function can be used as
-% a constructor-destructor, a parser-printer or a serializer-deserializer pair.
+% a constructor-destructor, a parser-printer or a serializer-deserializer pair
+% for the parameters @var{x} and @var{y}.
 %
 % The following examples demonstrate basic usage.
 %
