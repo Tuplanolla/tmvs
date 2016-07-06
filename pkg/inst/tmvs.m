@@ -28,6 +28,15 @@
 % You can come back here and read the details
 % in case you encounter something puzzling.
 %
+% Short Octave primer:
+% put configs in @qcode{'~/.octaverc'},
+% for nice integration try
+% @code{suppress_verbose_help_message(true);
+% graphics_toolkit('gnuplot');
+% setenv('GNUTERM', 'wxt noraise');}
+% use @code{help} and @code{whos} frequently,
+% hit Control C to abort,
+%
 % Look at this space.
 % Mention: all vars.
 %
@@ -57,11 +66,6 @@
 
 function aggr = tmvs (dname)
 
-fname = canonicalize_file_name (dname);
-if isempty (fname)
-  error ('no such file or directory ''%s''', dname);
-end
-
 if ~isdir (fname)
   error ('not a directory ''%s''', fname);
 end
@@ -77,15 +81,15 @@ aggr = tmvs_merge (buildings, stations, observatories);
 
 tmvs_visualize (aggr);
 
-% tmvs_visualize (aggr, 1, 'T[0-9]+', 'Temperature [^oC]');
-% tmvs_visualize (aggr, 2, 'RH[0-9]+', 'Relative Humidity [\%]');
-% tmvs_visualize (aggr, 3, 'AH[0-9]+', 'Absolute Humidity [g/m^3]');
+% tmvs_visualize (aggr, 'T[0-9]+', 'Temperature [^oC]');
+% tmvs_visualize (aggr, 'RH[0-9]+', 'Relative Humidity [\%]');
+% tmvs_visualize (aggr, 'AH[0-9]+', 'Absolute Humidity [g/m^3]');
 
-% tmvs_visualize (aggr, 1, '.ila', 'Temperature [^oC]');
-% tmvs_visualize (aggr, 2, '.osteus', 'Relative Humidity [\%]');
-% tmvs_visualize (aggr, 3, '.aine', 'Ambient Pressure [hPa]');
-% tmvs_visualize (aggr, 4, '.uul', 'Wind Speed [m/s]');
-% tmvs_visualize (aggr, 5, '.ade', 'Precipitation [mm/d]');
+% tmvs_visualize (aggr, '.ila', 'Temperature [^oC]');
+% tmvs_visualize (aggr, '.osteus', 'Relative Humidity [\%]');
+% tmvs_visualize (aggr, '.aine', 'Ambient Pressure [hPa]');
+% tmvs_visualize (aggr, '.uul', 'Wind Speed [m/s]');
+% tmvs_visualize (aggr, '.ade', 'Precipitation [mm/d]');
 
 end
 

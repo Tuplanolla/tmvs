@@ -10,6 +10,8 @@
 % @example
 % @code{fieldnames (aggr)}
 % @result{} @{'id', 'meta', 'pairs'@}
+% @code{aggrd = tmvs_discretize (interp);
+% plot (num2cell (aggrd(3).pairs, 1){:});}
 % @end example
 %
 % @seealso{tmvs, tmvs_interpolate}
@@ -18,17 +20,22 @@
 
 function aggr = tmvs_discretize (interp, n = 100)
 
-names = fieldnames (interp);
+aggr = struct ('id', {}, 'meta', {}, 'pairs', {});
+aggr = resize (aggr, size (interp));
 
-aggr = struct ();
-for i = 1 : length (names)
-  name = names{i};
+for i = 1 : numel (interp)
+  a = interp(i).limits;
 
-  interp = interp.(name);
+  if numel (a) < 2
+    z = [];
+  else
+    t = linspace (a(1), a(2), n)';
+    z = [t, (interp(i).function (t))];
+  end
 
-  limits = interp.limits;
-  days = linspace (limits(1), limits(2), n)';
-  aggr.(name) = [days, (interp.function (days))];
+  aggr(i) = struct ('id', aggr(i).id, ...
+                    'meta', aggr(i).meta, ...
+                    'pairs', z);
 end
 
 end

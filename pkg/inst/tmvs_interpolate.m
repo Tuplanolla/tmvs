@@ -9,6 +9,11 @@
 % @example
 % @code{fieldnames (aggr)}
 % @result{} @{'id', 'meta', 'pairs'@}
+% @code{fieldnames (interp)}
+% @result{} @{'id', 'meta', 'function', 'limits'@}
+% @code{interp = tmvs_interpolate (aggr, 'spline');
+% t = linspace (num2cell (interp(3).limits){:});
+% plot (t, interp(3).function(t));}
 % @end example
 %
 % @seealso{tmvs, tmvs_discretize}
@@ -17,24 +22,25 @@
 
 function interp = tmvs_interpolate (aggr, varargin)
 
-names = fieldnames (arrays);
+interp = struct ('id', {}, 'meta', {}, 'function', {}, 'limits', {});
+interp = resize (interp, size (aggr));
 
-interp = struct ();
-for i = 1 : length (names)
-  name = names{i};
+for i = 1 : numel (aggr)
+  t = aggr(i).pairs(:, 1);
+  x = aggr(i).pairs(:, 2);
 
-  array = arrays.(name);
-  days = array(:, 1);
-  x = array(:, 2);
-
-  n = length (days);
-  if n < 2
-    error (sprintf ('not enough data points: %d'), n);
+  if numel (t) < 2
+    f = @(ti) nan;
+    a = [];
+  else
+    f = @(ti) interp1 (t, x, ti, varargin{:});
+    a = [(min (t)), (max (t))];
   end
 
-  interp.(name) = struct ( ...
-    'function', @(xi) interp1 (days, x, xi, varargin{:}), ...
-    'limits', [(min (days)), (max (days))]);
+  interp(i) = struct ('id', aggr(i).id, ...
+                      'meta', aggr(i).meta, ...
+                      'function', f, ...
+                      'limits', a);
 end
 
 end

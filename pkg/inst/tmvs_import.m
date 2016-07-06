@@ -156,7 +156,7 @@ case 'weather observatory'
 otherwise
   fclose (fid);
 
-  error ('data source ''%s'' not supported', tmvs_source ());
+  error ('data source ''%s'' not supported', tmvs_source (src));
 end
 
 [err, msg] = ferror (fid);

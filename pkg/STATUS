@@ -35,14 +35,10 @@ Works Well
 +- tmvs_fetchall
 +- tmvs_store
 +- tmvs_recall
++- tmvs_interpolate
++- tmvs_discretize
 Incomplete
 -- tmvs
 -- tmvs_visualize
--- tmvs_interpolate
--- tmvs_discretize
 -- tmvs_filtrate
 -- tmvs_select
-
-% TODO These interface changes.
-interp = tmvs_interpolate (aggr, varargin) % what return structure?
-         tmvs_visualize (aggr, n = 1, pat = false, string = '') % what what?

@@ -30,11 +30,6 @@ if numel (unique (c)) ~= numel (c)
   error ('naming function is not injective');
 end
 
-fname = canonicalize_file_name (dname);
-if isempty (fname)
-  error ('no such file or directory ''%s''', dname);
-end
-
 if ~isdir (fname)
   error ('not a directory ''%s''', fname);
 end

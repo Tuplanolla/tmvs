@@ -49,7 +49,7 @@
 % @result{} 'relative humidity'
 % @end example
 %
-% @seealso{tmvs, tmvs_source, tmvs_site, tmvs_surface, tmvs_room, tmvs_section, tmvs_material, tmvs_region}
+% @seealso{tmvs, tmvs_source, tmvs_site, tmvs_surface, tmvs_room, tmvs_section, tmvs_material, tmvs_region, tmvs_graph}
 %
 % @end deftypefn
 

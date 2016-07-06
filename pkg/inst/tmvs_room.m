@@ -5,7 +5,7 @@
 %
 % See @code{tmvs_quantity} for a detailed treatise on functions of this kind.
 %
-% @seealso{tmvs, tmvs_source, tmvs_quantity, tmvs_site, tmvs_surface, tmvs_section, tmvs_material, tmvs_region}
+% @seealso{tmvs, tmvs_source, tmvs_quantity, tmvs_site, tmvs_surface, tmvs_section, tmvs_region}
 %
 % @end deftypefn
 
