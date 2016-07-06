@@ -10,7 +10,7 @@
 % @result{} 'excerpt/2011/120-0.csv.tmp'
 % @end example
 %
-% @seealso{tmvs, tmvs_iscache, tmvs_store, tmvs_recall, tmvs_fetch, tmvs_purge}
+% @seealso{tmvs, tmvs_checkcache, tmvs_store, tmvs_recall, tmvs_fetch, tmvs_purge}
 %
 % @end deftypefn
 

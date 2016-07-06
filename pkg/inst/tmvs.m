@@ -17,7 +17,7 @@
 % @end example
 %
 % Temperature and Moisture Visualization System or TMVS in short
-% is a simple data analysis and visualization system.
+% is a simple data exploration and analysis tool.
 % More words go here.
 % Even though the system itself is quite pedestrian,
 % the author has tried to impose some categorical structure on it.

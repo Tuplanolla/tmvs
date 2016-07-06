@@ -1,6 +1,5 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {} tmvs_purge (@var{cname})
-% @deftypefnx {Function File} {} tmvs_purge (@var{fname})
+% @deftypefn {Function File} {} tmvs_purge (@var{name})
 %
 % Removes the cache file @var{cname} or
 % the cache file corresponding to the original file @var{fname}.
@@ -24,22 +23,29 @@
 
 function tmvs_purge (name)
 
-if tmvs_iscache (name)
-  [err, msg] = unlink (name);
-  if err == -1
-    error ('failed to remove cache file ''%s'': %s', name, msg);
-  end
+remove = false;
+
+if tmvs_checkcache (name)
+  cname = name;
+
+  remove = true;
 else
   cname = tmvs_cachename (name);
 
-  if tmvs_iscache (cname)
-    [err, msg] = unlink (cname);
-    if err == -1
-      error ('failed to remove cache file ''%s'': %s', cname, msg);
-    end
-  else
-    error ('not a cache file ''%s''', cname);
+  warning ('not a cache file ''%s'', trying ''%s''', name, cname);
+
+  if tmvs_checkcache (cname)
+    remove = true;
   end
+end
+
+if remove
+  [err, msg] = unlink (cname);
+  if err == -1
+    error ('failed to remove cache file ''%s'': %s', cname, msg);
+  end
+else
+  error ('not a removable cache file ''%s''', cname);
 end
 
 end

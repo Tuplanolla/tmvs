@@ -32,7 +32,7 @@ Auxiliary
   tmvs_parsecsv
   tmvs_findid
   tmvs_cachename
-  tmvs_iscache
+  tmvs_checkcache
 Generic
   tmvs_brsearch
   tmvs_chauvenet

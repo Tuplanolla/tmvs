@@ -7,6 +7,8 @@
 % use @code{tmvs_fetchall} instead.
 % This procedure does not read files byitself and is thus quite inconvenient.
 %
+% Algebraic properties!
+%
 % The following examples demonstrate basic usage.
 %
 % @example

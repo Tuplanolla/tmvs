@@ -22,7 +22,7 @@ Perfect
 ++ tmvs_uncertainty
 ++ tmvs_findid
 ++ tmvs_cachename
-++ tmvs_iscache
+++ tmvs_checkcache
 Almost Perfect
 ++ tmvs_import
 ++ tmvs_purge
@@ -43,8 +43,6 @@ Incomplete
 -- tmvs_select
 
 % TODO These interface changes.
-         tmvs_store (cname, aggr, varargin) % accept fname
-  aggr = tmvs_recall (cname, force = false) % accept fname
   aggr = tmvs_fetch (fname, src, varargin) % accept cname
 interp = tmvs_interpolate (aggr, varargin) % what return structure?
          tmvs_visualize (aggr, n = 1, pat = false, string = '') % what what?
