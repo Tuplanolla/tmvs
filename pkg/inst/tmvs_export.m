@@ -17,6 +17,6 @@
 
 function tmvs_export (fname, aggr, id)
 
-error ('nope');
+dlmwrite (fname, aggr(tmvs_findid (aggr, id)).pairs, '|');
 
 end

@@ -1,7 +1,7 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {@var{v} =} tmvs_checkcache (@var{cname})
+% @deftypefn {Function File} {[@var{p}, @var{ver}] =} tmvs_checkcache (@var{cname})
 %
-% Sets @var{v} to a nonzero value if @var{cname} is a readable cache file.
+% Sets @var{ver} to a nonzero value if @var{cname} is a readable cache file.
 %
 % The following examples demonstrate basic usage.
 %
@@ -16,12 +16,14 @@
 %
 % @end deftypefn
 
-function v = tmvs_checkcache (cname)
+function [p, ver] = tmvs_checkcache (cname)
 
-v = false;
+ver = '';
+p = false;
 
 try
-  v = load (cname, 'tmvs_version').tmvs_version;
+  ver = load (cname, 'tmvs_version').tmvs_version;
+  p = true;
 end
 
 end

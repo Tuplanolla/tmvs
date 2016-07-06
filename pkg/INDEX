@@ -33,6 +33,7 @@ Auxiliary
   tmvs_findid
   tmvs_cachename
   tmvs_checkcache
+  tmvs_readcache
 Generic
   tmvs_brsearch
   tmvs_chauvenet

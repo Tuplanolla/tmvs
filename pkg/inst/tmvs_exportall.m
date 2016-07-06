@@ -1,5 +1,5 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {} tmvs_exportall (@var{fname}, @var{aggr}, @var{id})
+% @deftypefn {Function File} {} tmvs_exportall (@var{dname}, @var{aggr}, @var{f})
 %
 % Wrong:
 % Exports the data matching the identifier @var{id} from the aggregate @var{aggr}
@@ -8,15 +8,39 @@
 % The following examples demonstrate basic usage.
 %
 % @example
-% @code{tmvs_export ('/tmp/tmvs.csv', tmvs_fetch ('excerpt/2011/120-0.csv'))}
+% @code{tmvs_exportall ('/tmp', aggr, @@(i, ~) sprintf ('%d.csv', i))}
+% @code{tmvs_exportall ('/tmp', aggr, @@(~, id) sprintf ('%d-%d-%d.csv', id.quantity, id.section, id.ordinal))}
 % @end example
 %
 % @seealso{dlmwrite, tmvs, tmvs_fetch}
 %
 % @end deftypefn
 
-function tmvs_exportall (fname, aggr, id)
+function tmvs_exportall (dname, aggr, f = @(i, ~) sprintf ('%d', i))
 
-error ('nope');
+n = numel (aggr);
+
+c = cell (n, 1);
+
+for i = 1 : n
+  c{i} = f (i, aggr(i).id);
+end
+
+if numel (unique (c)) ~= numel (c)
+  error ('naming function is not injective');
+end
+
+fname = canonicalize_file_name (dname);
+if isempty (fname)
+  error ('no such file or directory ''%s''', dname);
+end
+
+if ~isdir (fname)
+  error ('not a directory ''%s''', fname);
+end
+
+for i = 1 : n
+  dlmwrite (sprintf ('%s/%s', fname, c{i}), aggr(i).pairs, '|');
+end
 
 end

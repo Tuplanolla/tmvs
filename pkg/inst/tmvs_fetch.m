@@ -31,6 +31,8 @@ function aggr = tmvs_fetch (fname, src, varargin)
 
 cname = tmvs_cachename (fname);
 
+cached = true;
+
 [cacheinfo, err, msg] = stat (cname);
 if err == -1
   warning (sprintf ('cannot access cache file ''%s''', cname));
@@ -42,15 +44,11 @@ else
   if err == -1
     warning (sprintf ('cannot access original file ''%s''', fname));
     warning ('falling back on the cache file');
-
-    cached = true;
   elseif cacheinfo.mtime < fileinfo.mtime
     warning ('cache file is stale');
     warning ('rereading the original file (this can take a while)');
 
     cached = false;
-  else
-    cached = true;
   end
 end
 

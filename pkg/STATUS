@@ -22,27 +22,27 @@ Perfect
 ++ tmvs_uncertainty
 ++ tmvs_findid
 ++ tmvs_cachename
-++ tmvs_checkcache
 Almost Perfect
-++ tmvs_import
-++ tmvs_purge
-++ tmvs_merge
++- tmvs_merge
++- tmvs_checkcache
++- tmvs_readcache
++- tmvs_export
++- tmvs_exportall
 Works Well
--+ tmvs_fetch
--+ tmvs_fetchall
--+ tmvs_store
--+ tmvs_recall
++- tmvs_import
++- tmvs_purge
++- tmvs_fetch
++- tmvs_fetchall
++- tmvs_store
++- tmvs_recall
 Incomplete
 -- tmvs
+-- tmvs_visualize
 -- tmvs_interpolate
 -- tmvs_discretize
--- tmvs_visualize
--- tmvs_export
--- tmvs_exportall
 -- tmvs_filtrate
 -- tmvs_select
 
 % TODO These interface changes.
-  aggr = tmvs_fetch (fname, src, varargin) % accept cname
 interp = tmvs_interpolate (aggr, varargin) % what return structure?
          tmvs_visualize (aggr, n = 1, pat = false, string = '') % what what?

@@ -1,5 +1,5 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {} tmvs_store (@var{name}, @var{aggr}, @var{varargin})
+% @deftypefn {Function File} {} tmvs_store (@var{cname}, @var{aggr}, @var{varargin})
 %
 % Writes the aggregate @var{aggr} into the cache file @var{cname}.
 % The optional storage parameters @var{varargin} can be chosen
@@ -22,35 +22,9 @@
 %
 % @end deftypefn
 
-function tmvs_store (name, aggr, varargin)
+function tmvs_store (cname, aggr, varargin)
 
-write = false;
-
-if exist (name, 'file')
-  if tmvs_checkcache (name)
-    cname = name;
-
-    write = true;
-  else
-    cname = tmvs_cachename (name);
-
-    warning ('not a cache file ''%s'', trying ''%s''', name, cname);
-
-    if exist (cname, 'file')
-      if tmvs_checkcache (cname)
-        write = true;
-      end
-    else
-      write = true;
-    end
-  end
-else
-  cname = name;
-
-  write = true;
-end
-
-if write
+if ~exist (cname, 'file') || tmvs_checkcache (cname)
   if nargin <= 2
     options = {'-hdf5'};
   else
