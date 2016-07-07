@@ -18,6 +18,8 @@ if ischar (x)
     y = 1;
   case 'slice'
     y = 2;
+  case 'surface'
+    y = 3;
   otherwise
     error ('graph ''%s'' not known', x);
   end
@@ -27,6 +29,8 @@ elseif isindex (x)
     y = 'simple';
   case 2
     y = 'slice';
+  case 3
+    y = 'surface';
   otherwise
     error ('graph %d not known', x);
   end

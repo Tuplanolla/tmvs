@@ -44,7 +44,7 @@
 %
 % @example
 % @code{
-% fname = 'excerpt/2011/120-0.csv';
+% fname = 'excerpt/2012/118-0.csv';
 % imported = tmvs_import (fname);
 % fetched = tmvs_fetch (fname);
 % merged = tmvs_merge (imported, fetched);

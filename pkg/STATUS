@@ -22,6 +22,7 @@ Perfect
 ++ tmvs_uncertainty
 ++ tmvs_findid
 ++ tmvs_cachename
+++ tmvs_graph
 Almost Perfect
 +- tmvs_merge
 +- tmvs_checkcache
@@ -42,3 +43,5 @@ Incomplete
 -- tmvs_visualize
 -- tmvs_filtrate
 -- tmvs_select
+-- tmvs_filtrate
+-- tmvs_printid

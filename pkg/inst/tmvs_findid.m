@@ -9,7 +9,7 @@
 % The following examples demonstrate basic usage.
 %
 % @example
-% @code{aggr = tmvs_fetch ('excerpt/2011/120-0.csv', ...
+% @code{aggr = tmvs_fetch ('excerpt/2012/118-0.csv', ...
 %                    tmvs_source ('test lab'));}
 % @code{tmvs_findid (aggr, aggr(3).id)}
 % @result{} 3

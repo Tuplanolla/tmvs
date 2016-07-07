@@ -6,8 +6,8 @@
 % The following examples demonstrate basic usage.
 %
 % @example
-% @code{tmvs_cachename ('excerpt/2011/120-0.csv')}
-% @result{} 'excerpt/2011/120-0.csv.tmp'
+% @code{tmvs_cachename ('excerpt/2012/118-0.csv')}
+% @result{} 'excerpt/2012/118-0.csv.tmp'
 % @end example
 %
 % @seealso{tmvs, tmvs_checkcache, tmvs_store, tmvs_recall, tmvs_fetch, tmvs_purge}

@@ -14,7 +14,7 @@
 %                           tmvs_quantity ('relative humidity')))}
 % @result{} 10
 % @code{tmvs_uncertainty (tmvs_fetch (tmvs_source ('test lab'), ...
-%                               'excerpt/2011/120-0.csv')(1).id)}
+%                               'excerpt/2012/118-0.csv')(1).id)}
 % @result{} 10
 % @end example
 %

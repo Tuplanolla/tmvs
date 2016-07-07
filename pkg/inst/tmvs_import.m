@@ -20,7 +20,7 @@
 % The following examples demonstrate basic usage.
 %
 % @example
-% @code{aggr = tmvs_import ('excerpt/2011/120-0.csv', ...
+% @code{aggr = tmvs_import ('excerpt/2012/118-0.csv', ...
 %                     tmvs_source ('test lab'));}
 % @code{fieldnames (aggr)}
 % @result{} @{'id', 'meta', 'pairs'@}

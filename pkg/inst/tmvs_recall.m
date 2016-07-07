@@ -11,7 +11,7 @@
 % The following examples demonstrate basic usage.
 %
 % @example
-% @code{tmvs_store ('/tmp/tmvs.tmp', tmvs_fetch ('excerpt/2011/120-0.csv'))}
+% @code{tmvs_store ('/tmp/tmvs.tmp', tmvs_fetch ('excerpt/2012/118-0.csv'))}
 % @code{aggr = tmvs_recall ('/tmp/tmvs.tmp');}
 % @code{aggr = tmvs_recall ('/tmp/tmvs.tmp', true);}
 % @end example

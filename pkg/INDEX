@@ -27,6 +27,7 @@ Enumerating
   tmvs_section
   tmvs_material
   tmvs_region
+  tmvs_graph
 Auxiliary
   tmvs_parsename
   tmvs_parsecsv
@@ -44,3 +45,6 @@ Generic
   tmvs_mapl
   tmvs_mapr
   tmvs_progress
+What
+  tmvs_filtrate
+  tmvs_printid
