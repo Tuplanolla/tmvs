@@ -53,7 +53,7 @@ case 1
   y = nan (0);
 case 2
   y = cell (0);
-case 1
+case 3
   c = fieldnames (x);
   y = resize (cell2struct (cell (size (c)), c), 0);
 end

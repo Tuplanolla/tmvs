@@ -38,6 +38,7 @@ Works Well
 +- tmvs_recall
 +- tmvs_interpolate
 +- tmvs_discretize
++- tmvs_evaluate
 Incomplete
 -- tmvs
 -- tmvs_visualize

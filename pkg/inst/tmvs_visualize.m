@@ -55,7 +55,7 @@ case 'simple'
 case 'slice'
   [qty, room, site, src] = varargin{:};
 
-  figure (2);
+  figure (1);
   clf ();
   hold ('on');
 
@@ -103,7 +103,7 @@ case 'slice'
   h = false;
 
   while true
-    figure (2);
+    figure (1);
 
     t = ginput (1);
 
@@ -116,7 +116,7 @@ case 'slice'
     end
     h = line ([t, t], b);
 
-    figure (3);
+    figure (2);
     clf ();
 
     y = [];
@@ -149,7 +149,7 @@ case 'surface'
 
   [qty, room, site, src] = varargin{:};
 
-  figure (1);
+  figure (3);
   clf ();
   hold ('on');
 
@@ -167,7 +167,7 @@ case 'surface'
     a = [(min ([a(1), b(1)])), (max ([a(2), b(2)]))];
   end
 
-  t = linspace (a(1), a(2), 50);
+  t = linspace (a(1), a(2), 100);
 
   y = [];
   x = [];

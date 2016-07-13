@@ -12,11 +12,11 @@
 % @code{fieldnames (interp)}
 % @result{} @{'id', 'meta', 'function', 'limits'@}
 % @code{interp = tmvs_interpolate (aggr, 'spline');
-% t = linspace (num2cell (interp(3).limits){:});
+% t = linspace (num2cell (interp(3).limits)@{:@});
 % plot (t, interp(3).function(t));}
 % @end example
 %
-% @seealso{tmvs, tmvs_discretize}
+% @seealso{tmvs, tmvs_discretize, tmvs_evaluate}
 %
 % @end deftypefn
 

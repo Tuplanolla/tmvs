@@ -17,7 +17,7 @@
 % @end example
 %
 % Temperature and Moisture Visualization System or TMVS in short
-% is a simple data exploration and analysis tool.
+% is a simple data exploration and analysis tool built for JAMK.
 % More words go here.
 % Even though the system itself is quite pedestrian,
 % the author has tried to impose some categorical structure on it.
@@ -39,6 +39,38 @@
 %
 % Look at this space.
 % Mention: all vars.
+%
+% Notational conventions:
+%
+% @itemize @bullet
+% @item the variable @var{aggr} is a structure
+% with the fields @qcode{'id'}, @qcode{'meta'} and @qcode{'pairs'},
+% @item the variable @var{c} is a cell vector or array,
+% @item the variable @var{fid} is a stream handle,
+% @item the variable @var{fname} is a path to a regular file,
+% @item the variable @var{cname} is a path to a cache file,
+% @item the variable @var{dname} is a path to a directory,
+% @item the variables @var{f}, @var{g} and @var{h} are functions or procedures,
+% @item the variable @var{id} is a structure
+% with varying fields like @qcode{'source'} or @qcode{'quantity'},
+% @item the variable @var{interp} is a structure
+% with the fields @qcode{'id'}, @qcode{'meta'},
+% @item @qcode{'function'} and @qcode{'limits'},
+% @item the variables @var{i}, @var{j} and @var{k} are index scalars or vectors,
+% @item the variable @var{meta} is a structure
+% with varying fields like @qcode{'position'} or @qcode{'material'},
+% @item the variable @var{mu} is a mean scalar,
+% @item the variable @var{sigma} is a standard deviation scalar,
+% @item the variable @var{n} is a natural number,
+% @item the variable @var{pat} is a regular expression or glob pattern string,
+% @item the variable @var{p} is a truth value,
+% @item the variable @var{str} is a string,
+% @item the variable @var{s} is a structure,
+% @item the variable @var{varargin} is a variable argument cell vector,
+% @item the variable @var{ver} is a version number string,
+% @item the variable @var{v} is a vector,
+% @item the variables @var{x}, @var{y} and @var{z} are polymorphic,
+% @end itemize
 %
 % The following example demonstrates basic usage.
 %
@@ -63,6 +95,18 @@
 % @seealso{tmvs_import, tmvs_interpolate, tmvs_discretize, tmvs_merge, tmvs_visualize, tmvs_export, tmvs_store, tmvs_recall, tmvs_fetch, tmvs_purge}
 %
 % @end deftypefn
+
+% Remove moist.
+% maggr = tmvs_mapl (@(s) setfield (s, 'pairs', s.pairs(s.pairs(:, 2) < 99)), aggr);
+% Remove other outliers.
+% maggr = tmvs_mapl (@(s) setfield (s, 'pairs', s.pairs(tmvs_chauvenet (s.pairs(:, 2)), :)), aggr);
+% Etc.
+% aggr = tmvs_recall ('../data/2012/118-0.csv.tmp');
+% maggr = tmvs_mapl (@(s) setfield (s, 'pairs', s.pairs(tmvs_chauvenet (s.pairs(:, 2)), :)), aggr);
+% faggr = tmvs_filteru (@(s) s.id.quantity == 1 && s.id.site == 17 && s.id.surface == 1 && s.id.section == 1, maggr);
+% eaggr = tmvs_evaluate (tmvs_interpolate (faggr), 734.7e+3);
+% z = sortrows ([(arrayfun (@(s) s.meta.position, eaggr')), (arrayfun (@(s) s.pairs(2), eaggr'))]);
+% plot (num2cell (z, 1){:});
 
 function aggr = tmvs (dname)
 
