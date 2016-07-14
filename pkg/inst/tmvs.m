@@ -166,3 +166,5 @@ end
 %! test tmvs_mapl
 %! test tmvs_mapr
 %! test tmvs_progress
+%! test tmvs_withinc
+%! test tmvs_withino

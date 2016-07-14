@@ -14,7 +14,9 @@
 % @code{tmvs_withino (3, [0, 2])}
 % @result{} false
 % @code{tmvs_withino (2, [0, 2])}
-% @result{} true
+% @result{} false
+% @code{tmvs_withino (1)}
+% @result{} false
 % @end example
 %
 % @seealso{tmvs_withinc}
@@ -23,6 +25,15 @@
 
 function p = tmvs_withino (x, z = [0, 1])
 
-p = x > z(0) && x < z(1);
+p = x > z(1) && x < z(2);
 
 end
+
+%!test
+%! assert (tmvs_withino (1, [0, 2]), true);
+%!test
+%! assert (tmvs_withino (3, [0, 2]), false);
+%!test
+%! assert (tmvs_withino (2, [0, 2]), false);
+%!test
+%! assert (tmvs_withino (1), false);
