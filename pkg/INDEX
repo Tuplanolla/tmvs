@@ -46,6 +46,8 @@ Generic
   tmvs_mapl
   tmvs_mapr
   tmvs_progress
+  tmvs_withinc
+  tmvs_withino
 What
   tmvs_filtrate
   tmvs_printid

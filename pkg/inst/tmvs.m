@@ -43,33 +43,34 @@
 % Notational conventions:
 %
 % @itemize @bullet
-% @item the variable @var{aggr} is a structure
+% @item the structure @var{aggr} is an aggregate
 % with the fields @qcode{'id'}, @qcode{'meta'} and @qcode{'pairs'},
-% @item the variable @var{c} is a cell vector or array,
-% @item the variable @var{fid} is a stream handle,
-% @item the variable @var{fname} is a path to a regular file,
-% @item the variable @var{cname} is a path to a cache file,
-% @item the variable @var{dname} is a path to a directory,
-% @item the variables @var{f}, @var{g} and @var{h} are functions or procedures,
-% @item the variable @var{id} is a structure
-% with varying fields like @qcode{'source'} or @qcode{'quantity'},
-% @item the variable @var{interp} is a structure
+% @item the structure @var{interp} is an interpolator
 % with the fields @qcode{'id'}, @qcode{'meta'},
-% @item @qcode{'function'} and @qcode{'limits'},
-% @item the variables @var{i}, @var{j} and @var{k} are index scalars or vectors,
-% @item the variable @var{meta} is a structure
-% with varying fields like @qcode{'position'} or @qcode{'material'},
-% @item the variable @var{mu} is a mean scalar,
-% @item the variable @var{sigma} is a standard deviation scalar,
-% @item the variable @var{n} is a natural number,
-% @item the variable @var{pat} is a regular expression or glob pattern string,
-% @item the variable @var{p} is a truth value,
+% @qcode{'function'} and @qcode{'limits'},
+% @item the structure @var{id} is an identifier
+% with various fields like @qcode{'source'} or @qcode{'quantity'},
+% @item the structure @var{meta} is a metadata container
+% with various fields like @qcode{'position'} or @qcode{'material'},
+% @item the string @var{fname} is a path to a regular file,
+% @item the string @var{cname} is a path to a cache file,
+% @item the string @var{dname} is a path to a directory,
+% @item the string @var{pat} is a regular expression or a glob pattern,
+% @item the string @var{ver} is a version number,
+% @item the integer @var{fid} is a file or stream identifier,
+% @item the integer @var{n} is a natural number,
+% @item the integer @var{p} is a truth value,
+% @item the variable @var{mu} is a mean value,
+% @item the variable @var{sigma} is a standard deviation value,
+% @item the variable @var{delta} is a standard error value,
 % @item the variable @var{str} is a string,
-% @item the variable @var{s} is a structure,
-% @item the variable @var{varargin} is a variable argument cell vector,
-% @item the variable @var{ver} is a version number string,
+% @item the variable @var{c} is a cell array,
+% @item the variable @var{s} is a structure or structure array,
 % @item the variable @var{v} is a vector,
-% @item the variables @var{x}, @var{y} and @var{z} are polymorphic,
+% @item the variables @var{f}, @var{g} and @var{h} are functions or procedures,
+% @item the variables @var{i}, @var{j} and @var{k}
+% are index scalars or vectors and
+% @item the variables @var{x}, @var{y} and @var{z} are generic.
 % @end itemize
 %
 % The following example demonstrates basic usage.
@@ -96,8 +97,10 @@
 %
 % @end deftypefn
 
-% Remove moist.
-% maggr = tmvs_mapl (@(s) setfield (s, 'pairs', s.pairs(s.pairs(:, 2) < 99)), aggr);
+% tmvs_range = @(aggr, z) tmvs_mapl (@(s) setfield (s, 'pairs', s.pairs(s.pairs(:, 2) >= z(1) && s.pairs(:, 2) <= z(2))), aggr);
+% Remove wrong humidity, pressure, ...
+% maggr = tmvs_range (aggr, [0, 99]);
+% maggr = tmvs_range (aggr, [20e+3, 200e+3]);
 % Remove other outliers.
 % maggr = tmvs_mapl (@(s) setfield (s, 'pairs', s.pairs(tmvs_chauvenet (s.pairs(:, 2)), :)), aggr);
 % Etc.
@@ -107,6 +110,9 @@
 % eaggr = tmvs_evaluate (tmvs_interpolate (faggr), 734.7e+3);
 % z = sortrows ([(arrayfun (@(s) s.meta.position, eaggr')), (arrayfun (@(s) s.pairs(2), eaggr'))]);
 % plot (num2cell (z, 1){:});
+% Project field out.
+% cat (1, aggr.pairs);
+% z = sortrows ([vertcat (vertcat (eaggr.meta).position), vertcat (eaggr.pairs)(:, 2)]);
 
 function aggr = tmvs (dname)
 
