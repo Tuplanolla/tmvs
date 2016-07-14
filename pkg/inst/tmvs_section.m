@@ -1,8 +1,8 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{y} =} tmvs_section (@var{x})
 %
-% Enumerates the case-insensitive sections @qcode{'bottom corner'} and
-% @qcode{'top corner'}.
+% Enumerates the case-insensitive sections @qcode{'Bottom Corner'} and
+% @qcode{'Top Corner'}.
 %
 % See @code{tmvs_quantity} for a detailed treatise on functions of this kind.
 %
@@ -24,9 +24,9 @@ if ischar (x)
 elseif isindex (x)
   switch x
   case 1
-    y = 'bottom corner';
+    y = 'Bottom Corner';
   case 2
-    y = 'top corner';
+    y = 'Top Corner';
   otherwise
     error ('section %d not known', x);
   end

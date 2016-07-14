@@ -1,8 +1,8 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{y} =} tmvs_material (@var{x})
 %
-% Enumerates the case-insensitive materials @qcode{'mineral wool'},
-% @qcode{'polyurethane'} and @qcode{'polystyrene'}.
+% Enumerates the case-insensitive materials @qcode{'Mineral Wool'},
+% @qcode{'Polyurethane'} and @qcode{'Polystyrene'}.
 %
 % See @code{tmvs_quantity} for a detailed treatise on functions of this kind.
 %
@@ -26,11 +26,11 @@ if ischar (x)
 elseif isindex (x)
   switch x
   case 1
-    y = 'mineral wool';
+    y = 'Mineral Wool';
   case 2
-    y = 'polyurethane';
+    y = 'Polyurethane';
   case 3
-    y = 'polystyrene';
+    y = 'Polystyrene';
   otherwise
     error ('placement %d not known', x);
   end

@@ -11,9 +11,9 @@
 %
 % @example
 % @code{tmvs_uncertainty (struct ('quantity', ...
-%                           tmvs_quantity ('relative humidity')))}
+%                           tmvs_quantity ('Relative Humidity')))}
 % @result{} 10
-% @code{tmvs_uncertainty (tmvs_fetch (tmvs_source ('test lab'), ...
+% @code{tmvs_uncertainty (tmvs_fetch (tmvs_source ('Test Lab'), ...
 %                               'excerpt/2012/118-0.csv')(1).id)}
 % @result{} 10
 % @end example
@@ -28,17 +28,17 @@ quantity = id.quantity;
 
 % TODO Replace these educated guesses with accurate data.
 switch tmvs_quantity (quantity)
-case 'temperature'
+case 'Temperature'
   delta = 1;
-case 'relative humidity'
+case 'Relative Humidity'
   delta = 10;
-case 'absolute humidity'
+case 'Absolute Humidity'
   delta = 1;
-case 'pressure'
+case 'Pressure'
   delta = 1;
-case 'wind speed'
+case 'Wind Speed'
   delta = 0.1;
-case 'precipitation'
+case 'Precipitation'
   delta = 1;
 otherwise
   error ('uncertainty for physical quantity %d not known', quantity);

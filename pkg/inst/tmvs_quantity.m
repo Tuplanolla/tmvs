@@ -1,10 +1,10 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{y} =} tmvs_quantity (@var{x})
 %
-% Enumerates the case-insensitive physical quantities @qcode{'temperature'},
-% @qcode{'relative humidity'}, @qcode{'absolute humidity'},
-% @qcode{'pressure'}, @qcode{'wind speed'}, @qcode{'precipitation'} and
-% @qcode{'solar energy'}.
+% Enumerates the case-insensitive physical quantities @qcode{'Temperature'},
+% @qcode{'Relative Humidity'}, @qcode{'Absolute Humidity'},
+% @qcode{'Pressure'}, @qcode{'Wind Speed'}, @qcode{'Precipitation'} and
+% @qcode{'Solar Energy'}.
 %
 % Enumerations or tagged unions of unit types are a common and
 % useful technique for giving names to a fixed set of values.
@@ -33,20 +33,20 @@
 % The following examples demonstrate basic usage.
 %
 % @example
-% @code{tmvs_quantity ('relative humidity')}
+% @code{tmvs_quantity ('Relative Humidity')}
 % @result{} 2
 % @code{tmvs_quantity (2)}
-% @result{} 'relative humidity'
+% @result{} 'Relative Humidity'
 % @end example
 %
 % Inputs can be abbreviated for convenience,
 % but should not be used in programs.
 %
 % @example
-% @code{tmvs_quantity ('rh')}
+% @code{tmvs_quantity ('RH')}
 % @result{} 2
-% @code{tmvs_quantity (tmvs_quantity ('rh'))}
-% @result{} 'relative humidity'
+% @code{tmvs_quantity (tmvs_quantity ('RH'))}
+% @result{} 'Relative Humidity'
 % @end example
 %
 % @seealso{tmvs, tmvs_source, tmvs_site, tmvs_surface, tmvs_room, tmvs_section, tmvs_material, tmvs_region, tmvs_graph}
@@ -77,19 +77,19 @@ if ischar (x)
 elseif isindex (x)
   switch x
   case 1
-    y = 'temperature';
+    y = 'Temperature';
   case 2
-    y = 'relative humidity';
+    y = 'Relative Humidity';
   case 3
-    y = 'absolute humidity';
+    y = 'Absolute Humidity';
   case 4
-    y = 'pressure';
+    y = 'Pressure';
   case 5
-    y = 'wind speed';
+    y = 'Wind Speed';
   case 6
-    y = 'precipitation';
+    y = 'Precipitation';
   case 7
-    y = 'solar energy';
+    y = 'Solar Energy';
   otherwise
     error ('physical quantity %d not known', x);
   end

@@ -78,31 +78,31 @@ end
 nm = regexpi (str, pat, 'names');
 
 if ~isempty (nm.testLab)
-  source = 'test lab';
+  source = 'Test Lab';
 elseif ~isempty (nm.weatherStation)
-  source = 'weather station';
+  source = 'Weather Station';
 end
 
 if ~isempty (nm.shortTemperature)
-  quantity = 'temperature';
+  quantity = 'Temperature';
 elseif ~isempty (nm.shortRelativeHumidity)
-  quantity = 'relative humidity';
+  quantity = 'Relative Humidity';
 elseif ~isempty (nm.shortAbsoluteHumidity)
-  quantity = 'absolute humidity';
+  quantity = 'Absolute Humidity';
 end
 
 if ~isempty (nm.longTemperature)
-  quantity = 'temperature';
+  quantity = 'Temperature';
 elseif ~isempty (nm.longRelativeHumidity)
-  quantity = 'relative humidity';
+  quantity = 'Relative Humidity';
 elseif ~isempty (nm.longAbsoluteHumidity)
-  quantity = 'absolute humidity';
+  quantity = 'Absolute Humidity';
 elseif ~isempty (nm.longPressure)
-  quantity = 'pressure';
+  quantity = 'Pressure';
 elseif ~isempty (nm.longWindSpeed)
-  quantity = 'wind speed';
+  quantity = 'Wind Speed';
 elseif ~isempty (nm.longPrecipitation)
-  quantity = 'precipitation';
+  quantity = 'Precipitation';
 end
 
 if ~isempty (nm.site)
@@ -110,11 +110,11 @@ if ~isempty (nm.site)
 end
 
 if ~isempty (nm.wall)
-  surface = 'wall';
+  surface = 'Wall';
 elseif ~isempty (nm.floor)
-  surface = 'floor';
+  surface = 'Floor';
 elseif ~isempty (nm.ceiling)
-  surface = 'ceiling';
+  surface = 'Ceiling';
 end
 
 % The second condition is equivalent to
@@ -125,9 +125,9 @@ if ~isempty (nm.room1) && (isempty (nm.room2) || nm.room1 == nm.room2)
 end
 
 if ~isempty (nm.bottomCorner)
-  section = 'bottom corner';
+  section = 'Bottom Corner';
 elseif ~isempty (nm.topCorner)
-  section = 'top corner';
+  section = 'Top Corner';
 end
 
 if ~isempty (nm.position)
@@ -139,25 +139,25 @@ if ~isempty (nm.ordinal)
 end
 
 if ~isempty (nm.mineralWool)
-  material = 'mineral wool';
+  material = 'Mineral Wool';
 elseif ~isempty (nm.polystyrene)
-  material = 'polystyrene';
+  material = 'Polystyrene';
 elseif ~isempty (nm.polyurethane)
-  material = 'polyurethane';
+  material = 'Polyurethane';
 end
 
 % TODO Find more information about this special sensor.
 if ~isempty (nm.magicNumber)
-  quantity = 'temperature';
-  surface = 'floor';
+  quantity = 'Temperature';
+  surface = 'Floor';
   position = nan;
   ordinal = 1;
 end
 
 if ~isempty (nm.autiolahti)
-  region = 'autiolahti';
+  region = 'Autiolahti';
 elseif ~isempty (nm.jyvaskyla)
-  region = 'jyvaskyla';
+  region = 'Jyvaskyla';
 end
 
 % To summarize,

@@ -9,7 +9,7 @@
 %
 % @example
 % @code{tmvs_visualize (aggr, tmvs_graph ('simple'), false, 9);}
-% @code{tmvs_visualize (aggr, tmvs_graph ('slice'), true, tmvs_quantity ('temperature'), tmvs_room ('123'), tmvs_site ('M'), tmvs_source ('test lab'));}
+% @code{tmvs_visualize (aggr, tmvs_graph ('slice'), true, tmvs_quantity ('Temperature'), tmvs_room ('123'), tmvs_site ('M'), tmvs_source ('Test Lab'));}
 % @end example
 %
 % @seealso{tmvs, tmvs_fetch}

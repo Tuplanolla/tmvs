@@ -121,12 +121,12 @@ if ~isdir (fname)
 end
 
 buildings = tmvs_fetchall (sprintf ('%s/*/[0-9]*.csv', fname), ...
-                           tmvs_source ('test lab'));
+                           tmvs_source ('Test Lab'));
 stations = tmvs_fetchall (sprintf ('%s/*/[a-z]*.csv', fname), ...
-                          tmvs_source ('weather station'));
+                          tmvs_source ('Weather Station'));
 observatories = tmvs_fetchall (sprintf ('%s/*.csv', fname), ...
-                               tmvs_source ('weather observatory'), ...
-                               tmvs_region ('jyvaskyla'));
+                               tmvs_source ('Weather Observatory'), ...
+                               tmvs_region ('Jyvaskyla'));
 aggr = tmvs_merge (buildings, stations, observatories);
 
 tmvs_visualize (aggr);

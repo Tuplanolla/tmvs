@@ -9,14 +9,14 @@
 %
 % @example
 % @code{aggr = tmvs_fetch ('excerpt/2012/118-0.csv', ...
-%                    tmvs_source ('test lab'));}
+%                    tmvs_source ('Test Lab'));}
 % @code{fieldnames (aggr)}
 % @result{} @{'id', 'meta', 'pairs'@}
 % @code{size (aggr)}
 % @result{} [1, 11]
 % @code{aggr = tmvs_fetch ('excerpt/2011-2013-0.csv', ...
-%                    tmvs_source ('weather observatory'), ...
-%                    tmvs_region ('jyvaskyla'));}
+%                    tmvs_source ('Weather Observatory'), ...
+%                    tmvs_region ('Jyvaskyla'));}
 % @code{fieldnames (aggr)}
 % @result{} @{'id', 'meta', 'pairs'@}
 % @code{size (aggr)}

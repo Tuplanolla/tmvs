@@ -1,8 +1,8 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{y} =} tmvs_surface (@var{x})
 %
-% Enumerates the case-insensitive surfaces @qcode{'wall'},
-% @qcode{'floor'} and @qcode{'ceiling'}.
+% Enumerates the case-insensitive surfaces @qcode{'Wall'},
+% @qcode{'Floor'} and @qcode{'Ceiling'}.
 %
 % See @code{tmvs_quantity} for a detailed treatise on functions of this kind.
 %
@@ -26,11 +26,11 @@ if ischar (x)
 elseif isindex (x)
   switch x
   case 1
-    y = 'wall';
+    y = 'Wall';
   case 2
-    y = 'floor';
+    y = 'Floor';
   case 3
-    y = 'ceiling';
+    y = 'Ceiling';
   otherwise
     error ('surface %d not known', x);
   end

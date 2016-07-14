@@ -1,8 +1,8 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{y} =} tmvs_region (@var{x})
 %
-% Enumerates the case-insensitive regions @qcode{'autiolahti'} and
-% @qcode{'jyvaskyla'}.
+% Enumerates the case-insensitive regions @qcode{'Autiolahti'} and
+% @qcode{'Jyvaskyla'}.
 %
 % Special characters are accepted in inputs,
 % but in outputs they are represented by their ASCII approximations
@@ -29,9 +29,9 @@ if ischar (x)
 elseif isindex (x)
   switch x
   case 1
-    y = 'autiolahti';
+    y = 'Autiolahti';
   case 2
-    y = 'jyvaskyla';
+    y = 'Jyvaskyla';
   otherwise
     error ('region %d not known', x);
   end

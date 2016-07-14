@@ -13,10 +13,10 @@
 %
 % @example
 % @code{aggr1 = tmvs_import ('excerpt/2012/118-0.csv', ...
-%                      tmvs_source ('test lab'));
+%                      tmvs_source ('Test Lab'));
 % aggr2 = tmvs_import ('excerpt/2011-2013-0.csv', ...
-%                      tmvs_source ('weather observatory'), ...
-%                      tmvs_region ('jyvaskyla'));}
+%                      tmvs_source ('Weather Observatory'), ...
+%                      tmvs_region ('Jyvaskyla'));}
 % @code{aggr = tmvs_merge (aggr1, aggr2);}
 % @code{fieldnames (aggr)}
 % @result{} @{'id', 'meta', 'pairs'@}

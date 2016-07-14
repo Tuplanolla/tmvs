@@ -1,8 +1,8 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{y} =} tmvs_source (@var{x})
 %
-% Enumerates the case-insensitive data sources @qcode{'test lab'},
-% @qcode{'weather station'} and @qcode{'weather observatory'}.
+% Enumerates the case-insensitive data sources @qcode{'Test Lab'},
+% @qcode{'Weather Station'} and @qcode{'Weather Observatory'}.
 %
 % See @code{tmvs_quantity} for a detailed treatise on functions of this kind.
 %
@@ -26,11 +26,11 @@ if ischar (x)
 elseif isindex (x)
   switch x
   case 1
-    y = 'test lab';
+    y = 'Test Lab';
   case 2
-    y = 'weather station';
+    y = 'Weather Station';
   case 3
-    y = 'weather observatory';
+    y = 'Weather Observatory';
   otherwise
     error ('source %d not known', x);
   end
