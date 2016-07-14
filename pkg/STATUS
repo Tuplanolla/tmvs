@@ -7,6 +7,9 @@ Perfect
 ++ tmvs_foldr
 ++ tmvs_mapl
 ++ tmvs_mapr
+++ tmvs_withinc
+++ tmvs_withino
+++ tmvs_zoom
 ++ tmvs_version
 ++ tmvs_source
 ++ tmvs_quantity

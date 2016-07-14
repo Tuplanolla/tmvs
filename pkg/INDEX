@@ -48,6 +48,7 @@ Generic
   tmvs_progress
   tmvs_withinc
   tmvs_withino
+  tmvs_zoom
 What
   tmvs_filtrate
   tmvs_printid

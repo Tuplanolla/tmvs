@@ -97,7 +97,8 @@
 %
 % @end deftypefn
 
-% tmvs_range = @(aggr, z) tmvs_mapl (@(s) setfield (s, 'pairs', s.pairs(s.pairs(:, 2) >= z(1) && s.pairs(:, 2) <= z(2))), aggr);
+% tmvs_range = @(aggr, a) tmvs_zoom (@(z) z(tmvs_withinc (z(:, 2), a), :), aggr, 'pairs');
+% tmvs_range = @(aggr, a) tmvs_mapl (@(s) setfield (s, 'pairs', s.pairs(s.pairs(:, 2) >= a(1) && s.pairs(:, 2) <= a(2))), aggr);
 % Remove wrong humidity, pressure, ...
 % maggr = tmvs_range (aggr, [0, 99]);
 % maggr = tmvs_range (aggr, [20e+3, 200e+3]);

@@ -58,10 +58,11 @@ else
     o = nan (1, n);
   end
 
+  p = 2 * n * normcdf (-abs (v - mu) / sigma);
+
   k = 0;
   for j = 1 : n
-    p = 2 * n * normcdf (-abs (v(j) - mu) / sigma);
-    if p < 0.5
+    if p(j) < 0.5
       o(j - k) = j;
     else
       k = k + 1;
