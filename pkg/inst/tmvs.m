@@ -1,5 +1,27 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {@var{aggr} =} tmvs (@var{dname})
+% @settitle Temperature and Moisture Visualization System
+%
+% @copying
+% This is a short example of a complete Texinfo file, version 1.0.
+%
+% Copyright @copyright{} 2016 SK.
+% @end copying
+%
+% @titlepage
+% @title Sample Title
+%
+% @c The following two commands start the copyright page.
+% @page
+% @vskip 0pt plus 1filll
+% @insertcopying
+% @end titlepage
+%
+% @c Output the table of contents at the beginning.
+% @contents
+%
+% @ifnottex
+% @node Top
+% @top Short Sample
 %
 % @example
 % @code{,-----------------.
@@ -11,36 +33,104 @@
 %       |     |    .       ,    |\          / \        \  \
 %       |     |    |\     /|    | \        /,-------    |-'
 %       |     |    | `---' |    | |\      / \          / \
-%       `-----'----' |\   \`----' | `----'   `--------'   |
+%       `-----^----' |\   \`----' | `----'   `--------'   |
 %        \     \    \| `---'\    \|  \    \ / \        \ /
 %         `-----`----'       `----'   `----'   `--------'}
 % @end example
 %
-% Temperature and Moisture Visualization System or TMVS in short
-% is a simple data exploration and analysis tool built for JAMK.
-% More words go here.
+% This is a short sample Texinfo file.
+% @end ifnottex
+%
+% @menu
+% * First Chapter::    The first chapter is the
+%                        only chapter in this sample.
+% * Index::            Complete index.
+% @end menu
+%
+% @node First Chapter
+% @chapter First Chapter
+%
+% @cindex chapter, first
+%
+% This is the first chapter.
+% @cindex index entry, another
+%
+% Here is a numbered list.
+%
+% @enumerate
+% @item
+% This is the first item.
+%
+% @item
+% This is the second item.
+% @end enumerate
+%
+% @node Index
+% @unnumbered Index
+%
+% @printindex cp
+%
+% Temperature and Moisture Visualization System, or TMVS among friends,
+% is a simple data exploration and analysis tool.
+% Its purpose is to help work with a sizable chunk of data
+% gathered from a test lab and some weather stations.
+% It was originally built by Sampsa "Tuplanolla" Kiiskinen
+% between 2016-06-01 and 2016-08-01 and
+% supported by the funding of the JAMK University of Applied Sciences.
+%
+% This text explains the structure and usage of TMVS
+% in addition to the @code{tmvs} helper procedure.
+% If you are in a hurry or do not enjoy reading technical manuals,
+% jump straight to the examples at the end, try them out yourself and
+% explore the other procedures marked 'see also'.
+% You can come back here and read the details
+% in case you encounter something puzzling or simply become curious.
+%
+% @section Short Primer
+%
+% The documentation for TMVS is built around Texinfo
+% use @code{help} frequently,
+% for nice integration try
+% @code{suppress_verbose_help_message (true)}
+% @code{graphics_toolkit ('gnuplot')}
+% @code{setenv ('GNUTERM', 'wxt noraise')}
+% hit Control C to abort,
+% put configs in @qcode{'~/.octaverc'},
+%
+% Format longer and engineering.
+%
+% @example
+% @code{format long eng}
+% @end example
+%
+% @section The Big Picture
+%
+% Assuming installation.
+%
+% @example
+% @code{pkg install tmvs-1.0.0.tar.gz
+% pkg describe -verbose tmvs}
+% @end example
+%
+% Then.
+%
+% @example
+% @code{pkg load tmvs
+% help tmvs}
+% @end example
+%
+% Mainly fetch.
+%
+% @section Data Structures
+%
 % Even though the system itself is quite pedestrian,
 % the author has tried to impose some categorical structure on it.
 %
-% If you are in a hurry or do not enjoy reading technical manuals,
-% jump straight to the examples at the end, try them out yourself and
-% explore the other procedures listed under 'see also'.
-% You can come back here and read the details
-% in case you encounter something puzzling.
-%
-% Short Octave primer:
-% put configs in @qcode{'~/.octaverc'},
-% for nice integration try
-% @code{suppress_verbose_help_message(true);
-% graphics_toolkit('gnuplot');
-% setenv('GNUTERM', 'wxt noraise');}
-% use @code{help} and @code{whos} frequently,
-% hit Control C to abort,
-%
 % Look at this space.
-% Mention: all vars.
 %
-% Notational conventions:
+% @section Notational Conventions
+%
+% Throughout the project
 %
 % @itemize @bullet
 % @item the structure @var{aggr} is an aggregate
@@ -60,42 +150,19 @@
 % @item the integer @var{fid} is a file or stream identifier,
 % @item the integer @var{n} is a natural number,
 % @item the integer @var{p} is a truth value,
+% @item the variable @var{t} is a time parameter,
 % @item the variable @var{mu} is a mean value,
 % @item the variable @var{sigma} is a standard deviation value,
 % @item the variable @var{delta} is a standard error value,
 % @item the variable @var{str} is a string,
 % @item the variable @var{c} is a cell array,
 % @item the variable @var{s} is a structure or structure array,
-% @item the variable @var{v} is a vector,
+% @item the variables @var{v}, @var{u} and @var{w} are vectors,
 % @item the variables @var{f}, @var{g} and @var{h} are functions or procedures,
 % @item the variables @var{i}, @var{j} and @var{k}
 % are index scalars or vectors and
 % @item the variables @var{x}, @var{y} and @var{z} are generic.
 % @end itemize
-%
-% The following example demonstrates basic usage.
-%
-% @example
-% @code{
-% fname = 'excerpt/2012/118-0.csv';
-% imported = tmvs_import (fname);
-% fetched = tmvs_fetch (fname);
-% merged = tmvs_merge (imported, fetched);
-% interpolated = tmvs_interpolate (merged);
-% discretized = tmvs_discretize (interpolated);
-% tmvs_visualize (discretized);
-% }
-% @end example
-%
-% This procedure performs the commands shown in the previous example.
-%
-% @example
-% @code{tmvs ('excerpt')}
-% @end example
-%
-% @seealso{tmvs_import, tmvs_interpolate, tmvs_discretize, tmvs_merge, tmvs_visualize, tmvs_export, tmvs_store, tmvs_recall, tmvs_fetch, tmvs_purge}
-%
-% @end deftypefn
 
 % tmvs_range = @(aggr, a) tmvs_zoom (@(z) z(tmvs_withinc (z(:, 2), a), :), aggr, 'pairs');
 % tmvs_range = @(aggr, a) tmvs_mapl (@(s) setfield (s, 'pairs', s.pairs(s.pairs(:, 2) >= a(1) && s.pairs(:, 2) <= a(2))), aggr);
@@ -115,35 +182,6 @@
 % cat (1, aggr.pairs);
 % z = sortrows ([vertcat (vertcat (eaggr.meta).position), vertcat (eaggr.pairs)(:, 2)]);
 
-function aggr = tmvs (dname)
-
-if ~isdir (fname)
-  error ('not a directory ''%s''', fname);
-end
-
-buildings = tmvs_fetchall (sprintf ('%s/*/[0-9]*.csv', fname), ...
-                           tmvs_source ('Test Lab'));
-stations = tmvs_fetchall (sprintf ('%s/*/[a-z]*.csv', fname), ...
-                          tmvs_source ('Weather Station'));
-observatories = tmvs_fetchall (sprintf ('%s/*.csv', fname), ...
-                               tmvs_source ('Weather Observatory'), ...
-                               tmvs_region ('Jyvaskyla'));
-aggr = tmvs_merge (buildings, stations, observatories);
-
-tmvs_visualize (aggr);
-
-% tmvs_visualize (aggr, 'T[0-9]+', 'Temperature [^oC]');
-% tmvs_visualize (aggr, 'RH[0-9]+', 'Relative Humidity [\%]');
-% tmvs_visualize (aggr, 'AH[0-9]+', 'Absolute Humidity [g/m^3]');
-
-% tmvs_visualize (aggr, '.ila', 'Temperature [^oC]');
-% tmvs_visualize (aggr, '.osteus', 'Relative Humidity [\%]');
-% tmvs_visualize (aggr, '.aine', 'Ambient Pressure [hPa]');
-% tmvs_visualize (aggr, '.uul', 'Wind Speed [m/s]');
-% tmvs_visualize (aggr, '.ade', 'Precipitation [mm/d]');
-
-end
-
 %!test
 %! test tmvs_version
 
@@ -156,6 +194,7 @@ end
 %! test tmvs_section
 %! test tmvs_material
 %! test tmvs_region
+%! test tmvs_graph
 
 %!test
 %! test tmvs_brsearch
@@ -169,3 +208,4 @@ end
 %! test tmvs_progress
 %! test tmvs_withinc
 %! test tmvs_withino
+%! test tmvs_zoom

@@ -12,30 +12,34 @@
 
 function y = tmvs_material (x)
 
-if ischar (x)
-  switch tolower (x)
-  case {'mw', 'mineral wool'}
-    y = 1;
-  case {'pur', 'polyurethane'}
-    y = 2;
-  case {'eps', 'polystyrene'}
-    y = 3;
-  otherwise
-    error ('material ''%s'' not known', x);
-  end
-elseif isindex (x)
-  switch x
-  case 1
-    y = 'Mineral Wool';
-  case 2
-    y = 'Polyurethane';
-  case 3
-    y = 'Polystyrene';
-  otherwise
-    error ('placement %d not known', x);
-  end
+if nargin == 0
+  y = 'Material';
 else
-  error ('wrong type ''%s''', class (x));
+  if ischar (x)
+    switch tolower (x)
+    case {'mw', 'mineral wool'}
+      y = 1;
+    case {'pur', 'polyurethane'}
+      y = 2;
+    case {'eps', 'polystyrene'}
+      y = 3;
+    otherwise
+      error ('material ''%s'' not known', x);
+    end
+  elseif isindex (x)
+    switch x
+    case 1
+      y = 'Mineral Wool';
+    case 2
+      y = 'Polyurethane';
+    case 3
+      y = 'Polystyrene';
+    otherwise
+      error ('placement %d not known', x);
+    end
+  else
+    error ('wrong type ''%s''', class (x));
+  end
 end
 
 end

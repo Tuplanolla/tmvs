@@ -12,30 +12,34 @@
 
 function y = tmvs_source (x)
 
-if ischar (x)
-  switch tolower (x)
-  case {'tl', 'test lab'}
-    y = 1;
-  case {'ws', 'weather station'}
-    y = 2;
-  case {'wo', 'weather observatory'}
-    y = 3;
-  otherwise
-    error ('source ''%s'' not known', x);
-  end
-elseif isindex (x)
-  switch x
-  case 1
-    y = 'Test Lab';
-  case 2
-    y = 'Weather Station';
-  case 3
-    y = 'Weather Observatory';
-  otherwise
-    error ('source %d not known', x);
-  end
+if nargin == 0
+  y = 'Data Source';
 else
-  error ('wrong type ''%s''', class (x));
+  if ischar (x)
+    switch tolower (x)
+    case {'tl', 'test lab'}
+      y = 1;
+    case {'ws', 'weather station'}
+      y = 2;
+    case {'wo', 'weather observatory'}
+      y = 3;
+    otherwise
+      error ('source ''%s'' not known', x);
+    end
+  elseif isindex (x)
+    switch x
+    case 1
+      y = 'Test Lab';
+    case 2
+      y = 'Weather Station';
+    case 3
+      y = 'Weather Observatory';
+    otherwise
+      error ('source %d not known', x);
+    end
+  else
+    error ('wrong type ''%s''', class (x));
+  end
 end
 
 end

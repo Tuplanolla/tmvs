@@ -1,7 +1,8 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {[@var{aggr}, @var{aggr}] =} tmvs_readcache (@var{cname})
+% @deftypefn {Function File} {[@var{p}, @var{aggr}] =} tmvs_readcache (@var{cname})
 %
-% Sets @var{aggr} to a nonzero value if @var{cname} is a readable cache file.
+% Sets @var{p} to a nonzero value and produces the aggregate @var{aggr}
+% if @var{cname} is a readable cache file.
 %
 % The following examples demonstrate basic usage.
 %
@@ -18,7 +19,7 @@
 
 function [p, aggr] = tmvs_readcache (cname)
 
-aggr = false;
+aggr = [];
 p = false;
 
 try

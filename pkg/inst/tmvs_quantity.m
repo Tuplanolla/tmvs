@@ -1,5 +1,6 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{y} =} tmvs_quantity (@var{x})
+% @deftypefnx {Function File} {@var{y} =} tmvs_quantity ()
 %
 % Enumerates the case-insensitive physical quantities @qcode{'Temperature'},
 % @qcode{'Relative Humidity'}, @qcode{'Absolute Humidity'},
@@ -29,6 +30,7 @@
 % The idea is that a single function can be used as
 % a constructor-destructor, a parser-printer or a serializer-deserializer pair
 % for the parameters @var{x} and @var{y}.
+% Additionally the name of the enumeration can be obtained by omitting @var{x}.
 %
 % The following examples demonstrate basic usage.
 %
@@ -37,6 +39,8 @@
 % @result{} 2
 % @code{tmvs_quantity (2)}
 % @result{} 'Relative Humidity'
+% @code{tmvs_quantity ()}
+% @result{} 'Physical Quantity'
 % @end example
 %
 % Inputs can be abbreviated for convenience,
@@ -55,46 +59,50 @@
 
 function y = tmvs_quantity (x)
 
-if ischar (x)
-  switch tolower (x)
-  case {'t', 'temperature'}
-    y = 1;
-  case {'rh', 'relative humidity'}
-    y = 2;
-  case {'ah', 'absolute humidity'}
-    y = 3;
-  case {'p', 'pressure'}
-    y = 4;
-  case {'v', 'wind speed'}
-    y = 5;
-  case {'h', 'precipitation'}
-    y = 6;
-  case {'i', 'solar energy'}
-    y = 7;
-  otherwise
-    error ('physical quantity ''%s'' not known', x);
-  end
-elseif isindex (x)
-  switch x
-  case 1
-    y = 'Temperature';
-  case 2
-    y = 'Relative Humidity';
-  case 3
-    y = 'Absolute Humidity';
-  case 4
-    y = 'Pressure';
-  case 5
-    y = 'Wind Speed';
-  case 6
-    y = 'Precipitation';
-  case 7
-    y = 'Solar Energy';
-  otherwise
-    error ('physical quantity %d not known', x);
-  end
+if nargin == 0
+  y = 'Physical Quantity';
 else
-  error ('wrong type ''%s''', class (x));
+  if ischar (x)
+    switch tolower (x)
+    case {'t', 'temperature'}
+      y = 1;
+    case {'rh', 'relative humidity'}
+      y = 2;
+    case {'ah', 'absolute humidity'}
+      y = 3;
+    case {'p', 'pressure'}
+      y = 4;
+    case {'v', 'wind speed'}
+      y = 5;
+    case {'h', 'precipitation'}
+      y = 6;
+    case {'i', 'solar energy'}
+      y = 7;
+    otherwise
+      error ('physical quantity ''%s'' not known', x);
+    end
+  elseif isindex (x)
+    switch x
+    case 1
+      y = 'Temperature';
+    case 2
+      y = 'Relative Humidity';
+    case 3
+      y = 'Absolute Humidity';
+    case 4
+      y = 'Pressure';
+    case 5
+      y = 'Wind Speed';
+    case 6
+      y = 'Precipitation';
+    case 7
+      y = 'Solar Energy';
+    otherwise
+      error ('physical quantity %d not known', x);
+    end
+  else
+    error ('wrong type ''%s''', class (x));
+  end
 end
 
 end

@@ -12,30 +12,34 @@
 
 function y = tmvs_graph (x)
 
-if ischar (x)
-  switch tolower (x)
-  case 'simple'
-    y = 1;
-  case 'slice'
-    y = 2;
-  case 'surface'
-    y = 3;
-  otherwise
-    error ('graph ''%s'' not known', x);
-  end
-elseif isindex (x)
-  switch x
-  case 1
-    y = 'simple';
-  case 2
-    y = 'slice';
-  case 3
-    y = 'surface';
-  otherwise
-    error ('graph %d not known', x);
-  end
+if nargin == 0
+  y = 'Graph';
 else
-  error ('wrong type ''%s''', class (x));
+  if ischar (x)
+    switch tolower (x)
+    case 'simple'
+      y = 1;
+    case 'slice'
+      y = 2;
+    case 'surface'
+      y = 3;
+    otherwise
+      error ('graph ''%s'' not known', x);
+    end
+  elseif isindex (x)
+    switch x
+    case 1
+      y = 'simple';
+    case 2
+      y = 'slice';
+    case 3
+      y = 'surface';
+    otherwise
+      error ('graph %d not known', x);
+    end
+  else
+    error ('wrong type ''%s''', class (x));
+  end
 end
 
 end

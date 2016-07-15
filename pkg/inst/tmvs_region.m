@@ -17,26 +17,30 @@
 
 function y = tmvs_region (x)
 
-if ischar (x)
-  switch tolower (x)
-  case 'autiolahti'
-    y = 1;
-  case {'jyvaskyla', 'jyväskylä', 'jyv?skyl?'}
-    y = 2;
-  otherwise
-    error ('region ''%s'' not known', x);
-  end
-elseif isindex (x)
-  switch x
-  case 1
-    y = 'Autiolahti';
-  case 2
-    y = 'Jyvaskyla';
-  otherwise
-    error ('region %d not known', x);
-  end
+if nargin == 0
+  y = 'Region';
 else
-  error ('wrong type ''%s''', class (x));
+  if ischar (x)
+    switch tolower (x)
+    case 'autiolahti'
+      y = 1;
+    case {'jyvaskyla', 'jyväskylä', 'jyv?skyl?'}
+      y = 2;
+    otherwise
+      error ('region ''%s'' not known', x);
+    end
+  elseif isindex (x)
+    switch x
+    case 1
+      y = 'Autiolahti';
+    case 2
+      y = 'Jyvaskyla';
+    otherwise
+      error ('region %d not known', x);
+    end
+  else
+    error ('wrong type ''%s''', class (x));
+  end
 end
 
 end

@@ -33,7 +33,7 @@ case 'simple'
 
   s = aggr(i);
 
-  fprintf (tmvs_printid (s.id));
+  fprintf (tmvs_dispid (s.id));
 
   t = s.pairs(:, 1);
   x = s.pairs(:, 2);

@@ -12,26 +12,30 @@
 
 function y = tmvs_section (x)
 
-if ischar (x)
-  switch tolower (x)
-  case {'bc', 'bottom corner'}
-    y = 1;
-  case {'tc', 'top corner'}
-    y = 2;
-  otherwise
-    error ('section ''%s'' not known', x);
-  end
-elseif isindex (x)
-  switch x
-  case 1
-    y = 'Bottom Corner';
-  case 2
-    y = 'Top Corner';
-  otherwise
-    error ('section %d not known', x);
-  end
+if nargin == 0
+  y = 'Section';
 else
-  error ('wrong type ''%s''', class (x));
+  if ischar (x)
+    switch tolower (x)
+    case {'bc', 'bottom corner'}
+      y = 1;
+    case {'tc', 'top corner'}
+      y = 2;
+    otherwise
+      error ('section ''%s'' not known', x);
+    end
+  elseif isindex (x)
+    switch x
+    case 1
+      y = 'Bottom Corner';
+    case 2
+      y = 'Top Corner';
+    otherwise
+      error ('section %d not known', x);
+    end
+  else
+    error ('wrong type ''%s''', class (x));
+  end
 end
 
 end

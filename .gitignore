@@ -10,4 +10,5 @@
 *.tmp
 *.tokens
 /data-flow.tex
+/manual
 /raw.tex

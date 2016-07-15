@@ -33,6 +33,7 @@ Auxiliary
   tmvs_parsename
   tmvs_parsecsv
   tmvs_findid
+  tmvs_dispid
   tmvs_cachename
   tmvs_checkcache
   tmvs_readcache
@@ -51,4 +52,3 @@ Generic
   tmvs_zoom
 What
   tmvs_filtrate
-  tmvs_printid

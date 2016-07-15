@@ -12,23 +12,27 @@
 
 function y = tmvs_site (x)
 
-if ischar (x)
-  c = tolower (x);
-  if c < 'a' || c > 'z'
-    error ('measuring site ''%s'' not known', x);
-  else
-    y = c - 'a' + 1;
-  end
-elseif isindex (x)
-  if x < 1 || x > 26
-    error ('measuring site %d not known', x);
-  else
-    n = x + 'A' - 1;
-  end
-
-  y = char (n);
+if nargin == 0
+  y = 'Measuring Site';
 else
-  error ('wrong type ''%s''', class (x));
+  if ischar (x)
+    c = tolower (x);
+    if c < 'a' || c > 'z'
+      error ('measuring site ''%s'' not known', x);
+    else
+      y = c - 'a' + 1;
+    end
+  elseif isindex (x)
+    if x < 1 || x > 26
+      error ('measuring site %d not known', x);
+    else
+      n = x + 'A' - 1;
+    end
+
+    y = char (n);
+  else
+    error ('wrong type ''%s''', class (x));
+  end
 end
 
 end
