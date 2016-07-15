@@ -131,7 +131,7 @@ case 'Weather Observatory'
       R = str2double (csv{6});
       % TODO Should this be csv{10} instead?
       v = str2double (csv{8});
-      p = str2double (csv{17});
+      p = str2double (csv{17}) * 100;
       % TODO Should this be csv{19} or csv{20} instead?
       h = str2double (csv{18});
       % TODO Should this be csv{21} instead?

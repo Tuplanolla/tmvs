@@ -24,18 +24,7 @@ aggr = struct ('id', {}, 'meta', {}, 'pairs', {});
 aggr = resize (aggr, size (interp));
 
 for i = 1 : numel (interp)
-  a = interp(i).limits;
-
-  if numel (a) < 2
-    z = [];
-  else
-    t = linspace (a(1), a(2), n)';
-    z = [t, (interp(i).function (t))];
-  end
-
-  aggr(i) = struct ('id', interp(i).id, ...
-                    'meta', interp(i).meta, ...
-                    'pairs', z);
+  aggr(i) = tmvs_evaluate (interp(i), linspace (num2cell (interp(i).limits){:}, n)(:));
 end
 
 end

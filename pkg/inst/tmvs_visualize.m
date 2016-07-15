@@ -53,7 +53,7 @@ case 'simple'
 
   hold ('off');
 case 'slice'
-  [qty, room, site, src] = varargin{:};
+  [qty, room, site, src, sec] = varargin{:};
 
   figure (1);
   clf ();
@@ -62,6 +62,7 @@ case 'slice'
   f = @(s) s.id.quantity == qty && ...
            s.id.room == room && ...
            s.id.site == site && ...
+           s.id.section == sec && ...
            s.id.source == src;
   interp = tmvs_interpolate (tmvs_filteru (f, aggr), 'extrap');
 

@@ -131,7 +131,7 @@ elseif ~isempty (nm.topCorner)
 end
 
 if ~isempty (nm.position)
-  position = str2double (nm.position);
+  position = str2double (nm.position) * 1e-3;
 end
 
 if ~isempty (nm.ordinal)
