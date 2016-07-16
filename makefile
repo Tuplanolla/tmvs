@@ -1,14 +1,14 @@
 version=1.0.0
 
-build: grammars package manual report
+build: verify package document report
 
 report: data-flow.png report.pdf
 
-manual: manual/index.html
+document: manual/index.html
 
 package: tmvs-$(version).tar.gz
 
-grammars: CSVParser.class NameParser.class
+verify: CSVParser.class NameParser.class
 
 clean:
 	$(RM) *.tmp
@@ -39,8 +39,8 @@ manual/index.html: pkg/inst/tmvs.m
 	  echo '@code{\x\}' && \
 	  echo '@end macro' && \
 	  a='-\*- texinfo -\*-' && b='^\([^%]\|\)$$' && \
-	  sed -n "/$$a/,/$$b/{/$$a/n;/$$b/q;s/^% //p}" $< && \
-	  echo '@bye' ; } | makeinfo --html --output manual
+	  sed -n "/$$a/,/$$b/{/$$a/n;/$$b/q;s/^% \\?//p}" $< && \
+	  echo '@bye' ; } | tee /tmp/pipe | makeinfo --html --output manual
 
 %.class: %.java
 	javac $<

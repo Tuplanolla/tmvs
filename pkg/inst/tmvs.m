@@ -1,92 +1,53 @@
 % -*- texinfo -*-
-% @settitle Temperature and Moisture Visualization System
+% @settitle TMVS
 %
-% @copying
-% This is a short example of a complete Texinfo file, version 1.0.
-%
-% Copyright @copyright{} 2016 SK.
-% @end copying
-%
-% @titlepage
-% @title Sample Title
-%
-% @c The following two commands start the copyright page.
-% @page
-% @vskip 0pt plus 1filll
-% @insertcopying
-% @end titlepage
-%
-% @c Output the table of contents at the beginning.
+% @ifhtml
 % @contents
+% @end ifhtml
 %
 % @ifnottex
 % @node Top
-% @top Short Sample
-%
-% @example
-% @code{,-----------------.
-% |                 |\
-% |                 | |
-% `-----.     ,-----<.|  ,-----,----.    ,----.,-------.
-%  \    |     |       \ /      \     \  /     /         \
-%   `---|     |        '        |     \/     |    ------'\
-%       |     |    .       ,    |\          / \        \  \
-%       |     |    |\     /|    | \        /,-------    |-'
-%       |     |    | `---' |    | |\      / \          / \
-%       `-----^----' |\   \`----' | `----'   `--------'   |
-%        \     \    \| `---'\    \|  \    \ / \        \ /
-%         `-----`----'       `----'   `----'   `--------'}
-% @end example
-%
-% This is a short sample Texinfo file.
-% @end ifnottex
+% @top
 %
 % @menu
-% * First Chapter::    The first chapter is the
-%                        only chapter in this sample.
-% * Index::            Complete index.
+% * Preface:: Project overview.
+% * Introduction:: Project overview.
+% * Short Primer:: Installing and configuring Octave, Gnuplot and TMVS.
+% * The Big Picture:: Understanding how things fit together.
+% * Quirks in the Source Data:: What the fuck?
 % @end menu
+% @end ifnottex
 %
-% @node First Chapter
-% @chapter First Chapter
+% @node Preface
+% @chapter Preface
 %
-% @cindex chapter, first
-%
-% This is the first chapter.
-% @cindex index entry, another
-%
-% Here is a numbered list.
-%
-% @enumerate
-% @item
-% This is the first item.
-%
-% @item
-% This is the second item.
-% @end enumerate
-%
-% @node Index
-% @unnumbered Index
-%
-% @printindex cp
-%
-% Temperature and Moisture Visualization System, or TMVS among friends,
-% is a simple data exploration and analysis tool.
-% Its purpose is to help work with a sizable chunk of data
-% gathered from a test lab and some weather stations.
-% It was originally built by Sampsa "Tuplanolla" Kiiskinen
-% between 2016-06-01 and 2016-08-01 and
-% supported by the funding of the JAMK University of Applied Sciences.
-%
-% This text explains the structure and usage of TMVS
-% in addition to the @code{tmvs} helper procedure.
+% This text explains the structure and usage of TMVS.
 % If you are in a hurry or do not enjoy reading technical manuals,
 % jump straight to the examples at the end, try them out yourself and
 % explore the other procedures marked 'see also'.
 % You can come back here and read the details
 % in case you encounter something puzzling or simply become curious.
 %
-% @section Short Primer
+% @node Introduction
+% @chapter Introduction
+%
+% Temperature and Moisture Visualization System, or TMVS among friends,
+% is a simple data exploration and analysis tool.
+% Its purpose is to help work with a sizable chunk of data
+% gathered from a test lab and some weather stations,
+% covering temperature, humidity, pressure, precipitation and more.
+% It was originally built by Sampsa "Tuplanolla" Kiiskinen
+% between 2016-06-01 and 2016-08-01 and
+% supported by the funding of the JAMK University of Applied Sciences.
+%
+% Even though TMVS itself is quite pedestrian,
+% the author has tried to impose some mathematical structure on it.
+% The data structures are built from algebraic sum and product types,
+% data flow is modeled around a category and many transformations
+% are adapted or at least inspired by functional programming.
+%
+% @node Short Primer
+% @chapter Short Primer
 %
 % The documentation for TMVS is built around Texinfo
 % use @code{help} frequently,
@@ -103,7 +64,8 @@
 % @code{format long eng}
 % @end example
 %
-% @section The Big Picture
+% @node The Big Picture
+% @chapter The Big Picture
 %
 % Assuming installation.
 %
@@ -122,9 +84,6 @@
 % Mainly fetch.
 %
 % @section Data Structures
-%
-% Even though the system itself is quite pedestrian,
-% the author has tried to impose some categorical structure on it.
 %
 % Look at this space.
 %
@@ -163,6 +122,11 @@
 % are index scalars or vectors and
 % @item the variables @var{x}, @var{y} and @var{z} are generic.
 % @end itemize
+%
+% @node Quirks in the Source Data
+% @chapter Quirks in the Source Data
+%
+% Ha!
 
 % tmvs_range = @(aggr, a) tmvs_zoom (@(z) z(tmvs_withinc (z(:, 2), a), :), aggr, 'pairs');
 % tmvs_range = @(aggr, a) tmvs_mapl (@(s) setfield (s, 'pairs', s.pairs(s.pairs(:, 2) >= a(1) && s.pairs(:, 2) <= a(2))), aggr);
