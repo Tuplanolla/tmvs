@@ -10,7 +10,7 @@
 % @top
 %
 % @menu
-% * Preface:: Project overview.
+% * Preface:: How to read this manual.
 % * Introduction:: Project overview.
 % * Short Primer:: Installing and configuring Octave, Gnuplot and TMVS.
 % * The Big Picture:: Understanding how things fit together.
@@ -31,7 +31,8 @@
 % @node Introduction
 % @chapter Introduction
 %
-% Temperature and Moisture Visualization System, or TMVS among friends,
+% Temperature and Moisture Visualization System,
+% or TMVS among friends, because the name is not important,
 % is a simple data exploration and analysis tool.
 % Its purpose is to help work with a sizable chunk of data
 % gathered from a test lab and some weather stations,

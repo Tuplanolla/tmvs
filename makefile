@@ -12,12 +12,12 @@ verify: CSVParser.class NameParser.class
 
 clean:
 	$(RM) *.tmp
-	$(RM) *.class *.java *.tokens
+	$(RM) *.class CSV*.java Name*.java *.tokens
 	$(RM) *.aux *.log *.out
 
 deep-clean: clean
 	$(RM) *.tar.gz
-	$(RM) *.png
+	$(RM) data-flow.png
 	$(RM) *.pdf
 	$(RM) -r manual
 

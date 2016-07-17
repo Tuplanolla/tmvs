@@ -25,6 +25,7 @@ Perfect
 ++ tmvs_uncertainty
 ++ tmvs_findid
 ++ tmvs_cachename
+++ tmvs_dispid
 ++ tmvs_graph
 Almost Perfect
 +- tmvs_merge
@@ -42,10 +43,8 @@ Works Well
 +- tmvs_interpolate
 +- tmvs_discretize
 +- tmvs_evaluate
-Incomplete
--- tmvs
++- tmvs_work
 -- tmvs_visualize
--- tmvs_filtrate
+Incomplete
 -- tmvs_select
 -- tmvs_filtrate
--- tmvs_dispid

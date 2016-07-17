@@ -1,5 +1,5 @@
 digraph {
-  subgraph cluster_cace {
+  subgraph cluster_os {
     label = "Operating System"
 
     node [shape = box]
@@ -18,8 +18,8 @@ digraph {
         label = "Working Set"
 
         node [shape = box]
-        array [label = "Array"]
-        function [label = "Function"]
+        aggr [label = "Aggregate"]
+        interp [label = "Interpolator"]
         plot [label = "Plot"]
 
         node [shape = oval]
@@ -47,17 +47,17 @@ digraph {
   }
 
   xlsr -> gnumeric -> csvr
-  csvr -> import -> array
-  array -> interpolate -> function
-  function -> discretize -> array
-  array -> merge -> array
-  array -> visualize -> plot
-  array -> store -> cache
-  cache -> recall -> array
-  csvr -> fetch -> array
+  csvr -> import -> aggr
+  aggr -> interpolate -> function
+  interp -> discretize -> aggr
+  aggr -> merge -> aggr
+  aggr -> visualize -> plot
+  aggr -> store -> cache
+  cache -> recall -> aggr
+  csvr -> fetch -> aggr
   cache -> fetch -> cache
   null -> purge -> cache
-  array -> export -> csvw
+  aggr -> export -> csvw
 
   fetch -> import [style = invis]
   recall -> import [style = invis]

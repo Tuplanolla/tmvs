@@ -5,10 +5,7 @@
 *.log
 *.out
 *.pdf
-*.png
 *.tar.gz
 *.tmp
 *.tokens
-/data-flow.tex
 /manual
-/raw.tex
