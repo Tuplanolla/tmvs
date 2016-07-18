@@ -64,9 +64,11 @@ longTemperature : ('L' | 'l') . 'mp' . Space? ('T' | 't') 'ila' ;
 longRelativeHumidity :
   (('S' | 's') 'uhteellinen' Space?)? ('K' | 'k') 'osteus'
   (Space? ('P' | 'p') 'rosentti')? ;
-longAbsoluteHumidity : ('A' | 'a') 'bsoluuttinen' Space? ('K' | 'k') 'osteus' ;
+longAbsoluteHumidity :
+  ('A' | 'a') 'bsoluuttinen' Space? ('K' | 'k') 'osteus' ;
 longPressure : ('P' | 'p') 'aine' ;
-longWindSpeed : ('T' | 't') 'uul' ('i' | 'en') (Space? ('N' | 'n') 'opeus')? ;
+longWindSpeed :
+  ('T' | 't') 'uul' ('i' | 'en') (Space? ('N' | 'n') 'opeus')? ;
 longPrecipitation :
   ('S' | 's') ('ade' | 'ateen') (Space? ('M' | 'm') . . 'r' .)? ;
 longSuffix : ('A' | 'a') 'rvo' | ('M' | 'm') 'ittaus' ;

@@ -9,12 +9,13 @@ Basic
   tmvs_discretize
   tmvs_evaluate
   tmvs_merge
-  tmvs_visualize
   tmvs_export
   tmvs_store
   tmvs_recall
   tmvs_fetch
   tmvs_purge
+Visual
+  tmvs_visualize
 Convenient
   tmvs_fetchall
   tmvs_exportall
@@ -29,7 +30,6 @@ Enumerating
   tmvs_section
   tmvs_material
   tmvs_region
-  tmvs_graph
 Auxiliary
   tmvs_parsename
   tmvs_parsecsv
@@ -52,4 +52,5 @@ Generic
   tmvs_withino
   tmvs_zoom
 What
+  tmvs_graph
   tmvs_filtrate

@@ -76,7 +76,7 @@ else
       y = 5;
     case {'h', 'precipitation'}
       y = 6;
-    case {'i', 'solar energy'}
+    case {'i', 'sunniness'}
       y = 7;
     otherwise
       error ('physical quantity ''%s'' not known', x);
@@ -96,7 +96,7 @@ else
     case 6
       y = 'Precipitation';
     case 7
-      y = 'Solar Energy';
+      y = 'Sunniness';
     otherwise
       error ('physical quantity %d not known', x);
     end

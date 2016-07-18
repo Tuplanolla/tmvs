@@ -23,6 +23,7 @@ function tmvs_visualize (aggr, graph, unc = true, varargin)
 datefmt = 'yyyy-mm-dd';
 
 % TODO Be more creative.
+% TODO Split into different procedures; keep the interface 'open' to change.
 switch tmvs_graph (graph)
 case 'simple'
   i = varargin{:};

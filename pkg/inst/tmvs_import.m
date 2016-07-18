@@ -112,7 +112,7 @@ case 'Weather Observatory'
                         (f (tmvs_quantity ('Wind Speed'))), ...
                         (f (tmvs_quantity ('Pressure'))), ...
                         (f (tmvs_quantity ('Precipitation'))), ...
-                        (f (tmvs_quantity ('Solar Energy')))}, ...
+                        (f (tmvs_quantity ('Sunniness')))}, ...
               'meta', repmat ({(struct ())}, 1, 6), ...
               'pairs', repmat ({[]}, 1, 6));
 
@@ -132,8 +132,8 @@ case 'Weather Observatory'
       % TODO Should this be csv{10} instead?
       v = str2double (csv{8});
       p = str2double (csv{17}) * 100;
-      % TODO Should this be csv{19} or csv{20} instead?
-      h = str2double (csv{18});
+      % TODO Should this be csv{19} instead?
+      h = str2double (csv{18}) * 1e-3;
       % TODO Should this be csv{21} instead?
       E = str2double (csv{22});
 
