@@ -3,7 +3,7 @@
 %
 % Parses the string @var{str} containing a comma-separated value record
 % with the delimiter @qcode{'|'} and produces the cell array @var{c}.
-% A formal grammar is presented in the file @qcode{'CSV.g4'}.
+% A formal grammar is presented in the file @file{CSV.g4}.
 %
 % The following examples demonstrate basic usage.
 %

@@ -1,25 +1,25 @@
 version=1.0.0
 
-build: verify package document report
+build: verify package document
 
-report: data-flow.png report.pdf
-
-document: manual/index.html
+document: data-flow.png data-flow.tex manual.pdf manual/index.html
 
 package: tmvs-$(version).tar.gz
 
 verify: CSVParser.class NameParser.class
 
 clean:
-	$(RM) *.tmp
-	$(RM) *.class CSV*.java Name*.java *.tokens
-	$(RM) *.aux *.log *.out
+	$(RM) *.java *.tokens
+	$(RM) *.log *.texinfo *.toc
+	$(RM) tmvs.tar.gz
 
 deep-clean: clean
-	$(RM) *.tar.gz
-	$(RM) data-flow.png
-	$(RM) *.pdf
+	$(RM) *.class
+	$(RM) *.png *.tex
+	$(RM) manual.pdf
 	$(RM) -r manual
+	$(RM) *.tar.gz
+	$(RM) *.tmp
 
 install: tmvs-$(version).tar.gz
 	octave-cli --norc --quiet --eval 'pkg install $<'
@@ -30,29 +30,35 @@ uninstall:
 tmvs-$(version).tar.gz: tmvs.tar.gz
 	octave-cli --norc --quiet --eval 'pkg build . tmvs.tar.gz'
 
-tmvs.tar.gz: pkg
-	tar acf tmvs.tar.gz pkg
+tmvs.tar.gz: pkg pkg/* pkg/inst/*
+	tar --auto-compress --create --file tmvs.tar.gz \
+	--transform 's|^\./|pkg/inst/|' pkg ./excerpt ./*.g4 ./*.txt
 
-manual/index.html: pkg/inst/tmvs.m
+manual/index.html: tmvs.texinfo data-flow.png
+	makeinfo --html --output manual $<
+	cp data-flow.png manual
+
+manual.pdf: tmvs.texinfo data-flow.png
+	makeinfo --pdf --output manual.pdf $<
+
+%.texinfo: pkg/inst/%.m
 	{ echo '\input texinfo' && \
 	  echo '@macro qcode{x}' && \
 	  echo '@code{\x\}' && \
 	  echo '@end macro' && \
 	  a='-\*- texinfo -\*-' && b='^\([^%]\|\)$$' && \
 	  sed -n "/$$a/,/$$b/{/$$a/n;/$$b/q;s/^% \\?//p}" $< && \
-	  echo '@bye' ; } | tee /tmp/pipe | makeinfo --html --output manual
+	  echo '@bye' ; } > $@
+
+%.tex: %.dot
+	dot2tex --codeonly --format tikz --texmode verbatim -o $@ $<
+
+%.png: %.dot
+	dot -Efontname=sans -Gfontname=sans -Nfontname=sans \
+	-Tpng -Gsize=6,12 $< > $@
 
 %.class: %.java
 	javac $<
 
 %Parser.java: %.g4
 	antlr4 $<
-
-%.pdf: %.tex data-flow.tex
-	pdflatex $<
-
-%.tex: %.dot
-	dot2tex --codeonly --format tikz --texmode verbatim -o $@ $<
-
-%.png: %.dot
-	dot -Efontname=sans -Gfontname=sans -Nfontname=sans $< > $@

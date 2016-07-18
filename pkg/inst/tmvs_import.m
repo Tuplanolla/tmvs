@@ -6,13 +6,13 @@
 % with the delimiter @qcode{'|'} and
 % and produces the aggregate @var{aggr}.
 % A formal grammar for the superstructure
-% is presented in the file @qcode{'CSV.g4'}
+% is presented in the file @file{CSV.g4}
 % with the exception that quoted fields in records may not contain line breaks.
 % The record format is expected to be
 % suitable for the data source @var{src} and
 % any other specifications passed within @var{varargin}.
 % A formal grammar for some of the substructures
-% is presented in the file @qcode{'Name.g4'}.
+% is presented in the file @file{Name.g4}.
 %
 % If you simply want to load data from a file, use @code{tmvs_fetch} instead.
 % This procedure does not cache its results and is thus quite slow.

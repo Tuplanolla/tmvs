@@ -1,11 +1,12 @@
-*.aux
 *.class
-*.eps
 *.java
 *.log
-*.out
 *.pdf
 *.tar.gz
+*.texinfo
 *.tmp
+*.tex
+*.toc
 *.tokens
 /manual
+/*.png

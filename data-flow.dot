@@ -12,7 +12,7 @@ digraph {
     gnumeric [label = "Gnumeric"]
 
     subgraph cluster_tmvs {
-      label = "Temperature and Moisture Visualization System"
+      label = "TMVS"
 
       subgraph cluster_ws {
         label = "Working Set"
@@ -48,7 +48,7 @@ digraph {
 
   xlsr -> gnumeric -> csvr
   csvr -> import -> aggr
-  aggr -> interpolate -> function
+  aggr -> interpolate -> interp
   interp -> discretize -> aggr
   aggr -> merge -> aggr
   aggr -> visualize -> plot

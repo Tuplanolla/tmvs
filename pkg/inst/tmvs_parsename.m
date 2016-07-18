@@ -4,7 +4,7 @@
 % Parses the string @var{str} containing a record name and
 % produces the identifying structure @var{id} and
 % the metadata structure @var{meta}.
-% The formal grammar is presented in the file @qcode{'Name.g4'}.
+% The formal grammar is presented in the file @file{Name.g4}.
 %
 % The following examples demonstrate basic usage.
 %

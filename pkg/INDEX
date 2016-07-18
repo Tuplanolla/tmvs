@@ -18,6 +18,7 @@ Basic
 Convenient
   tmvs_fetchall
   tmvs_exportall
+  tmvs_purgeall
   tmvs_select
 Enumerating
   tmvs_source
