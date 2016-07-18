@@ -3,10 +3,10 @@
 *.log
 *.pdf
 *.tar.gz
+*.tex
 *.texinfo
 *.tmp
-*.tex
 *.toc
 *.tokens
-/manual
 /*.png
+/manual
