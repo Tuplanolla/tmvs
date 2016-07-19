@@ -403,7 +403,7 @@
 % should give you the idea.
 %
 % @example
-% @code{struct ( ...
+% @code{aggr = struct ( ...
 %   'id', @{(struct ('source', tmvs_source ('Test Lab'), ...
 %                   'quantity', tmvs_quantity ('Temperature'), ...
 %                   'site', tmvs_site ('Q'), ...
@@ -425,20 +425,35 @@
 %              735007.154769, 16.7], ...
 %             [734723.045440, 3.1e-03; ...
 %              734775.657118, 7.7e-03], ...
-%             [734719.000000, 0.9]@})}
+%             [734719.000000, 0.9]@});}
+% @end example
+%
+% Uncertainties are not stored within the data.
+% If needed, they can be computed separately
+% from the identifier and the measured value.
+%
+% @example
+% @code{tmvs_uncertainty (aggr(1).id, aggr(1).pairs(:, 2))}
+% @result{} [1; 1; 1]
 % @end example
 %
 % To perform computations, the aggregate can be converted into an interpolator.
 % In an interpolator the @qcode{'pairs'}
 % are simply replaced by a @qcode{'function'} and its @qcode{'limits'}.
-% The following structures illustrate difference for a single element.
+% Assuming @code{fields} is a cell array
+% containing the definitions for @qcode{'id'} and @qcode{'meta'},
+% the following structures illustrate the difference
+% between a singleton aggregate and the equivalent interpolator.
 %
 % @example
-% @code{struct (fields@{:@}, ...
-%         'pairs', [t, x])}
-% @code{struct (fields@{:@}, ...
-%         'function', @@(xi) interp (t, x, xi), ...
-%         'limits', [t(1), t(end)])}
+% @code{aggr = struct (fields@{:@}, ...
+%   'pairs', [t, x]);}
+% @end example
+%
+% @example
+% @code{interp = struct (fields@{:@}, ...
+%   'function', @@(xi) interp (t, x, xi), ...
+%   'limits', [t(1), t(end)]);}
 % @end example
 %
 % Within the limits the interpolator works as the name suggests:
@@ -497,13 +512,13 @@
 % The following microbenchmark should drive the point home.
 %
 % @example
-% @code{tic ();
+% @code{tic
 % aggr = tmvs_fetch ('excerpt/2012/118-0.csv', tmvs_source ('Test Lab'));
-% toc ();}
+% toc}
 % @print{} Elapsed time is 0.112992 seconds.
-% @code{tic ();
+% @code{tic
 % aggr = tmvs_fetch ('excerpt/2012/118-0.csv', tmvs_source ('Test Lab'));
-% toc ();}
+% toc}
 % @print{} Elapsed time is 0.012532 seconds.
 % @end example
 %
@@ -600,8 +615,13 @@
 %
 % Fun and games (mostly games).
 %
-% Mention uncertainties.
-% Uncertainties are not stored elsewhere.
+% @example
+% @code{print ('/tmp/tmvs.tex', '-depslatex', '-S480,320');}
+% @end example
+%
+% @example
+% @code{tmvs_exportall ('/tmp', aggr);}
+% @end example
 %
 % @c tmvs_filters (@(s) s.id.quantity == tmvs_quantity ('temperature'), aggr)
 % @c tmvs_mapl (@(s) setfield (s, 'pairs', s.pairs(s.pairs(:, 1) < 734543, :)), aggr)
@@ -713,8 +733,7 @@
 % It can be benchmarked as follows.
 %
 % @example
-% @code{profile clear
-% profile on
+% @code{profile on
 % aggr = tmvs_work ('excerpt');
 % profile off
 % profexplore}

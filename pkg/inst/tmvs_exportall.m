@@ -8,6 +8,7 @@
 % The following examples demonstrate basic usage.
 %
 % @example
+% @code{tmvs_exportall ('/tmp', aggr)}
 % @code{tmvs_exportall ('/tmp', aggr, @@(i, ~) sprintf ('%d.csv', i))}
 % @code{tmvs_exportall ('/tmp', aggr, @@(~, id) sprintf ('%d-%d-%d.csv', id.quantity, id.section, id.ordinal))}
 % @end example
