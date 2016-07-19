@@ -8,8 +8,8 @@
 % The following examples demonstrate basic usage.
 %
 % @example
-% @code{tmvs_visualize (aggr, tmvs_graph ('simple'), false, 9);}
-% @code{tmvs_visualize (aggr, tmvs_graph ('slice'), true, tmvs_quantity ('Temperature'), tmvs_room ('123'), tmvs_site ('M'), tmvs_source ('Test Lab'));}
+% @code{tmvs_visualize (aggr, 1, false, 9);}
+% @code{tmvs_visualize (aggr, 2, true, tmvs_quantity ('Temperature'), tmvs_room ('123'), tmvs_site ('M'), tmvs_source ('Test Lab'));}
 % @end example
 %
 % @seealso{tmvs, tmvs_fetch}
@@ -24,8 +24,8 @@ datefmt = 'yyyy-mm-dd';
 
 % TODO Be more creative.
 % TODO Split into different procedures; keep the interface 'open' to change.
-switch tmvs_graph (graph)
-case 'simple'
+switch graph
+case 1
   i = varargin{:};
 
   figure (1);
@@ -53,7 +53,7 @@ case 'simple'
   ylabel (tmvs_quantity (s.id.quantity));
 
   hold ('off');
-case 'slice'
+case 2
   [qty, room, site, src, sec] = varargin{:};
 
   figure (1);
@@ -146,7 +146,7 @@ case 'slice'
     xlabel ('Position [m]');
     ylabel (tmvs_quantity (interp(1).id.quantity));
   end
-case 'surface'
+case 3
   % Copy-paste code is my favorite!
 
   [qty, room, site, src] = varargin{:};

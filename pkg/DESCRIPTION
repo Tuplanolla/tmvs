@@ -1,9 +1,9 @@
 Name: tmvs
 Version: 1.0.0
-Date: 2016-07-01
+Date: 2016-07-31
 Author: Sampsa Kiiskinen <tuplanolla@gmail.com>
 Maintainer: Sampsa Kiiskinen <tuplanolla@gmail.com>
-Title: Temperature and Moisture Visualization System
-Description: Temperature and Moisture Visualization System or TMVS in short is a simple data exploration and analysis tool built for JAMK.
+Title: TMVS
+Description: Temperature and Moisture Visualization System, or TMVS in short, is a simple data exploration and analysis tool.
 Depends: octave (>= 3.8)
 License: GPL-3

@@ -24,7 +24,8 @@ function i = tmvs_findid (aggr, id)
 i = 0;
 
 for j = 1 : numel (aggr)
-  if isequaln (aggr(j).id, id)
+  % Calling @code{isequaln} here would be too slow.
+  if tmvs_isequals (aggr(j).id, id)
     i = j;
 
     break

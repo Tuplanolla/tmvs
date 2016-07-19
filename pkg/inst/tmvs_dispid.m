@@ -20,7 +20,7 @@
 %                Ordinal: 3
 % @end example
 %
-% @seealso{tmvs}
+% @seealso{tmvs, tmvs_dispmeta}
 %
 % @end deftypefn
 
@@ -60,14 +60,6 @@ end
 
 if isfield (id, 'region')
   str = f (str, tmvs_region (), tmvs_region (id.region));
-end
-
-if isfield (id, 'position')
-  str = f (str, 'Position', sprintf ('%f mm', id.position));
-end
-
-if isfield (id, 'material')
-  str = f (str, tmvs_material (), tmvs_material (id.material));
 end
 
 end

@@ -76,8 +76,6 @@ else
       y = 5;
     case {'h', 'precipitation'}
       y = 6;
-    case {'i', 'sunniness'}
-      y = 7;
     otherwise
       error ('physical quantity ''%s'' not known', x);
     end
@@ -95,8 +93,6 @@ else
       y = 'Wind Speed';
     case 6
       y = 'Precipitation';
-    case 7
-      y = 'Sunniness';
     otherwise
       error ('physical quantity %d not known', x);
     end
@@ -109,7 +105,7 @@ end
 
 %!shared f, n
 %! f = @tmvs_quantity;
-%! n = 7;
+%! n = 6;
 
 %!test
 %! for i = 1 : n

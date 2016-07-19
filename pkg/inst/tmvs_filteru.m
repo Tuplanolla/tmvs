@@ -50,7 +50,7 @@ end
 
 switch type
 case 1
-  y = nan (0);
+  y = [];
 case 2
   y = cell (0);
 case 3

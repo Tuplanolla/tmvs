@@ -54,7 +54,7 @@ end
 switch tmvs_source (src)
 case {'Test Lab', 'Weather Station'}
   c = cell (0);
-  j = nan (0);
+  j = [];
 
   aggr = struct ('id', {}, 'meta', {}, 'pairs', {});
 
@@ -63,8 +63,6 @@ case {'Test Lab', 'Weather Station'}
     try
       csv = tmvs_parsecsv (line);
 
-      k = find (ismember (c, csv{1}));
-
       [year, month, day, ...
        hour, minute, second] = datevec (csv{2}, 'yyyy/mm/dd HH:MM:SS');
       t = datenum (year, month, day, hour, minute, second);
@@ -72,27 +70,41 @@ case {'Test Lab', 'Weather Station'}
         error ('failed to parse date ''%s''', csv{2});
       end
 
-      x = str2double (csv{3});
+      k = find (ismember (c, csv{1}));
 
       if isempty (k)
         [id, meta] = tmvs_parsename (csv{1});
 
         k = tmvs_findid (aggr, id);
 
-        if k
-          aggr(k).pairs(end + 1, :) = [t, x];
+        if ~isindex (k)
+          k = numel (aggr) + 1;
 
-          j(end + 1) = k;
-        else
-          aggr(end + 1) = struct ('id', id, 'meta', meta, 'pairs', [t, x]);
-
-          j(end + 1) = numel (aggr);
+          aggr(k) = struct ('id', id, 'meta', meta, 'pairs', nan (0, 2));
         end
 
         c{end + 1} = csv{1};
+        j(end + 1) = k;
       else
-        aggr(j(k)).pairs(end + 1, :) = [t, x];
+        k = j(k);
       end
+
+      switch tmvs_quantity (aggr(k).id.quantity)
+      case 'Temperature'
+        x = str2double (csv{3});
+      case 'Relative Humidity'
+        x = str2double (csv{3}) * 1e-2;
+      case 'Absolute Humidity'
+        x = str2double (csv{3});
+      case 'Pressure'
+        x = str2double (csv{3}) * 100;
+      case 'Wind Speed'
+        x = str2double (csv{3});
+      case 'Precipitation'
+        x = str2double (csv{3}) * 1e-3;
+      end
+
+      aggr(k).pairs(end + 1, :) = [t, x];
 
       header = false;
     catch err
@@ -104,17 +116,17 @@ case {'Test Lab', 'Weather Station'}
     end
   end
 case 'Weather Observatory'
-  reg = varargin{1};
+  reg = varargin{:};
 
   f = @(qty) struct ('source', src, 'quantity', qty, 'region', reg);
-  aggr = struct ('id', {(f (tmvs_quantity ('Temperature'))), ...
-                        (f (tmvs_quantity ('Relative Humidity'))), ...
-                        (f (tmvs_quantity ('Wind Speed'))), ...
-                        (f (tmvs_quantity ('Pressure'))), ...
-                        (f (tmvs_quantity ('Precipitation'))), ...
-                        (f (tmvs_quantity ('Sunniness')))}, ...
-              'meta', repmat ({(struct ())}, 1, 6), ...
-              'pairs', repmat ({[]}, 1, 6));
+  c = {(f (tmvs_quantity ('Temperature'))), ...
+       (f (tmvs_quantity ('Relative Humidity'))), ...
+       (f (tmvs_quantity ('Wind Speed'))), ...
+       (f (tmvs_quantity ('Pressure'))), ...
+       (f (tmvs_quantity ('Precipitation')))};
+  aggr = struct ('id', c, ...
+                 'meta', repmat ({(struct ())}, size (c)), ...
+                 'pairs', repmat ({[]}, size (c)));
 
   header = true;
   while (line = fgetl (fid)) ~= -1
@@ -128,21 +140,18 @@ case 'Weather Observatory'
       end
 
       T = str2double (csv{3});
-      R = str2double (csv{6});
+      R = str2double (csv{6}) * 1e-2;
       % TODO Should this be csv{10} instead?
       v = str2double (csv{8});
       p = str2double (csv{17}) * 100;
       % TODO Should this be csv{19} instead?
       h = str2double (csv{18}) * 1e-3;
-      % TODO Should this be csv{21} instead?
-      E = str2double (csv{22});
 
       aggr(1).pairs(end + 1, :) = [t, T];
       aggr(2).pairs(end + 1, :) = [t, R];
       aggr(3).pairs(end + 1, :) = [t, v];
       aggr(4).pairs(end + 1, :) = [t, p];
       aggr(5).pairs(end + 1, :) = [t, h];
-      aggr(6).pairs(end + 1, :) = [t, E];
 
       header = false;
     catch err
