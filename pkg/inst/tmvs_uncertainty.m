@@ -23,12 +23,12 @@
 %
 % @end deftypefn
 
-function delta = tmvs_uncertainty (id, x = nan)
+function delta = tmvs_uncertainty (id, x = 0)
 
-quantity = id.quantity;
+qty = tmvs_quantity (id.quantity);
 
 % TODO Replace these educated guesses with accurate data.
-switch tmvs_quantity (quantity)
+switch qty
 case 'Temperature'
   delta = 1 + 0 * x;
 case 'Relative Humidity'
@@ -42,7 +42,7 @@ case 'Wind Speed'
 case 'Precipitation'
   delta = 1 + 0 * x;
 otherwise
-  error ('uncertainty for physical quantity %d not known', quantity);
+  error ('uncertainty for physical quantity ''%s'' not known', qty);
 end
 
 end

@@ -26,7 +26,7 @@ aggr = struct ('id', {}, 'meta', {}, 'pairs', {});
 aggr = resize (aggr, size (interp));
 
 for i = 1 : numel (interp)
-  a = interp(i).limits;
+  a = interp(i).domain;
 
   if numel (a) < 2
     z = [];

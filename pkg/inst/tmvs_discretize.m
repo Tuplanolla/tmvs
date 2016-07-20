@@ -24,7 +24,7 @@ aggr = struct ('id', {}, 'meta', {}, 'pairs', {});
 aggr = resize (aggr, size (interp));
 
 for i = 1 : numel (interp)
-  aggr(i) = tmvs_evaluate (interp(i), linspace (num2cell (interp(i).limits){:}, n)(:));
+  aggr(i) = tmvs_evaluate (interp(i), linspace (num2cell (interp(i).domain){:}, n)(:));
 end
 
 end

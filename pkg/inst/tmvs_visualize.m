@@ -70,7 +70,7 @@ case 2
   a = [inf, -inf];
 
   for i = 1 : numel (interp)
-    b = interp(i).limits;
+    b = interp(i).domain;
 
     a = [(min ([a(1), b(1)])), (max ([a(2), b(2)]))];
   end
@@ -164,7 +164,7 @@ case 3
   a = [inf, -inf];
 
   for i = 1 : numel (interp)
-    b = interp(i).limits;
+    b = interp(i).domain;
 
     a = [(min ([a(1), b(1)])), (max ([a(2), b(2)]))];
   end

@@ -156,7 +156,7 @@
 % have more precision than what Octave typically shows.
 % For example two times in 2012 that are five minutes apart are represented
 % by @code{734869.003472} and @code{734869.006944} respectively.
-% To make such differences visible without manual processing,
+% To make such differences visible without additional manual processing,
 % the number format can be changed to, say, the long engineering format.
 %
 % @example
@@ -354,14 +354,14 @@
 % Observe that
 %
 % @itemize
-% @item humidity sensors may get stuck at 100 % relative humidity for a while
+% @item relative humidity sensors may get stuck at 100 % for a while
 % if the temperature quickly drops when the humidity is high,
-% because that causes water to condense on the sensor,
+% because that allows water to condense on the sensor,
 % @item pressure sensors may report near-vacuum pressures at random,
 % probably due to fluctuations in their power supplies and
 % @item sensors that should be right next to each other
 % may report systematically and significantly differing values,
-% which suggest a calibration problem.
+% which suggests a calibration problem.
 % @end itemize
 %
 % Alas the sensors are of unknown origin,
@@ -438,8 +438,9 @@
 % @end example
 %
 % To perform computations, the aggregate can be converted into an interpolator.
-% In an interpolator the @qcode{'pairs'}
-% are simply replaced by a @qcode{'function'} and its @qcode{'limits'}.
+% In an interpolator the @qcode{'pairs'} field
+% is simply replaced by a @qcode{'function'} function field,
+% along with its @qcode{'domain'} and @qcode{'codomain'}.
 % Assuming @code{fields} is a cell array
 % containing the definitions for @qcode{'id'} and @qcode{'meta'},
 % the following structures illustrate the difference
@@ -453,12 +454,13 @@
 % @example
 % @code{interp = struct (fields@{:@}, ...
 %   'function', @@(xi) interp (t, x, xi), ...
-%   'limits', [t(1), t(end)]);}
+%   'domain', [t(1), t(end)], ...
+%   'codomain', [x(1), x(end)]);}
 % @end example
 %
-% Within the limits the interpolator works as the name suggests:
+% Within the domain the interpolator works as the name suggests:
 % by interpolation.
-% Going outside the limits raises an error or, if so desired,
+% Going outside the domain raises an error or, if so desired,
 % triggers extrapolation.
 %
 % @section Data Flow
@@ -485,8 +487,8 @@
 % woaggr = tmvs_fetch ('excerpt/2011-2013-0.csv', ...
 %                      tmvs_source ('Weather Observatory'), ...
 %                      tmvs_region ('Jyvaskyla'));
-% tmvs_merge (tlaggr(9), wsaggr(4), ...
-%             tmvs_zoom (@@(z) z(1, :), woaggr(3), 'pairs'))}
+% aggr = tmvs_merge (tlaggr(9), wsaggr(4), ...
+%                    tmvs_zoom (@@(z) z(1, :), woaggr(3), 'pairs'));}
 % @end example
 %
 % @section Caching
@@ -531,8 +533,9 @@
 % if you want to optimize for disk space or compatibility instead.
 %
 % @example
-% @code{aggr = tmvs_fetch ('excerpt/2012/118-0.csv', tmvs_source ('Test Lab'));
-% tmvs_store (tmvs_cachename ('excerpt/2012/118-0.csv'), aggr, '-mat', '-zip');}
+% @code{fname = 'excerpt/2012/118-0.csv';
+% aggr = tmvs_fetch (fname, tmvs_source ('Test Lab'));
+% tmvs_store (tmvs_cachename (fname), aggr, '-mat', '-zip');}
 % @end example
 %
 % @section Enumerations
@@ -543,15 +546,15 @@
 % for defining such forms.
 % Octave does not.
 %
-% To work around this minor shortcoming,
-% enumerating functions are used to convert between storable and readable forms.
+% To work around this minor shortcoming, enumerating functions exist
+% for converting between storable and readable forms.
 % The following examples demonstrate this in isolation.
 %
 % @example
-% @code{tmvs_quantity ('Relative Humidity')
-% @result{} 2}
-% @code{tmvs_quantity (2)
-% @result{} 'Relative Humidity'}
+% @code{tmvs_quantity ('Relative Humidity')}
+% @result{} 2
+% @code{tmvs_quantity (2)}
+% @result{} 'Relative Humidity'
 % @end example
 %
 % @section Functional Programming
@@ -574,7 +577,7 @@
 % r = [(datenum (2012, 3, 1)), (datenum (2012, 6, 1))];
 % g = @@(z) z(tmvs_withinc (z(1), r), :);
 % waggr = tmvs_zoom (g, faggr, 'pairs'); % Spring only.
-% tmvs_foldl (@@(y, s) min ([y, s.pairs(:, 2)]), waggr, inf)}
+% tmvs_foldl (@@(x, s) min ([x, s.pairs(:, 2)]), waggr, inf)}
 % @result{} 8
 % @end example
 %
@@ -582,7 +585,7 @@
 % if the resulting code is not intended to be read ever again.
 %
 % @example
-% @code{tmvs_foldl (@@(y, s) min ([y, s.pairs(:, 2)]), ...
+% @code{tmvs_foldl (@@(x, s) min ([x, s.pairs(:, 2)]), ...
 %   tmvs_zoom (@@(z) z(tmvs_withinc (z(1), ...
 %       [(datenum (2012, 3, 1)), (datenum (2012, 6, 1))]), :), ...
 %     tmvs_filteru ( ...
@@ -595,21 +598,121 @@
 % @node Complete Examples
 % @chapter Complete Examples
 %
-% @section Looking at a Single Sensor
+% @section Looking at a Few Data Points
 %
-% Quick start.
-%
-% @example
-% @code{tmvs_fetch ()}
-% @end example
-%
-% @section Working with a Complete Data Set
-%
-% With more time.
+% The following program plots the complete time evolution of a single sensor.
 %
 % @example
-% @code{tmvs_fetch ()}
+% @code{
+% f = @@(s) s.id.quantity == tmvs_quantity ('Temperature') && ...
+%          s.id.site == tmvs_site ('Q') && ...
+%          s.id.surface == tmvs_surface ('Wall') && ...
+%          s.id.section == tmvs_section ('Bottom Corner') && ...
+%          s.id.ordinal == 3;
+% aggr = tmvs_fetchall ('excerpt/*/118-0.csv', tmvs_source ('Test Lab'));
+% faggr = tmvs_filteru (f, aggr);
+%
+% t = faggr.pairs(:, 1);
+% x = faggr.pairs(:, 2);
+% dx = tmvs_uncertainty (faggr.id, x);
+%
+% figure (1);
+% clf ();
+% errorbar (t, x, dx, '~1');
+% datefmt = 'yyyy-mm-dd';
+% xlabel (sprintf ('Date [%s]', datefmt));
+% datetick ('x', datefmt);
+% ylabel ('Temperature [^oC]');
+% axis ('tight');
+% }
 % @end example
+%
+% It is quite easy to extend the previous program over all the ordinals and
+% draw an interactive or higher-dimensional plot of it.
+% Let us first draw a point cloud of all the ordinals.
+%
+% @example
+% @code{
+% f = @@(s) s.id.quantity == tmvs_quantity ('Temperature') && ...
+%          s.id.site == tmvs_site ('Q') && ...
+%          s.id.surface == tmvs_surface ('Wall') && ...
+%          s.id.section == tmvs_section ('Bottom Corner');
+% aggr = tmvs_fetchall ('excerpt/*/118-0.csv', tmvs_source ('Test Lab'));
+% faggr = tmvs_filteru (f, aggr);
+%
+% a = vertcat (faggr.pairs);
+% a = a(1 : 1 + floor (numel (a) / 1e+3) : end, :);
+%
+% t = a(:, 1);
+% x = a(:, 2);
+%
+% figure (2);
+% clf ();
+% plot (t, x, '.1');
+% datefmt = 'yyyy-mm-dd';
+% xlabel (sprintf ('Date [%s]', datefmt));
+% datetick ('x', datefmt);
+% ylabel ('Temperature [^oC]');
+% axis ('tight');
+% }
+% @end example
+%
+% We can then add interactivity to the point cloud.
+%
+% @example
+% @code{
+% interp = tmvs_interpolate (faggr, 'extrap');
+%
+% a = vertcat (interp.domain);
+% dom = [(min (a(:, 1))), (max (a(:, 2)))];
+%
+% a = vertcat (interp.codomain);
+% codom = [(min (a(:, 1))), (max (a(:, 2)))];
+%
+% t = mean (dom);
+%
+% while true
+%   figure (2);
+%   h = line ([t, t], codom);
+%
+%   eaggr = tmvs_evaluate (interp, t);
+%
+%   y = vertcat (vertcat (eaggr.meta).position);
+%   x = vertcat (eaggr.pairs)(:, 2);
+%
+%   dx = 0;
+%   for i = 1 : numel (eaggr)
+%     dx = max ([dx, (max (tmvs_uncertainty (eaggr(i).id, x)))]);
+%   end
+%
+%   [y, k] = sort (y);
+%   x = x(k);
+%
+%   figure (3);
+%   clf ();
+%   errorbar (y, x, dx, '~1');
+%   xlabel ('Position [m]');
+%   ylabel ('Temperature [^oC]');
+%
+%   figure (2);
+%   t = ginput (1);
+%   if isempty (t) || ~tmvs_withinc (t, dom)
+%     break
+%   end
+%   delete (h);
+% end
+% }
+% @end example
+%
+% @section Working with Data Sets
+%
+% The following program does things.
+%
+% @example
+% @code{disp (nan);}
+% @end example
+%
+% @section Managing Caches
 %
 % @section Printing and Exporting
 %
@@ -666,7 +769,7 @@
 % with the fields @qcode{'id'}, @qcode{'meta'} and @qcode{'pairs'},
 % @item the structure @var{interp} is an interpolator
 % with the fields @qcode{'id'}, @qcode{'meta'},
-% @qcode{'function'} and @qcode{'limits'},
+% @qcode{'function'} and @qcode{'domain'},
 % @item the structure @var{id} is an identifier
 % with various fields like @qcode{'source'} or @qcode{'quantity'},
 % @item the structure @var{meta} is a metadata container
@@ -686,6 +789,8 @@
 % @item the variable @var{str} is a string,
 % @item the variable @var{c} is a cell array,
 % @item the variable @var{s} is a structure or structure array,
+% @item the variables @var{dom} and @var{codom} are nonempty intervals,
+% @item the variables @var{a} and @var{b} are matrices,
 % @item the variables @var{v}, @var{u} and @var{w} are vectors,
 % @item the variables @var{f}, @var{g} and @var{h} are functions or procedures,
 % @item the variables @var{i}, @var{j} and @var{k}
@@ -829,6 +934,7 @@
 %! test tmvs_filteru
 %! test tmvs_foldl
 %! test tmvs_foldr
+%! test tmvs_isequals
 %! test tmvs_mapl
 %! test tmvs_mapr
 %! test tmvs_progress

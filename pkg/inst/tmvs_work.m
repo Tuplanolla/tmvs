@@ -33,23 +33,13 @@ if ~isdir (dname)
   error ('not a directory ''%s''', dname);
 end
 
-buildings = tmvs_fetchall (sprintf ('%s/*/[0-9]*.csv', dname), ...
-                           tmvs_source ('Test Lab'));
+labs = tmvs_fetchall (sprintf ('%s/*/[0-9]*.csv', dname), ...
+                      tmvs_source ('Test Lab'));
 stations = tmvs_fetchall (sprintf ('%s/*/[a-z]*.csv', dname), ...
                           tmvs_source ('Weather Station'));
 observatories = tmvs_fetchall (sprintf ('%s/*.csv', dname), ...
                                tmvs_source ('Weather Observatory'), ...
                                tmvs_region ('Jyvaskyla'));
-aggr = tmvs_merge (buildings, stations, observatories);
-
-% tmvs_visualize (aggr, 'T[0-9]+', 'Temperature [^oC]');
-% tmvs_visualize (aggr, 'RH[0-9]+', 'Relative Humidity [\%]');
-% tmvs_visualize (aggr, 'AH[0-9]+', 'Absolute Humidity [g/m^3]');
-
-% tmvs_visualize (aggr, '.ila', 'Temperature [^oC]');
-% tmvs_visualize (aggr, '.osteus', 'Relative Humidity [\%]');
-% tmvs_visualize (aggr, '.aine', 'Ambient Pressure [hPa]');
-% tmvs_visualize (aggr, '.uul', 'Wind Speed [m/s]');
-% tmvs_visualize (aggr, '.ade', 'Precipitation [mm/d]');
+aggr = tmvs_merge (labs, stations, observatories);
 
 end
