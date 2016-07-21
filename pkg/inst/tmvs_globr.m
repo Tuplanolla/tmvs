@@ -32,7 +32,7 @@ for i = 1 : numel (str)
   fname = str{i};
 
   if ~(strcmp (fname, '.') || strcmp (fname, '..'))
-    c = [c; (tmvs_globr (pat, strcat (dname, '/', fname)))];
+    c = vertcat (c, tmvs_globr (pat, strcat (dname, '/', fname)));
   end
 end
 

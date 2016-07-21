@@ -588,6 +588,39 @@
 % @node Complete Examples
 % @chapter Complete Examples
 %
+% @section Working with Caches
+%
+% Load a cache file directly.
+%
+% @example
+% @code{aggr = tmvs_recall ('excerpt/2012/118-0.csv.tmp');}
+% @end example
+%
+% Remove wrong humidity, pressure and the like.
+%
+% @example
+% @code{waggr = tmvs_withinc (aggr, [0, 99]);
+% waggr = tmvs_withinc (aggr, [20e+3, 200e+3]);}
+% @end example
+%
+% Remove other outliers.
+%
+% @example
+% @code{caggr = tmvs_mapl (@@(s) tmvs_zoom (@@(z) z(tmvs_chauvenet (z(:, 2)), :), s, 'pairs'), aggr);}
+% @end example
+%
+% Project field out.
+%
+% @example
+% @code{z = sortrows (horzcat (vertcat (vertcat (eaggr.meta).position), vertcat (eaggr.pairs)(:, 2)));}
+% @end example
+%
+% Feed pairs into plot.
+%
+% @example
+% @code{plot (num2cell (z, 1)@{:@});}
+% @end example
+%
 % @section Visualizing Interesting Things
 %
 % The following program plots the complete time evolution of a single sensor.
@@ -725,49 +758,20 @@
 % end}
 % @end example
 %
-% @section Working with Caches
-%
-% The following program does things.
-%
-% @example
-% @code{disp (nan);}
-% @end example
-%
 % @section Printing and Exporting
 %
-% Fun and games (mostly games).
+% The following program saves figure 1 into a temporary file
+% for easy embedding into a TeX document.
 %
 % @example
-% @code{print ('/tmp/tmvs.tex', '-depslatex', '-S480,320');}
+% @code{figure (1);
+% print ('/tmp/tmvs.tex', '-depslatex', '-S480,320');}
 % @end example
+%
+% The following program saves all measurements into value files.
 %
 % @example
 % @code{tmvs_exportall ('/tmp', aggr);}
-% @end example
-%
-% @c tmvs_filters (@(s) s.id.quantity == tmvs_quantity ('temperature'), aggr)
-% @c tmvs_mapl (@(s) setfield (s, 'pairs', s.pairs(s.pairs(:, 1) < 734543, :)), aggr)
-%
-% @c tmvs_range = @(aggr, a) tmvs_zoom (@(z) z(tmvs_withinc (z(:, 2), a), :), aggr, 'pairs');
-% @c tmvs_range = @(aggr, a) tmvs_mapl (@(s) setfield (s, 'pairs', s.pairs(s.pairs(:, 2) >= a(1) && s.pairs(:, 2) <= a(2))), aggr);
-% @c Remove wrong humidity, pressure, ...
-% @c maggr = tmvs_range (aggr, [0, 99]);
-% @c maggr = tmvs_range (aggr, [20e+3, 200e+3]);
-% @c Remove other outliers.
-% @c maggr = tmvs_mapl (@(s) setfield (s, 'pairs', s.pairs(tmvs_chauvenet (s.pairs(:, 2)), :)), aggr);
-% @c Etc.
-% @c aggr = tmvs_recall ('../data/2012/118-0.csv.tmp');
-% @c maggr = tmvs_mapl (@(s) setfield (s, 'pairs', s.pairs(tmvs_chauvenet (s.pairs(:, 2)), :)), aggr);
-% @c faggr = tmvs_filteru (@(s) s.id.quantity == 1 && s.id.site == 17 && s.id.surface == 1 && s.id.section == 1, maggr);
-% @c eaggr = tmvs_evaluate (tmvs_interpolate (faggr), 734.7e+3);
-% @c z = sortrows ([(arrayfun (@(s) s.meta.position, eaggr')), (arrayfun (@(s) s.pairs(2), eaggr'))]);
-% @c plot (num2cell (z, 1){:});
-% @c Project field out.
-% @c cat (1, aggr.pairs);
-% @c z = sortrows ([vertcat (vertcat (eaggr.meta).position), vertcat (eaggr.pairs)(:, 2)]);
-%
-% @example
-% @code{tmvs_fetch ()}
 % @end example
 %
 % @node Implementation Details
@@ -816,6 +820,9 @@
 % are index scalars or vectors and
 % @item the variables @var{x}, @var{y} and @var{z} are generic.
 % @end itemize
+%
+% The @code{true} and @code{false} functions are also used
+% as if they were literal values to make the code more readable.
 %
 % @section Testing
 %
@@ -1032,15 +1039,15 @@
 %     7) prefix !: 1 calls, 0.000 total, 0.000 self
 %   2) profile: 1 calls, 0.000 total, 0.000 self}
 % @end example
-
-Most of the time seems to be spent inside the inbuilt parsing functions
-@code{datevec}, @code{datenum} and @code{regexp}.
-The utility functions @code{ismember} and @code{isempty}
-follow closely due to their sheer frequency.
-
-While it would be possible to replace the inbuilt functions
-with faster equivalents, it is not worth the effort.
-Using @code{jit_enable}, if available, is a better time investment.
+%
+% Most of the time seems to be spent inside the inbuilt parsing functions
+% @code{datevec}, @code{datenum} and @code{regexp}.
+% The utility functions @code{ismember} and @code{isempty}
+% follow closely due to their sheer frequency.
+%
+% While it would be possible to replace the inbuilt functions
+% with faster equivalents, it is not worth the effort.
+% Calling @code{jit_enable}, if possible, is a better time investment.
 
 %!test
 %! test tmvs_version
@@ -1054,7 +1061,6 @@ Using @code{jit_enable}, if available, is a better time investment.
 %! test tmvs_section
 %! test tmvs_material
 %! test tmvs_region
-%! test tmvs_graph
 
 %!test
 %! test tmvs_brsearch

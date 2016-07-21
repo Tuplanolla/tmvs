@@ -17,10 +17,10 @@ Basic
 Visual
   tmvs_visualize
 Convenient
-  tmvs_fetchall
   tmvs_exportall
+  tmvs_fetchall
   tmvs_purgeall
-  tmvs_select
+  tmvs_work
 Enumerating
   tmvs_source
   tmvs_quantity
@@ -30,14 +30,6 @@ Enumerating
   tmvs_section
   tmvs_material
   tmvs_region
-Auxiliary
-  tmvs_parsename
-  tmvs_parsecsv
-  tmvs_findid
-  tmvs_dispid
-  tmvs_cachename
-  tmvs_checkcache
-  tmvs_readcache
 Generic
   tmvs_brsearch
   tmvs_chauvenet
@@ -45,11 +37,21 @@ Generic
   tmvs_filteru
   tmvs_foldl
   tmvs_foldr
+  tmvs_globr
+  tmvs_isequals
   tmvs_mapl
   tmvs_mapr
   tmvs_progress
+  tmvs_sparsen
   tmvs_withinc
   tmvs_withino
   tmvs_zoom
-What
-  tmvs_filtrate
+Auxiliary
+  tmvs_cachename
+  tmvs_checkcache
+  tmvs_dispid
+  tmvs_dispmeta
+  tmvs_findid
+  tmvs_parsecsv
+  tmvs_parsename
+  tmvs_readcache
