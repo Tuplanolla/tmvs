@@ -24,12 +24,12 @@
 
 function aggr = tmvs_recall (cname, force = false)
 
-[p, ver] = tmvs_checkcache (cname);
+[p, v] = tmvs_checkcache (cname);
 if p
   [p, aggr] = tmvs_readcache (cname);
-  if ~(p && (ver == tmvs_version () || force))
+  if ~(p && (force || v(1 : 2) == tmvs_version ()(1 : 2)))
     error ('cache file ''%s'' has version ''%s'' instead of ''%s''', ...
-      cname, ver, tmvs_version ());
+      cname, v, tmvs_version ());
   end
 else
   error ('not a readable cache file ''%s''', cname);

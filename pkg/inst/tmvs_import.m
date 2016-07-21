@@ -95,7 +95,7 @@ case {'Test Lab', 'Weather Station'}
       case 'Relative Humidity'
         x = str2double (csv{3}) * 1e-2;
       case 'Absolute Humidity'
-        x = str2double (csv{3});
+        x = str2double (csv{3}) * 1e-3;
       case 'Pressure'
         x = str2double (csv{3}) * 100;
       case 'Wind Speed'

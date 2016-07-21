@@ -392,7 +392,8 @@
 % @item the field @qcode{'meta'},
 % which may contain metadata relating to the identifier and
 % @item the field @qcode{'pairs'},
-% which contains an array of the data points for to the identifier.
+% which contains an array of the data points for to the identifier,
+% in basic and unprefixed SI units (metres, pascals, what have you).
 % @end itemize
 %
 % Further, each row of the data point array has time on the first column and
@@ -588,6 +589,8 @@
 % @node Complete Examples
 % @chapter Complete Examples
 %
+% This chapter is still a bit incomplete.
+%
 % @section Working with Caches
 %
 % Load a cache file directly.
@@ -596,26 +599,30 @@
 % @code{aggr = tmvs_recall ('excerpt/2012/118-0.csv.tmp');}
 % @end example
 %
-% Remove wrong humidity, pressure and the like.
+% Remove dubious humidities or pressures.
 %
 % @example
-% @code{waggr = tmvs_withinc (aggr, [0, 99]);
-% waggr = tmvs_withinc (aggr, [20e+3, 200e+3]);}
+% @code{f = @@(z) z(tmvs_withinc (z(:, 2), [0, 99]), :);
+% whaggr = tmvs_mapl (@@(s) tmvs_zoom (f, s, 'pairs'), haggr);
+% g = @@(z) z(tmvs_withinc (z(:, 2), [20e+3, 200e+3]), :);
+% wpaggr = tmvs_mapl (@@(s) tmvs_zoom (g, s, 'pairs'), paggr);}
 % @end example
 %
-% Remove other outliers.
+% Remove statistical outliers automatically.
 %
 % @example
-% @code{caggr = tmvs_mapl (@@(s) tmvs_zoom (@@(z) z(tmvs_chauvenet (z(:, 2)), :), s, 'pairs'), aggr);}
+% @code{f = @@(z) z(tmvs_chauvenet (z(:, 2)), :);
+% caggr = tmvs_mapl (@@(s) tmvs_zoom (f, s, 'pairs'), aggr);}
 % @end example
 %
-% Project field out.
+% Primitively project fields out.
 %
 % @example
-% @code{z = sortrows (horzcat (vertcat (vertcat (eaggr.meta).position), vertcat (eaggr.pairs)(:, 2)));}
+% @code{z = sortrows (horzcat (vertcat (vertcat (eaggr.meta).position), ...
+%                              vertcat (eaggr.pairs)(:, 2)));}
 % @end example
 %
-% Feed pairs into plot.
+% Feed @qcode{pairs} into @code{plot} directly.
 %
 % @example
 % @code{plot (num2cell (z, 1)@{:@});}
@@ -768,7 +775,13 @@
 % print ('/tmp/tmvs.tex', '-depslatex', '-S480,320');}
 % @end example
 %
-% The following program saves all measurements into value files.
+% Save measurements with the same identifier into a file.
+%
+% @example
+% @code{tmvs_export ('/tmp/tmvs.csv', aggr, aggr(9));}
+% @end example
+%
+% Save all measurements into their own value files.
 %
 % @example
 % @code{tmvs_exportall ('/tmp', aggr);}
@@ -801,7 +814,6 @@
 % @item the string @var{cname} is a path to a cache file,
 % @item the string @var{dname} is a path to a directory,
 % @item the string @var{pat} is a regular expression or a glob pattern,
-% @item the string @var{ver} is a version number,
 % @item the integer @var{fid} is a file or stream identifier,
 % @item the integer @var{n} is a natural number,
 % @item the integer @var{p} is a truth value,
@@ -1048,9 +1060,6 @@
 % While it would be possible to replace the inbuilt functions
 % with faster equivalents, it is not worth the effort.
 % Calling @code{jit_enable}, if possible, is a better time investment.
-
-%!test
-%! test tmvs_version
 
 %!test
 %! test tmvs_source

@@ -19,6 +19,8 @@
 % @result{} [1; 1; 1]
 % @end example
 %
+% Programming note: The current uncertainties are educated guesses.
+%
 % @seealso{tmvs, tmvs_quantity, tmvs_fetch}
 %
 % @end deftypefn

@@ -1,5 +1,5 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {} tmvs_purgeall (@var{dname})
+% @deftypefn {Function File} {} tmvs_purgeall (@var{pat})
 %
 % ??
 %
@@ -16,8 +16,8 @@
 %
 % @end deftypefn
 
-function tmvs_purgeall (dname)
+function tmvs_purgeall (pat)
 
-cellfun (@tmvs_purge, tmvs_globr ('*.tmp', dname));
+cellfun (@tmvs_purge, glob (pat));
 
 end

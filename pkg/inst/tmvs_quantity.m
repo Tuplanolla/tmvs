@@ -4,8 +4,7 @@
 %
 % Enumerates the case-insensitive physical quantities @qcode{'Temperature'},
 % @qcode{'Relative Humidity'}, @qcode{'Absolute Humidity'},
-% @qcode{'Pressure'}, @qcode{'Wind Speed'}, @qcode{'Precipitation'} and
-% @qcode{'Solar Energy'}.
+% @qcode{'Pressure'}, @qcode{'Wind Speed'} and @qcode{'Precipitation'}.
 %
 % Enumerations or tagged unions of unit types are a common and
 % useful technique for giving names to a fixed set of values.

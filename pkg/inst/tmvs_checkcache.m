@@ -1,28 +1,31 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {[@var{p}, @var{ver}] =} tmvs_checkcache (@var{cname})
+% @deftypefn {Function File} {[@var{p}, @var{v}] =} tmvs_checkcache (@var{cname})
 %
-% Sets @var{ver} to a nonzero value if @var{cname} is a readable cache file.
+% Sets @var{p} to a nonzero value and
+% @var{v} to the cache version number vector
+% if @var{cname} is a readable cache file.
 %
 % The following examples demonstrate basic usage.
 %
 % @example
 % @code{tmvs_checkcache ('excerpt/2012/118-0.csv')}
 % @result{} false
-% @code{tmvs_checkcache ('excerpt/2012/118-0.csv.tmp')}
-% @result{} true
+% @code{[p, v] = tmvs_checkcache ('excerpt/2012/118-0.csv.tmp')}
+% @result{} p = true
+% v = [1, 0, 0]
 % @end example
 %
 % @seealso{tmvs, tmvs_cachename, tmvs_store, tmvs_recall, tmvs_fetch, tmvs_purge}
 %
 % @end deftypefn
 
-function [p, ver] = tmvs_checkcache (cname)
+function [p, v] = tmvs_checkcache (cname)
 
-ver = '';
+v = [];
 p = false;
 
 try
-  ver = load (cname, 'tmvs_version').tmvs_version;
+  v = load (cname, 'tmvs_version').tmvs_version;
   p = true;
 end
 

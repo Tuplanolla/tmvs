@@ -1,10 +1,10 @@
 tmvs >> Temperature and Moisture Visualization System
 Meta
   tmvs
-  tmvs_version
 Basic
   tmvs_import
   tmvs_uncertainty
+  tmvs_sanitize
   tmvs_interpolate
   tmvs_discretize
   tmvs_evaluate
@@ -15,7 +15,9 @@ Basic
   tmvs_fetch
   tmvs_purge
 Visual
-  tmvs_visualize
+  tmvs_drawp
+  tmvs_drawi
+  tmvs_draws
 Convenient
   tmvs_exportall
   tmvs_fetchall
@@ -47,6 +49,7 @@ Generic
   tmvs_withino
   tmvs_zoom
 Auxiliary
+  tmvs_version
   tmvs_cachename
   tmvs_checkcache
   tmvs_dispid

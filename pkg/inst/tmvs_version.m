@@ -1,26 +1,22 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {@var{str} =} tmvs_version ()
+% @deftypefn {Function File} {@var{v} =} tmvs_version ()
 %
-% Returns the version number string @var{str} of the project.
+% Returns the version number vector @var{v} of the project.
 % This is primarily used to determine cache compatibility.
 %
 % The following example is obvious.
 %
 % @example
 % @code{tmvs_version ()}
-% @result{} '1.0.0'
+% @result{} [1, 0, 0]
 % @end example
 %
 % @seealso{tmvs}
 %
 % @end deftypefn
 
-function str = tmvs_version ()
+function v = tmvs_version ()
 
-str = '1.0.0';
+v = [1, 0, 0];
 
 end
-
-%!test
-%! assert (regexp (tmvs_version (), ...
-%!                 '^(?:0|[1-9][0-9]*)(?:\.(?:0|[1-9][0-9]*)){2}$'));

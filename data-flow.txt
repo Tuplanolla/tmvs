@@ -3,7 +3,7 @@
 [Aggregate]    -> (Interpolate) -> [Interpolator]
 [Interpolator] -> (Discretize)  -> [Aggregate]
 [Aggregate]    -> (Merge)       -> [Aggregate]
-[Aggregate]    -> (Visualize)   -> [Plot]
+[Aggregate]    -> (Draw)        -> [Plot]
 [Aggregate]    -> (Store)       -> [Cache File]
 [Cache File]   -> (Recall)      -> [Aggregate]
 [Value File]   -> (Fetch)       -> [Aggregate]

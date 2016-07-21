@@ -27,7 +27,7 @@ digraph {
         interpolate [label = "Interpolate"]
         discretize [label = "Discretize"]
         merge [label = "Merge"]
-        visualize [label = "Visualize"]
+        draw [label = "Draw"]
         export [label = "Export"]
       }
 
@@ -51,7 +51,7 @@ digraph {
   aggr -> interpolate -> interp
   interp -> discretize -> aggr
   aggr -> merge -> aggr
-  aggr -> visualize -> plot
+  aggr -> draw -> plot
   aggr -> store -> cache
   cache -> recall -> aggr
   csvr -> fetch -> aggr

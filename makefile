@@ -43,9 +43,7 @@ manual.pdf: tmvs.texinfo data-flow.png
 
 %.texinfo: pkg/inst/%.m
 	{ echo '\input texinfo' && \
-	  echo '@macro qcode{x}' && \
-	  echo '@code{\x\}' && \
-	  echo '@end macro' && \
+	  cat macros.texi && \
 	  a='-\*- texinfo -\*-' && b='^\([^%]\|\)$$' && \
 	  sed -n "/$$a/,/$$b/{/$$a/n;/$$b/q;s/^% \\?//p}" $< && \
 	  echo '@bye' ; } > $@
