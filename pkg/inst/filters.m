@@ -1,5 +1,5 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {@var{y} =} tmvs_filters (@var{f}, @var{x})
+% @deftypefn {Function File} {@var{y} =} filters (@var{f}, @var{x})
 %
 % Filter, also known as select, find or copy-if,
 % produces the data structure @var{y}
@@ -10,16 +10,16 @@
 % The following examples demonstrate basic usage.
 %
 % @example
-% @code{tmvs_filters (@@(x) mod (x, 2) == 0, [1, 2, 3, 4, 5, 6])}
+% @code{filters (@@(x) mod (x, 2) == 0, [1, 2, 3, 4, 5, 6])}
 % @result{} [2, 4, 6]
 % @end example
 %
 % Other types work in a similar fashion.
 %
 % @example
-% @code{tmvs_filters (@@(x) mod (x, 2) == 0, @{1, 2, 3, 4, 5, 6@})}
+% @code{filters (@@(x) mod (x, 2) == 0, @{1, 2, 3, 4, 5, 6@})}
 % @result{} @{2, 4, 6@}
-% @code{tmvs_filters (@@(s) mod (s.one, 2) == 0, ...
+% @code{filters (@@(s) mod (s.one, 2) == 0, ...
 %               struct ('one', @{1, 2, 3, 4, 5, 6@}, ...
 %                       'two', @{7, 8, 9, 10, 11, 12@}))}
 % @result{} struct ('one', @{2, 4, 6@}, 'two', @{8, 10, 12@})
@@ -28,18 +28,18 @@
 % For the row vector @var{x} the following invocations produce the same result.
 %
 % @example
-% @code{tmvs_filters (f, x)}
-% @code{tmvs_foldl (@@(y, x) ifelse (f (x), [y, x], y), x, [])}
+% @code{filters (f, x)}
+% @code{foldl (@@(y, x) ifelse (f (x), [y, x], y), x, [])}
 % @end example
 %
-% Programming note: This is slightly faster than @code{tmvs_filters},
+% Programming note: This is slightly faster than @code{filters},
 % but uses more memory if only a few elements are chosen.
 %
-% @seealso{tmvs_filteru, tmvs_foldl, tmvs_foldr, find, ismember}
+% @seealso{filteru, foldl, foldr, find, ismember}
 %
 % @end deftypefn
 
-function y = tmvs_filters (f, x)
+function y = filters (f, x)
 
 if ~(isempty (x) || isvector (x))
   type = 0;
@@ -90,54 +90,54 @@ end
 
 
 %!test
-%! assert (tmvs_filters (f, []), []);
+%! assert (filters (f, []), []);
 
 %!test
-%! assert (tmvs_filters (f, [0]), []);
+%! assert (filters (f, [0]), []);
 %!test
-%! assert (tmvs_filters (f, [1]), [1]);
+%! assert (filters (f, [1]), [1]);
 
 %!test
-%! assert (tmvs_filters (f, [0, 0]), []);
+%! assert (filters (f, [0, 0]), []);
 %!test
-%! assert (tmvs_filters (f, [0, 1]), [1]);
+%! assert (filters (f, [0, 1]), [1]);
 %!test
-%! assert (tmvs_filters (f, [1, 0]), [1]);
+%! assert (filters (f, [1, 0]), [1]);
 %!test
-%! assert (tmvs_filters (f, [1, 2]), [1, 2]);
+%! assert (filters (f, [1, 2]), [1, 2]);
 
 %!test
-%! assert (tmvs_filters (f, [0; 0]), []);
+%! assert (filters (f, [0; 0]), []);
 %!test
-%! assert (tmvs_filters (f, [0; 1]), [1]);
+%! assert (filters (f, [0; 1]), [1]);
 %!test
-%! assert (tmvs_filters (f, [1; 0]), [1]);
+%! assert (filters (f, [1; 0]), [1]);
 %!test
-%! assert (tmvs_filters (f, [1; 2]), [1; 2]);
+%! assert (filters (f, [1; 2]), [1; 2]);
 
 
 %!test
-%! assert (tmvs_filters (f, {}), {});
+%! assert (filters (f, {}), {});
 
 %!test
-%! assert (tmvs_filters (f, {0}), {});
+%! assert (filters (f, {0}), {});
 %!test
-%! assert (tmvs_filters (f, {1}), {1});
+%! assert (filters (f, {1}), {1});
 
 %!test
-%! assert (tmvs_filters (f, {0, 0}), {});
+%! assert (filters (f, {0, 0}), {});
 %!test
-%! assert (tmvs_filters (f, {0, 1}), {1});
+%! assert (filters (f, {0, 1}), {1});
 %!test
-%! assert (tmvs_filters (f, {1, 0}), {1});
+%! assert (filters (f, {1, 0}), {1});
 %!test
-%! assert (tmvs_filters (f, {1, 2}), {1, 2});
+%! assert (filters (f, {1, 2}), {1, 2});
 
 %!test
-%! assert (tmvs_filters (f, {0; 0}), {});
+%! assert (filters (f, {0; 0}), {});
 %!test
-%! assert (tmvs_filters (f, {0; 1}), {1});
+%! assert (filters (f, {0; 1}), {1});
 %!test
-%! assert (tmvs_filters (f, {1; 0}), {1});
+%! assert (filters (f, {1; 0}), {1});
 %!test
-%! assert (tmvs_filters (f, {1; 2}), {1; 2});
+%! assert (filters (f, {1; 2}), {1; 2});

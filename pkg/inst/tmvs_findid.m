@@ -25,7 +25,7 @@ i = 0;
 
 for j = 1 : numel (aggr)
   % Calling @code{isequaln} here would be too slow.
-  if tmvs_isequals (aggr(j).id, id)
+  if isequals (aggr(j).id, id)
     i = j;
 
     break

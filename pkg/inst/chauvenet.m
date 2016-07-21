@@ -1,7 +1,7 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {[@var{i}, @var{o}] =} tmvs_chauvenet (@var{v})
-% @deftypefnx {Function File} {[@var{i}, @var{o}] =} tmvs_chauvenet (@var{v}, @var{mu})
-% @deftypefnx {Function File} {[@var{i}, @var{o}] =} tmvs_chauvenet (@var{v}, @var{mu}, @var{sigma})
+% @deftypefn {Function File} {[@var{i}, @var{o}] =} chauvenet (@var{v})
+% @deftypefnx {Function File} {[@var{i}, @var{o}] =} chauvenet (@var{v}, @var{mu})
+% @deftypefnx {Function File} {[@var{i}, @var{o}] =} chauvenet (@var{v}, @var{mu}, @var{sigma})
 %
 % Chauvenet's criterion separates the outliers @var{o} from the inliers @var{i}
 % in the normally distributed data set @var{v}.
@@ -21,10 +21,10 @@
 %
 % @example
 % @code{v = [4, 2, 1024, 0, 1];}
-% @code{[i, o] = tmvs_chauvenet (v)}
+% @code{[i, o] = chauvenet (v)}
 % @result{} i = [1, 2, 4, 5]
 %    o = [3]
-% @code{v(tmvs_chauvenet (v))}
+% @code{v(chauvenet (v))}
 % @result{} [4, 2, 0, 1]
 % @end example
 %
@@ -32,13 +32,13 @@
 %
 % @example
 % @code{m = [2, 4; 1, 2; 10, 1024; -1, 0; 0, 1];}
-% @code{m(tmvs_chauvenet (m(:, 2)), :)}
+% @code{m(chauvenet (m(:, 2)), :)}
 % @result{} [2, 4; 1, 2; -1, 0; 0, 1]
 % @end example
 %
 % @end deftypefn
 
-function [i, o] = tmvs_chauvenet (v, mu = mean (v), sigma = std (v))
+function [i, o] = chauvenet (v, mu = mean (v), sigma = std (v))
 
 if ~isvector (v)
   error ('wrong shape %dx%d', size (v));
@@ -86,19 +86,19 @@ end
 %! v = [4, 2, 1024, 0, 1];
 
 %!test
-% [i, o] = tmvs_chauvenet (u);
+% [i, o] = chauvenet (u);
 % assert (i, [1, 2, 4, 5]);
 % assert (o, [3]);
 %!test
-% [i, o] = tmvs_chauvenet (u');
+% [i, o] = chauvenet (u');
 % assert (i, [1; 2; 4; 5]);
 % assert (o, [3]);
 
 %!test
-% [i, o] = tmvs_chauvenet (v);
+% [i, o] = chauvenet (v);
 % assert (i, [1, 2, 3, 4, 5]);
 % assert (o, []);
 %!test
-% [i, o] = tmvs_chauvenet (v');
+% [i, o] = chauvenet (v');
 % assert (i, [1; 2; 3; 4; 5]);
 % assert (o, []);

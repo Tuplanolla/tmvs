@@ -15,6 +15,6 @@
 function aggr = tmvs_fetchall (pat, src, varargin)
 
 f = @(fname) tmvs_fetch (fname, src, varargin{:});
-aggr = tmvs_merge (tmvs_mapl (f, glob (pat)){:});
+aggr = tmvs_merge (mapl (f, glob (pat)){:});
 
 end

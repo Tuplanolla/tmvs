@@ -1,8 +1,8 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {} tmvs_progress (@var{i})
-% @deftypefnx {Function File} {} tmvs_progress (@var{i}, @var{n})
-% @deftypefnx {Function File} {} tmvs_progress (@var{i}, @var{n}, @var{fid})
-% @deftypefnx {Function File} {} tmvs_progress ()
+% @deftypefn {Function File} {} progress (@var{i})
+% @deftypefnx {Function File} {} progress (@var{i}, @var{n})
+% @deftypefnx {Function File} {} progress (@var{i}, @var{n}, @var{fid})
+% @deftypefnx {Function File} {} progress ()
 %
 % When called in a loop with the index @var{i},
 % prints a progress indicator to the file @var{fid} every @var{n} iterations.
@@ -22,20 +22,20 @@
 % @example
 % @code{for i = 1 : 5
 %   sleep (1);
-%   tmvs_progress (i);
+%   progress (i);
 % end}
 % @code{for i = 1 : 50
 %   sleep (0.1);
-%   tmvs_progress (i);
+%   progress (i);
 % end
-% tmvs_progress ();}
+% progress ();}
 % @end example
 %
 % @seealso{fprintf, fflush}
 %
 % @end deftypefn
 
-function tmvs_progress (i, n = 1, fid = stdout)
+function progress (i, n = 1, fid = stdout)
 
 if nargin == 0
   fprintf (fid, '\n');
@@ -59,4 +59,4 @@ end
 end
 
 %!test
-%! tmvs_progress (1, 2);
+%! progress (1, 2);

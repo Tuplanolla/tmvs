@@ -1,5 +1,5 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {@var{p} =} tmvs_isequals (@var{x}, @var{y})
+% @deftypefn {Function File} {@var{p} =} isequals (@var{x}, @var{y})
 %
 % Sets @var{p} to a nonzero value
 % if the structures @var{x} and @var{y} satisfy shallow equality, that is,
@@ -11,16 +11,16 @@
 % The following examples demonstrate basic usage.
 %
 % @example
-% @code{tmvs_isequals (struct ('one', 1, 'two', 2), ...
+% @code{isequals (struct ('one', 1, 'two', 2), ...
 %                struct ('one', 1, 'two', 2))}
 % @result{} true
-% @code{tmvs_isequals (struct ('one', 1, 'two', 2), ...
+% @code{isequals (struct ('one', 1, 'two', 2), ...
 %                struct ('one', 1, 'two', 3))}
 % @result{} false
-% @code{tmvs_isequals (struct ('one', 1, 'two', 2), ...
+% @code{isequals (struct ('one', 1, 'two', 2), ...
 %                struct ('one', 1, 'three', 3))}
 % @result{} false
-% @code{tmvs_isequals (struct ('one', 1, 'two', 2), ...
+% @code{isequals (struct ('one', 1, 'two', 2), ...
 %                struct ('one', 1))}
 % @result{} false
 % @end example
@@ -32,7 +32,7 @@
 %
 % @end deftypefn
 
-function p = tmvs_isequals (x, y)
+function p = isequals (x, y)
 
 c = fieldnames (x);
 n = numel (c);
@@ -56,23 +56,23 @@ end
 end
 
 %!test
-% assert (tmvs_isequals (struct (), struct ()), true);
+% assert (isequals (struct (), struct ()), true);
 %!test
-% assert (tmvs_isequals (struct ('1', 1), struct ('1', 1)), true);
+% assert (isequals (struct ('1', 1), struct ('1', 1)), true);
 %!test
-% assert (tmvs_isequals (struct ('1', 1, '2', 2), ...
+% assert (isequals (struct ('1', 1, '2', 2), ...
 %                        struct ('1', 1, '2', 2)), true);
 %!test
-% assert (tmvs_isequals (struct ('1', 1, '2', 2, '3', 3), ...
+% assert (isequals (struct ('1', 1, '2', 2, '3', 3), ...
 %                        struct ('1', 1, '2', 2, '3', 3)), true);
 
 %!test
-% assert (tmvs_isequals (struct (), struct ('1', 1)), false);
+% assert (isequals (struct (), struct ('1', 1)), false);
 %!test
-% assert (tmvs_isequals (struct ('1', 1), struct ()), false);
+% assert (isequals (struct ('1', 1), struct ()), false);
 %!test
-% assert (tmvs_isequals (struct ('1', 1), struct ('1', 2)), false);
+% assert (isequals (struct ('1', 1), struct ('1', 2)), false);
 %!test
-% assert (tmvs_isequals (struct ('1', 1), struct ('2', 1)), false);
+% assert (isequals (struct ('1', 1), struct ('2', 1)), false);
 %!test
-% assert (tmvs_isequals (struct ('1', 1), struct ('2', 2)), false);
+% assert (isequals (struct ('1', 1), struct ('2', 2)), false);

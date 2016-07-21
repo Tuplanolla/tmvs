@@ -1,6 +1,6 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {@var{y} =} tmvs_foldl (@var{f}, @var{x})
-% @deftypefnx {Function File} {@var{y} =} tmvs_foldl (@var{f}, @var{x}, @var{z})
+% @deftypefn {Function File} {@var{y} =} foldl (@var{f}, @var{x})
+% @deftypefnx {Function File} {@var{y} =} foldl (@var{f}, @var{x}, @var{z})
 %
 % Fold, also known as reduce, inject, accumulate, aggregate or
 % cata (for catamorphism), breaks the data structure @var{x} down
@@ -20,20 +20,20 @@
 % The following examples demonstrate basic usage.
 %
 % @example
-% @code{tmvs_foldl (@@plus, [1, 2, 3])}
+% @code{foldl (@@plus, [1, 2, 3])}
 % @result{} 6
-% @code{tmvs_foldl (@@plus, [1, 2, 3], 4)}
+% @code{foldl (@@plus, [1, 2, 3], 4)}
 % @result{} 10
-% @code{tmvs_foldl (@@(y, x) y / x, [36, 6, 3])}
+% @code{foldl (@@(y, x) y / x, [36, 6, 3])}
 % @result{} 2
 % @end example
 %
 % Other types work in a similar fashion.
 %
 % @example
-% @code{tmvs_foldl (@@plus, @{1, 2, 3@})}
+% @code{foldl (@@plus, @{1, 2, 3@})}
 % @result{} 6
-% @code{tmvs_foldl (@@(y, s) y + s.one, ...
+% @code{foldl (@@(y, s) y + s.one, ...
 %             struct ('one', @{1, 2, 3@}, 'two', @{4, 5, 6@}), 0)}
 % @result{} 6
 % @end example
@@ -41,17 +41,17 @@
 % The following rule for matrices generalizes.
 %
 % @example
-% @code{tmvs_foldl (@@(y, x) sprintf ('f (%s, x(%d))', y, x), [1 : 3], 'z')}
+% @code{foldl (@@(y, x) sprintf ('f (%s, x(%d))', y, x), [1 : 3], 'z')}
 % @result{} 'f (f (f (z, x(1)), x(2)), x(3))'
 % @end example
 %
-% Programming note: This is slightly faster than @code{tmvs_foldr}.
+% Programming note: This is slightly faster than @code{foldr}.
 %
-% @seealso{tmvs_foldr, reduce}
+% @seealso{foldr, reduce}
 %
 % @end deftypefn
 
-function y = tmvs_foldl (f, x, z)
+function y = foldl (f, x, z)
 
 if isnumeric (x) || isstruct (x)
   type = 1;
@@ -97,68 +97,68 @@ end
 
 
 %!error
-%! tmvs_foldl (f, []);
+%! foldl (f, []);
 %!test
-%! assert (tmvs_foldl (f, [], 2), 2);
+%! assert (foldl (f, [], 2), 2);
 
 %!test
-%! assert (tmvs_foldl (f, [2]), 2);
+%! assert (foldl (f, [2]), 2);
 %!test
-%! assert (tmvs_foldl (f, [3], 6), 2);
+%! assert (foldl (f, [3], 6), 2);
 
 %!test
-%! assert (tmvs_foldl (f, [6, 3]), 2);
+%! assert (foldl (f, [6, 3]), 2);
 %!test
-%! assert (tmvs_foldl (f, [6, 3], 36), 2);
+%! assert (foldl (f, [6, 3], 36), 2);
 %!test
-%! assert (tmvs_foldl (f, [6; 3]), 2);
+%! assert (foldl (f, [6; 3]), 2);
 %!test
-%! assert (tmvs_foldl (f, [6; 3], 36), 2);
+%! assert (foldl (f, [6; 3], 36), 2);
 
 %!test
-%! assert (tmvs_foldl (f, [1296, 36; 6, 3]), 2);
+%! assert (foldl (f, [1296, 36; 6, 3]), 2);
 %!test
-%! assert (tmvs_foldl (f, [1296, 36; 6, 3], 1679616), 2);
-
-
-%!error
-%! tmvs_foldl (f, {});
-%!test
-%! assert (tmvs_foldl (f, {}, 2), 2);
-
-%!test
-%! assert (tmvs_foldl (f, {2}), 2);
-%!test
-%! assert (tmvs_foldl (f, {3}, 6), 2);
-
-%!test
-%! assert (tmvs_foldl (f, {6, 3}), 2);
-%!test
-%! assert (tmvs_foldl (f, {6, 3}, 36), 2);
-%!test
-%! assert (tmvs_foldl (f, {6; 3}), 2);
-%!test
-%! assert (tmvs_foldl (f, {6; 3}, 36), 2);
-
-%!test
-%! assert (tmvs_foldl (f, {1296, 36; 6, 3}), 2);
-%!test
-%! assert (tmvs_foldl (f, {1296, 36; 6, 3}, 1679616), 2);
+%! assert (foldl (f, [1296, 36; 6, 3], 1679616), 2);
 
 
 %!error
-%! tmvs_foldl (g, struct ('1', {}, '2', {}));
+%! foldl (f, {});
 %!test
-%! assert (tmvs_foldl (g, struct ('1', {}, '2', {}), 2), 2);
+%! assert (foldl (f, {}, 2), 2);
 
 %!test
-%! assert (tmvs_foldl (g, struct ('1', {3}, '2', {6}), 6), 2);
+%! assert (foldl (f, {2}), 2);
+%!test
+%! assert (foldl (f, {3}, 6), 2);
 
 %!test
-%! assert (tmvs_foldl (g, struct ('1', {6, 3}, '2', {12, 6}), 36), 2);
+%! assert (foldl (f, {6, 3}), 2);
 %!test
-%! assert (tmvs_foldl (g, struct ('1', {6; 3}, '2', {12; 6}), 36), 2);
+%! assert (foldl (f, {6, 3}, 36), 2);
+%!test
+%! assert (foldl (f, {6; 3}), 2);
+%!test
+%! assert (foldl (f, {6; 3}, 36), 2);
 
 %!test
-%! assert (tmvs_foldl (g, struct ('1', {1296, 36; 6, 3}, ...
+%! assert (foldl (f, {1296, 36; 6, 3}), 2);
+%!test
+%! assert (foldl (f, {1296, 36; 6, 3}, 1679616), 2);
+
+
+%!error
+%! foldl (g, struct ('1', {}, '2', {}));
+%!test
+%! assert (foldl (g, struct ('1', {}, '2', {}), 2), 2);
+
+%!test
+%! assert (foldl (g, struct ('1', {3}, '2', {6}), 6), 2);
+
+%!test
+%! assert (foldl (g, struct ('1', {6, 3}, '2', {12, 6}), 36), 2);
+%!test
+%! assert (foldl (g, struct ('1', {6; 3}, '2', {12; 6}), 36), 2);
+
+%!test
+%! assert (foldl (g, struct ('1', {1296, 36; 6, 3}, ...
 %!                                '2', {2592, 72; 12, 6}), 1679616), 2);

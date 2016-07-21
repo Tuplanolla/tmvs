@@ -1,5 +1,5 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {@var{y} =} tmvs_mapr (@var{f}, @var{x})
+% @deftypefn {Function File} {@var{y} =} mapr (@var{f}, @var{x})
 %
 % Map, also known as collect, apply or for-each,
 % applies the function @var{f} to every element of the data structure @var{x}.
@@ -14,21 +14,21 @@
 % The following examples demonstrate basic usage.
 %
 % @example
-% @code{tmvs_mapr (@@sqrt, [1, 4, 9])}
+% @code{mapr (@@sqrt, [1, 4, 9])}
 % @result{} [1, 2, 3]
-% @code{tmvs_mapr (@@(x) mod (x, 2), [1, 2, 3])}
+% @code{mapr (@@(x) mod (x, 2), [1, 2, 3])}
 % @result{} [1, 0, 1]
 % @end example
 %
 % Other types work in a similar fashion.
 %
 % @example
-% @code{tmvs_mapr (@@sqrt, @{1, 4, 9@})}
+% @code{mapr (@@sqrt, @{1, 4, 9@})}
 % @result{} @{1, 2, 3@}
-% @code{tmvs_mapr (@@(s) setfield (s, 'two', 2 * s.one), ...
+% @code{mapr (@@(s) setfield (s, 'two', 2 * s.one), ...
 %            struct ('one', 1, 'two', 4))}
 % @result{} struct ('one', 1, 'two', 2)
-% @code{tmvs_mapr (@@(s) setfield (s, 'two', 2 * s.one), ...
+% @code{mapr (@@(s) setfield (s, 'two', 2 * s.one), ...
 %            struct ('one', @{1, 1@}, 'two', @{4, 4@}))}
 % @result{} struct ('one', @{1, 1@}, 'two', @{2, 2@})
 % @end example
@@ -36,17 +36,17 @@
 % Mapping is structure-preserving, so the following is not allowed.
 %
 % @example
-% @code{tmvs_mapr (@@(s) rmfield (s, 'two'), ...
+% @code{mapr (@@(s) rmfield (s, 'two'), ...
 %            struct ('one', @{1, 1@}, 'two', @{4, 4@}))}
 % @end example
 %
-% Programming note: This is slightly slower than @code{tmvs_mapl}.
+% Programming note: This is slightly slower than @code{mapl}.
 %
-% @seealso{tmvs_mapl, arrayfun, cellfun, structfun}
+% @seealso{mapl, arrayfun, cellfun, structfun}
 %
 % @end deftypefn
 
-function y = tmvs_mapr (f, x)
+function y = mapr (f, x)
 
 if isnumeric (x) || isstruct (x)
   type = 1;
@@ -83,49 +83,49 @@ end
 
 
 %!test
-%! assert (tmvs_mapr (f, []), []);
+%! assert (mapr (f, []), []);
 
 %!test
-%! assert (tmvs_mapr (f, [1]), [-1]);
+%! assert (mapr (f, [1]), [-1]);
 
 %!test
-%! assert (tmvs_mapr (f, [-1, 1]), [1, -1]);
+%! assert (mapr (f, [-1, 1]), [1, -1]);
 %!test
-%! assert (tmvs_mapr (f, [-1; 1]), [1; -1]);
+%! assert (mapr (f, [-1; 1]), [1; -1]);
 
 %!test
-%! assert (tmvs_mapr (f, [-2, -1; 1, 2]), [2, 1; -1, -2]);
-
-
-%!test
-%! assert (tmvs_mapr (f, {}), {});
-
-%!test
-%! assert (tmvs_mapr (f, {1}), {-1});
-
-%!test
-%! assert (tmvs_mapr (f, {-1, 1}), {1, -1});
-%!test
-%! assert (tmvs_mapr (f, {-1; 1}), {1; -1});
-
-%!test
-%! assert (tmvs_mapr (f, {-2, -1; 1, 2}), {2, 1; -1, -2});
+%! assert (mapr (f, [-2, -1; 1, 2]), [2, 1; -1, -2]);
 
 
 %!test
-%! assert (tmvs_mapr (g, struct ('1', {})), struct ('1', {}));
+%! assert (mapr (f, {}), {});
 
 %!test
-%! assert (tmvs_mapr (g, struct ('1', {-1}, '2', {1})), ...
+%! assert (mapr (f, {1}), {-1});
+
+%!test
+%! assert (mapr (f, {-1, 1}), {1, -1});
+%!test
+%! assert (mapr (f, {-1; 1}), {1; -1});
+
+%!test
+%! assert (mapr (f, {-2, -1; 1, 2}), {2, 1; -1, -2});
+
+
+%!test
+%! assert (mapr (g, struct ('1', {})), struct ('1', {}));
+
+%!test
+%! assert (mapr (g, struct ('1', {-1}, '2', {1})), ...
 %!         struct ('1', {-1}, '2', {1}));
 
 %!test
-%! assert (tmvs_mapr (g, struct ('1', {-2, -1}, '2', {1, 2})), ...
+%! assert (mapr (g, struct ('1', {-2, -1}, '2', {1, 2})), ...
 %!         struct ('1', {-2, -1}, '2', {2, 1}));
 %!test
-%! assert (tmvs_mapr (g, struct ('1', {-2; -1}, '2', {1; 2})), ...
+%! assert (mapr (g, struct ('1', {-2; -1}, '2', {1; 2})), ...
 %!         struct ('1', {-2; -1}, '2', {2; 1}));
 
 %!test
-%! assert (tmvs_mapr (g, struct ('1', {-4, -3; -2, -1}, '2', {1, 2; 3, 4})), ...
+%! assert (mapr (g, struct ('1', {-4, -3; -2, -1}, '2', {1, 2; 3, 4})), ...
 %!         struct ('1', {-4, -3; -2, -1}, '2', {4, 3; 2, 1}));

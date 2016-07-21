@@ -40,7 +40,7 @@
 % making an educated guess based on the first few records.
 % This is forgone to keep the parser simple and robust.
 %
-% @seealso{tmvs, tmvs_fetch, tmvs_source, tmvs_progress, csvread}
+% @seealso{tmvs, tmvs_fetch, tmvs_source, progress, csvread}
 %
 % @end deftypefn
 

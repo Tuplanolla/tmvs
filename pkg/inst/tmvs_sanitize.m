@@ -32,17 +32,17 @@ for i = 1 : numel (aggr)
 
   switch tmvs_quantity (aggr(i).id.quantity)
   case 'Temperature'
-    aggr(i).pairs = z(tmvs_withinc (z(:, 2), [-100, 100]), :);
+    aggr(i).pairs = z(withinc (z(:, 2), [-100, 100]), :);
   case 'Relative Humidity'
-    aggr(i).pairs = z(tmvs_withinc (z(:, 2), [0, 0.99]), :);
+    aggr(i).pairs = z(withinc (z(:, 2), [0, 0.99]), :);
   case 'Absolute Humidity'
-    aggr(i).pairs = z(tmvs_withinc (z(:, 2), [0, 1e+3]), :);
+    aggr(i).pairs = z(withinc (z(:, 2), [0, 1e+3]), :);
   case 'Pressure'
-    aggr(i).pairs = z(tmvs_withinc (z(:, 2), [20e+3, 200e+3]), :);
+    aggr(i).pairs = z(withinc (z(:, 2), [20e+3, 200e+3]), :);
   case 'Wind Speed'
-    aggr(i).pairs = z(tmvs_withinc (z(:, 2), [0, 100]), :);
+    aggr(i).pairs = z(withinc (z(:, 2), [0, 100]), :);
   case 'Precipitation'
-    aggr(i).pairs = z(tmvs_withinc (z(:, 2), [0, 1]), :);
+    aggr(i).pairs = z(withinc (z(:, 2), [0, 1]), :);
   end
 end
 

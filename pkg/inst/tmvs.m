@@ -455,7 +455,7 @@
 %
 % @example
 % @code{interp = struct (fields@{:@}, ...
-%   'function', @@(xi) interp (t, x, xi), ...
+%   'function', @@(xi) interp1 (t, x, xi), ...
 %   'domain', [t(1), t(end)], ...
 %   'codomain', [x(1), x(end)]);}
 % @end example
@@ -490,7 +490,7 @@
 %                      tmvs_source ('Weather Observatory'), ...
 %                      tmvs_region ('Jyvaskyla'));
 % aggr = tmvs_merge (tlaggr(9), wsaggr(4), ...
-%                    tmvs_zoom (@@(z) z(1, :), woaggr(3), 'pairs'));}
+%                    modify (@@(z) z(1, :), woaggr(3), 'pairs'));}
 % @end example
 %
 % @section Caching
@@ -575,11 +575,11 @@
 % @code{aggr = tmvs_fetchall ('excerpt/2012/[0-9]*.csv', ...
 %                       tmvs_source ('Test Lab')); % Everything.
 % f = @@(s) s.id.quantity == tmvs_quantity ('Temperature');
-% faggr = tmvs_filteru (f, aggr); % Temperatures only.
+% faggr = filteru (f, aggr); % Temperatures only.
 % r = [(datenum (2012, 3, 1)), (datenum (2012, 6, 1))];
-% g = @@(z) z(tmvs_withinc (z(1), r), :);
-% waggr = tmvs_zoom (g, faggr, 'pairs'); % Spring only.
-% tmvs_foldl (@@(x, s) min ([x, s.pairs(:, 2)]), waggr, inf)}
+% g = @@(z) z(withinc (z(1), r), :);
+% waggr = modify (g, faggr, 'pairs'); % Spring only.
+% foldl (@@(x, s) min ([x, s.pairs(:, 2)]), waggr, inf)}
 % @result{} 8
 % @end example
 %
@@ -590,43 +590,6 @@
 % @chapter Complete Examples
 %
 % This chapter is still a bit incomplete.
-%
-% @section Working with Caches
-%
-% Load a cache file directly.
-%
-% @example
-% @code{aggr = tmvs_recall ('excerpt/2012/118-0.csv.tmp');}
-% @end example
-%
-% Remove dubious humidities or pressures.
-%
-% @example
-% @code{f = @@(z) z(tmvs_withinc (z(:, 2), [0, 99]), :);
-% whaggr = tmvs_mapl (@@(s) tmvs_zoom (f, s, 'pairs'), haggr);
-% g = @@(z) z(tmvs_withinc (z(:, 2), [20e+3, 200e+3]), :);
-% wpaggr = tmvs_mapl (@@(s) tmvs_zoom (g, s, 'pairs'), paggr);}
-% @end example
-%
-% Remove statistical outliers automatically.
-%
-% @example
-% @code{f = @@(z) z(tmvs_chauvenet (z(:, 2)), :);
-% caggr = tmvs_mapl (@@(s) tmvs_zoom (f, s, 'pairs'), aggr);}
-% @end example
-%
-% Primitively project fields out.
-%
-% @example
-% @code{z = sortrows (horzcat (vertcat (vertcat (eaggr.meta).position), ...
-%                              vertcat (eaggr.pairs)(:, 2)));}
-% @end example
-%
-% Feed @qcode{pairs} into @code{plot} directly.
-%
-% @example
-% @code{plot (num2cell (z, 1)@{:@});}
-% @end example
 %
 % @section Visualizing Interesting Things
 %
@@ -639,7 +602,7 @@
 %          s.id.section == tmvs_section ('Bottom Corner') && ...
 %          s.id.ordinal == 3;
 % aggr = tmvs_fetchall ('excerpt/*/118-0.csv', tmvs_source ('Test Lab'));
-% faggr = tmvs_filteru (f, aggr);
+% faggr = filteru (f, aggr);
 %
 % t = faggr.pairs(:, 1);
 % x = faggr.pairs(:, 2);
@@ -655,6 +618,8 @@
 % axis ('tight');}
 % @end example
 %
+% This will be available as @code{tmvs_drawp}.
+%
 % It is quite easy to extend this program over all the ordinals and
 % draw a higher-dimensional plot of it.
 %
@@ -664,18 +629,18 @@
 %          s.id.surface == tmvs_surface ('Wall') && ...
 %          s.id.section == tmvs_section ('Bottom Corner');
 % aggr = tmvs_fetchall ('excerpt/*/118-0.csv', tmvs_source ('Test Lab'));
-% faggr = tmvs_filteru (f, aggr);
+% faggr = filteru (f, aggr);
 %
 % a = vertcat (faggr.pairs);
-% a = a(tmvs_sparsen (a(:, 1), 100), :);
+% a = a(sparsify (a(:, 1), 100), :);
 %
 % t = sort (a(:, 1));
 %
 % interp = tmvs_interpolate (faggr, 'extrap');
 % eaggr = tmvs_evaluate (interp, t);
 %
-% y = tmvs_foldl (@@(y, s) horzcat (y, s.meta.position), eaggr, []);
-% x = tmvs_foldl (@@(x, s) horzcat (x, s.pairs(:, 2)), eaggr, []);
+% y = foldl (@@(y, s) horzcat (y, s.meta.position), eaggr, []);
+% x = foldl (@@(x, s) horzcat (x, s.pairs(:, 2)), eaggr, []);
 %
 % figure (2);
 % clf ();
@@ -689,6 +654,8 @@
 % colormap ('hot');}
 % @end example
 %
+% This will be available as @code{tmvs_draws}.
+%
 % With some effort the extra dimension can also be explored interactively.
 % Let us first draw a point cloud of all the ordinals.
 %
@@ -698,10 +665,10 @@
 %          s.id.surface == tmvs_surface ('Wall') && ...
 %          s.id.section == tmvs_section ('Bottom Corner');
 % aggr = tmvs_fetchall ('excerpt/*/118-0.csv', tmvs_source ('Test Lab'));
-% faggr = tmvs_filteru (f, aggr);
+% faggr = filteru (f, aggr);
 %
 % a = vertcat (faggr.pairs);
-% a = a(tmvs_sparsen (a(:, 1), 1000), :);
+% a = a(sparsify (a(:, 1), 1000), :);
 %
 % t = a(:, 1);
 % x = a(:, 2);
@@ -745,7 +712,7 @@
 %   x = vertcat (eaggr.pairs)(:, 2);
 %
 %   f = @@(dx, s) max ([dx, (max (tmvs_uncertainty (s.id, x)))]);
-%   dx = tmvs_foldl (f, eaggr, 0);
+%   dx = foldl (f, eaggr, 0);
 %
 %   [y, k] = sort (y);
 %   x = x(k);
@@ -758,11 +725,51 @@
 %
 %   figure (3);
 %   t = ginput (1);
-%   if isempty (t) || ~tmvs_withinc (t, dom)
+%   if isempty (t) || ~withinc (t, dom)
 %     break
 %   end
 %   delete (h);
 % end}
+% @end example
+%
+% This will be available as @code{tmvs_drawi}.
+%
+% @section Working with Caches
+%
+% Load a cache file directly.
+%
+% @example
+% @code{aggr = tmvs_recall ('excerpt/2012/118-0.csv.tmp');}
+% @end example
+%
+% Remove dubious measurements.
+%
+% @example
+% @code{f = @@(z) z(withinc (z(:, 2), [20e+3, 200e+3]), :);
+% wpaggr = mapl (@@(s) modify (f, s, 'pairs'), paggr);}
+% ...
+% @end example
+%
+% This is available as @code{tmvs_sanitize} for all quantities.
+%
+% Remove statistical outliers automatically.
+%
+% @example
+% @code{f = @@(z) z(chauvenet (z(:, 2)), :);
+% caggr = mapl (@@(s) modify (f, s, 'pairs'), aggr);}
+% @end example
+%
+% Primitively project fields out.
+%
+% @example
+% @code{z = sortrows (horzcat (vertcat (vertcat (eaggr.meta).position), ...
+%                              vertcat (eaggr.pairs)(:, 2)));}
+% @end example
+%
+% Feed @qcode{pairs} into @code{plot} directly.
+%
+% @example
+% @code{plot (num2cell (z, 1)@{:@});}
 % @end example
 %
 % @section Printing and Exporting
@@ -840,11 +847,11 @@
 %
 % TMVS comes with a small test suite for those procedures
 % that do not require mocking file systems or other side effects.
-% To run the tests relating to, say, @code{tmvs_brsearch},
+% To run the tests relating to, say, @code{brsearch},
 % use the following command.
 %
 % @example
-% @code{test tmvs_brsearch}
+% @code{test brsearch}
 % @end example
 %
 % Running tests one by one is tiresome.
@@ -890,7 +897,7 @@
 %     1) tmvs_fetchall: 3 calls, 13.727 total, 0.001 self
 %       1) tmvs_merge: 3 calls, 8.481 total, 0.048 self
 %         1) tmvs_findid: 547 calls, 8.400 total, 1.378 self
-%           1) tmvs_isequals: 46797 calls, 7.021 total, 4.127 self
+%           1) isequals: 46797 calls, 7.021 total, 4.127 self
 %             1) fieldnames: 93594 calls, 2.351 total, 1.469 self
 %             2) isfield: 68385 calls, 0.266 total, 0.266 self
 %             3) false: 46455 calls, 0.069 total, 0.069 self
@@ -905,11 +912,11 @@
 %         4) end: 205 calls, 0.000 total, 0.000 self
 %         5) binary +: 205 calls, 0.000 total, 0.000 self
 %         6) numel: 52 calls, 0.000 total, 0.000 self
-%       2) tmvs_mapl: 3 calls, 5.243 total, 0.004 self
+%       2) mapl: 3 calls, 5.243 total, 0.004 self
 %       3) glob: 3 calls, 0.001 total, 0.001 self
 %     2) tmvs_merge: 1 calls, 3.638 total, 0.026 self
 %       1) tmvs_findid: 205 calls, 3.579 total, 0.618 self
-%         1) tmvs_isequals: 20910 calls, 2.961 total, 1.710 self
+%         1) isequals: 20910 calls, 2.961 total, 1.710 self
 %           1) fieldnames: 41820 calls, 1.041 total, 0.652 self
 %           2) isfield: 24765 calls, 0.096 total, 0.096 self
 %           3) false: 20910 calls, 0.031 total, 0.031 self
@@ -953,7 +960,7 @@
 % @code{Top
 %   1) tmvs_work: 1 calls, 15307.944 total, 0.002 self
 %     1) tmvs_fetchall: 3 calls, 15304.204 total, 0.027 self
-%       1) tmvs_mapl: 3 calls, 15294.016 total, 0.004 self
+%       1) mapl: 3 calls, 15294.016 total, 0.004 self
 %         1) anonymous@:17:50: 46 calls, 15294.012 total, 0.007 self
 %           1) tmvs_fetch: 46 calls, 15294.005 total, 0.021 self
 %             1) tmvs_import: 46 calls, 15293.362 total, 1377.351 self
@@ -1029,7 +1036,7 @@
 %       3) glob: 3 calls, 0.000 total, 0.000 self
 %     2) tmvs_merge: 1 calls, 3.737 total, 0.065 self
 %       1) tmvs_findid: 215 calls, 3.595 total, 0.616 self
-%         1) tmvs_isequals: 23005 calls, 2.980 total, 1.719 self
+%         1) isequals: 23005 calls, 2.980 total, 1.719 self
 %           1) fieldnames: 46010 calls, 1.048 total, 0.664 self
 %           2) isfield: 26829 calls, 0.095 total, 0.095 self
 %           3) false: 23005 calls, 0.032 total, 0.032 self
@@ -1072,16 +1079,16 @@
 %! test tmvs_region
 
 %!test
-%! test tmvs_brsearch
-%! test tmvs_chauvenet
-%! test tmvs_filters
-%! test tmvs_filteru
-%! test tmvs_foldl
-%! test tmvs_foldr
-%! test tmvs_isequals
-%! test tmvs_mapl
-%! test tmvs_mapr
-%! test tmvs_progress
-%! test tmvs_withinc
-%! test tmvs_withino
-%! test tmvs_zoom
+%! test brsearch
+%! test chauvenet
+%! test filters
+%! test filteru
+%! test foldl
+%! test foldr
+%! test isequals
+%! test mapl
+%! test mapr
+%! test progress
+%! test withinc
+%! test withino
+%! test modify

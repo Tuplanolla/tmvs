@@ -32,22 +32,6 @@ Enumerating
   tmvs_section
   tmvs_material
   tmvs_region
-Generic
-  tmvs_brsearch
-  tmvs_chauvenet
-  tmvs_filters
-  tmvs_filteru
-  tmvs_foldl
-  tmvs_foldr
-  tmvs_globr
-  tmvs_isequals
-  tmvs_mapl
-  tmvs_mapr
-  tmvs_progress
-  tmvs_sparsen
-  tmvs_withinc
-  tmvs_withino
-  tmvs_zoom
 Auxiliary
   tmvs_version
   tmvs_cachename
@@ -58,3 +42,19 @@ Auxiliary
   tmvs_parsecsv
   tmvs_parsename
   tmvs_readcache
+Generic
+  brsearch
+  chauvenet
+  filters
+  filteru
+  foldl
+  foldr
+  globr
+  isequals
+  mapl
+  mapr
+  modify
+  progress
+  sparsify
+  withinc
+  withino
