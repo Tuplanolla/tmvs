@@ -170,6 +170,7 @@
 %
 % @example
 % @code{which ('excerpt')}
+% @print{} 'excerpt' is the file /usr/share/octave/packages/tmvs-1.0.0/excerpt
 % @end example
 %
 % It is based on a real data set that has been sparsened and shuffled
@@ -581,30 +582,18 @@
 % @result{} 8
 % @end example
 %
-% This can be naturally written more compactly,
-% if the resulting code is not intended to be read ever again.
-%
-% @example
-% @code{tmvs_foldl (@@(x, s) min ([x, s.pairs(:, 2)]), ...
-%   tmvs_zoom (@@(z) z(tmvs_withinc (z(1), ...
-%       [(datenum (2012, 3, 1)), (datenum (2012, 6, 1))]), :), ...
-%     tmvs_filteru ( ...
-%       @@(s) s.id.quantity == tmvs_quantity ('Temperature'), ...
-%       tmvs_fetchall ('excerpt/2012/[0-9]*.csv', ...
-%         tmvs_source ('Test Lab'))), 'pairs'), inf)}
-% @result{} 8
-% @end example
+% The imperative equivalent is a little more verbose,
+% as you can see by trying it yourself.
 %
 % @node Complete Examples
 % @chapter Complete Examples
 %
-% @section Looking at a Few Data Points
+% @section Visualizing Interesting Things
 %
 % The following program plots the complete time evolution of a single sensor.
 %
 % @example
-% @code{
-% f = @@(s) s.id.quantity == tmvs_quantity ('Temperature') && ...
+% @code{f = @@(s) s.id.quantity == tmvs_quantity ('Temperature') && ...
 %          s.id.site == tmvs_site ('Q') && ...
 %          s.id.surface == tmvs_surface ('Wall') && ...
 %          s.id.section == tmvs_section ('Bottom Corner') && ...
@@ -623,17 +612,14 @@
 % xlabel (sprintf ('Date [%s]', datefmt));
 % datetick ('x', datefmt);
 % ylabel ('Temperature [^oC]');
-% axis ('tight');
-% }
+% axis ('tight');}
 % @end example
 %
-% It is quite easy to extend the previous program over all the ordinals and
-% draw an interactive or higher-dimensional plot of it.
-% Let us first draw a point cloud of all the ordinals.
+% It is quite easy to extend this program over all the ordinals and
+% draw a higher-dimensional plot of it.
 %
 % @example
-% @code{
-% f = @@(s) s.id.quantity == tmvs_quantity ('Temperature') && ...
+% @code{f = @@(s) s.id.quantity == tmvs_quantity ('Temperature') && ...
 %          s.id.site == tmvs_site ('Q') && ...
 %          s.id.surface == tmvs_surface ('Wall') && ...
 %          s.id.section == tmvs_section ('Bottom Corner');
@@ -641,27 +627,65 @@
 % faggr = tmvs_filteru (f, aggr);
 %
 % a = vertcat (faggr.pairs);
-% a = a(1 : 1 + floor (numel (a) / 1e+3) : end, :);
+% a = a(tmvs_sparsen (a(:, 1), 100), :);
+%
+% t = sort (a(:, 1));
+%
+% interp = tmvs_interpolate (faggr, 'extrap');
+% eaggr = tmvs_evaluate (interp, t);
+%
+% y = tmvs_foldl (@@(y, s) horzcat (y, s.meta.position), eaggr, []);
+% x = tmvs_foldl (@@(x, s) horzcat (x, s.pairs(:, 2)), eaggr, []);
+%
+% figure (2);
+% clf ();
+% surf (repmat (t, 1, columns (x)), repmat (y, rows (x), 1), x);
+% datefmt = 'yyyy-mm-dd';
+% xlabel (sprintf ('Date [%s]', datefmt));
+% datetick ('x', datefmt);
+% ylabel ('Position [m]');
+% zlabel ('Temperature [^oC]');
+% axis ('tight');
+% colormap ('hot');}
+% @end example
+%
+% With some effort the extra dimension can also be explored interactively.
+% Let us first draw a point cloud of all the ordinals.
+%
+% @example
+% @code{f = @@(s) s.id.quantity == tmvs_quantity ('Temperature') && ...
+%          s.id.site == tmvs_site ('Q') && ...
+%          s.id.surface == tmvs_surface ('Wall') && ...
+%          s.id.section == tmvs_section ('Bottom Corner');
+% aggr = tmvs_fetchall ('excerpt/*/118-0.csv', tmvs_source ('Test Lab'));
+% faggr = tmvs_filteru (f, aggr);
+%
+% a = vertcat (faggr.pairs);
+% a = a(tmvs_sparsen (a(:, 1), 1000), :);
 %
 % t = a(:, 1);
 % x = a(:, 2);
 %
-% figure (2);
+% figure (3);
 % clf ();
 % plot (t, x, '.1');
 % datefmt = 'yyyy-mm-dd';
 % xlabel (sprintf ('Date [%s]', datefmt));
 % datetick ('x', datefmt);
 % ylabel ('Temperature [^oC]');
-% axis ('tight');
-% }
+% axis ('tight');}
 % @end example
 %
 % We can then add interactivity to the point cloud.
+% This requires the Gnuplot graphics toolkit mentioned previously,
+% because otherwise @code{ginput} does not work.
+% The interactive behavior also varies a little depending on the terminal used.
+% The X11 terminal, for example,
+% is activated with @kbd{@key{Right Mouse Button}} and
+% cancelled with @kbd{@key{Return}}.
 %
 % @example
-% @code{
-% interp = tmvs_interpolate (faggr, 'extrap');
+% @code{interp = tmvs_interpolate (faggr, 'extrap');
 %
 % a = vertcat (interp.domain);
 % dom = [(min (a(:, 1))), (max (a(:, 2)))];
@@ -672,7 +696,7 @@
 % t = mean (dom);
 %
 % while true
-%   figure (2);
+%   figure (3);
 %   h = line ([t, t], codom);
 %
 %   eaggr = tmvs_evaluate (interp, t);
@@ -680,39 +704,34 @@
 %   y = vertcat (vertcat (eaggr.meta).position);
 %   x = vertcat (eaggr.pairs)(:, 2);
 %
-%   dx = 0;
-%   for i = 1 : numel (eaggr)
-%     dx = max ([dx, (max (tmvs_uncertainty (eaggr(i).id, x)))]);
-%   end
+%   f = @@(dx, s) max ([dx, (max (tmvs_uncertainty (s.id, x)))]);
+%   dx = tmvs_foldl (f, eaggr, 0);
 %
 %   [y, k] = sort (y);
 %   x = x(k);
 %
-%   figure (3);
+%   figure (4);
 %   clf ();
 %   errorbar (y, x, dx, '~1');
 %   xlabel ('Position [m]');
 %   ylabel ('Temperature [^oC]');
 %
-%   figure (2);
+%   figure (3);
 %   t = ginput (1);
 %   if isempty (t) || ~tmvs_withinc (t, dom)
 %     break
 %   end
 %   delete (h);
-% end
-% }
+% end}
 % @end example
 %
-% @section Working with Data Sets
+% @section Working with Caches
 %
 % The following program does things.
 %
 % @example
 % @code{disp (nan);}
 % @end example
-%
-% @section Managing Caches
 %
 % @section Printing and Exporting
 %
@@ -828,7 +847,7 @@
 %
 % @subsection Microbenchmark
 %
-% The following command reads every data file and
+% The following command reads every sample data file and
 % merges the results into a single aggregate.
 %
 % @example
@@ -901,17 +920,127 @@
 %   2) profile: 1 calls, 0.000 total, 0.000 self}
 % @end example
 %
-% The biggest bottlenecks are clearly
-% the inbuilt procedures @code{fieldnames} and @code{datevec}.
-% Unfortunately replacing them with faster versions is not worth the effort.
+% This result is obviously inaccurate,
+% because the sample data set is so small,
+% but it gives a rough idea of how well the load is balanced.
+% From this measurement alone
+% the biggest bottleneck appears to be @code{fieldnames}.
 %
 % @subsection Proper Benchmark
 %
-% The following call tree was produced with a 3 year data set.
+% The following call tree was produced with a complete 3 year data set.
 %
 % @example
-% @code{Top}
+% @code{Top
+%   1) tmvs_work: 1 calls, 15307.944 total, 0.002 self
+%     1) tmvs_fetchall: 3 calls, 15304.204 total, 0.027 self
+%       1) tmvs_mapl: 3 calls, 15294.016 total, 0.004 self
+%         1) anonymous@:17:50: 46 calls, 15294.012 total, 0.007 self
+%           1) tmvs_fetch: 46 calls, 15294.005 total, 0.021 self
+%             1) tmvs_import: 46 calls, 15293.362 total, 1377.351 self
+%               1) datevec: 6060911 calls, 8295.352 total, 1004.986 self
+%               2) datenum: 6060865 calls, 2879.025 total, 1301.696 self
+%               3) tmvs_parsecsv: 6060911 calls, 1732.615 total, 1300.516 self
+%                 1) regexp: 6060911 calls, 265.797 total, 265.797 self
+%                 2) isempty: 69939729 calls, 45.300 total, 45.300 self
+%                 3) false: 31987536 calls, 41.671 total, 41.671 self
+%                 4) true: 31891282 calls, 39.270 total, 39.270 self
+%                 5) binary +: 38000321 calls, 21.201 total, 21.201 self
+%                 6) cell: 6060911 calls, 9.151 total, 9.151 self
+%                 7) floor: 6060911 calls, 3.981 total, 3.981 self
+%                 8) numel: 6060911 calls, 3.586 total, 3.586 self
+%                 9) binary /: 6060911 calls, 2.142 total, 2.142 self
+%                 10) strcat: 1 calls, 0.000 total, 0.000 self
+%               4) ismember: 6012782 calls, 718.003 total, 442.932 self
+%               5) tmvs_quantity: 6012787 calls, 115.097 total, 93.994 self
+%                 1) isindex: 6012782 calls, 7.668 total, 7.668 self
+%                 2) nargin: 6012787 calls, 6.231 total, 6.231 self
+%                 3) ischar: 6012787 calls, 3.779 total, 3.779 self
+%                 4) binary ==: 6012787 calls, 3.425 total, 3.425 self
+%                 5) tolower: 5 calls, 0.000 total, 0.000 self
+%               6) fgetl: 6060957 calls, 52.137 total, 52.137 self
+%               7) binary !=: 6060957 calls, 45.893 total, 45.893 self
+%               8) str2double: 6253192 calls, 31.089 total, 31.089 self
+%               9) find: 6012782 calls, 13.407 total, 13.407 self
+%               10) false: 6060864 calls, 9.624 total, 9.624 self
+%               11) isempty: 12073693 calls, 8.108 total, 8.108 self
+%               12) end: 6254442 calls, 5.351 total, 5.351 self
+%               13) binary +: 6255067 calls, 3.543 total, 3.543 self
+%               14) prefix -: 6061095 calls, 3.522 total, 3.522 self
+%               15) binary *: 2406178 calls, 1.409 total, 1.409 self
+%               16) tmvs_findid: 625 calls, 1.045 total, 0.150 self
+%               17) tmvs_parsename: 625 calls, 0.550 total, 0.295 self
+%               18) unique: 630 calls, 0.172 total, 0.082 self
+%               19) isindex: 625 calls, 0.056 total, 0.056 self
+%               20) struct: 677 calls, 0.004 total, 0.004 self
+%               21) fclose: 46 calls, 0.002 total, 0.002 self
+%               22) NaN: 625 calls, 0.002 total, 0.002 self
+%               23) tmvs_source: 46 calls, 0.001 total, 0.001 self
+%               24) fopen: 46 calls, 0.001 total, 0.001 self
+%               25) prefix !: 718 calls, 0.000 total, 0.000 self
+%               26) numel: 671 calls, 0.000 total, 0.000 self
+%               27) binary ==: 138 calls, 0.000 total, 0.000 self
+%               28) repmat: 2 calls, 0.000 total, 0.000 self
+%               29) ferror: 46 calls, 0.000 total, 0.000 self
+%               30) cell: 45 calls, 0.000 total, 0.000 self
+%               31) true: 46 calls, 0.000 total, 0.000 self
+%               32) error: 1 calls, 0.000 total, 0.000 self
+%               33) size: 2 calls, 0.000 total, 0.000 self
+%             2) tmvs_store: 46 calls, 0.614 total, 0.003 self
+%               1) save: 46 calls, 0.609 total, 0.609 self
+%               2) exist: 46 calls, 0.002 total, 0.002 self
+%               3) tmvs_version: 46 calls, 0.000 total, 0.000 self
+%               4) nargin: 46 calls, 0.000 total, 0.000 self
+%               5) prefix !: 46 calls, 0.000 total, 0.000 self
+%               6) binary <=: 46 calls, 0.000 total, 0.000 self
+%             3) warning: 92 calls, 0.004 total, 0.004 self
+%             4) tmvs_cachename: 46 calls, 0.002 total, 0.001 self
+%             5) stat: 46 calls, 0.001 total, 0.001 self
+%             6) sprintf: 46 calls, 0.001 total, 0.001 self
+%             7) true: 46 calls, 0.000 total, 0.000 self
+%             8) binary ==: 46 calls, 0.000 total, 0.000 self
+%             9) false: 46 calls, 0.000 total, 0.000 self
+%             10) prefix -: 5 calls, 0.000 total, 0.000 self
+%           2) prefix -: 2 calls, 0.000 total, 0.000 self
+%         2) numel: 3 calls, 0.000 total, 0.000 self
+%         3) isnumeric: 3 calls, 0.000 total, 0.000 self
+%         4) isstruct: 3 calls, 0.000 total, 0.000 self
+%         5) iscell: 3 calls, 0.000 total, 0.000 self
+%       2) tmvs_merge: 3 calls, 10.161 total, 0.166 self
+%       3) glob: 3 calls, 0.000 total, 0.000 self
+%     2) tmvs_merge: 1 calls, 3.737 total, 0.065 self
+%       1) tmvs_findid: 215 calls, 3.595 total, 0.616 self
+%         1) tmvs_isequals: 23005 calls, 2.980 total, 1.719 self
+%           1) fieldnames: 46010 calls, 1.048 total, 0.664 self
+%           2) isfield: 26829 calls, 0.095 total, 0.095 self
+%           3) false: 23005 calls, 0.032 total, 0.032 self
+%           4) numel: 46010 calls, 0.028 total, 0.028 self
+%           5) prefix !: 26829 calls, 0.017 total, 0.017 self
+%           6) true: 10471 calls, 0.015 total, 0.015 self
+%           7) binary !=: 26829 calls, 0.014 total, 0.014 self
+%           8) binary ==: 23005 calls, 0.013 total, 0.013 self
+%         2) numel: 215 calls, 0.000 total, 0.000 self
+%       2) unique: 215 calls, 0.076 total, 0.032 self
+%       3) struct: 216 calls, 0.001 total, 0.001 self
+%       4) end: 215 calls, 0.000 total, 0.000 self
+%       5) binary +: 215 calls, 0.000 total, 0.000 self
+%       6) numel: 5 calls, 0.000 total, 0.000 self
+%     3) tmvs_source: 3 calls, 0.000 total, 0.000 self
+%     4) sprintf: 3 calls, 0.000 total, 0.000 self
+%     5) isdir: 1 calls, 0.000 total, 0.000 self
+%     6) tmvs_region: 1 calls, 0.000 total, 0.000 self
+%     7) prefix !: 1 calls, 0.000 total, 0.000 self
+%   2) profile: 1 calls, 0.000 total, 0.000 self}
 % @end example
+
+Most of the time seems to be spent inside the inbuilt parsing functions
+@code{datevec}, @code{datenum} and @code{regexp}.
+The utility functions @code{ismember} and @code{isempty}
+follow closely due to their sheer frequency.
+
+While it would be possible to replace the inbuilt functions
+with faster equivalents, it is not worth the effort.
+Using @code{jit_enable}, if available, is a better time investment.
 
 %!test
 %! test tmvs_version
