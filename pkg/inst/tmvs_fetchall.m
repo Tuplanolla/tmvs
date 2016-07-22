@@ -1,6 +1,5 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {@var{aggr} =} tmvs_fetchall (@var{pat}, @var{src})
-% @deftypefnx {Function File} {@var{aggr} =} tmvs_fetchall (@var{pat}, @var{src}, @var{varargin})
+% @deftypefn {Function File} {@var{aggr} =} tmvs_fetchall (@var{pat}, @var{src}, @var{varargin})
 %
 % Fetches and merges together the files matching the pattern @var{pat} and
 % produces the aggregate @var{aggr}.

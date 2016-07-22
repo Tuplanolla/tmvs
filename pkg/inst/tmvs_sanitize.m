@@ -4,7 +4,7 @@
 % Produces the sanitized aggregate @var{saggr}
 % by removing dubious data points from the aggregate @var{aggr}.
 %
-% What is dubious? Manual explains!
+% What is dubious? The manual explains!
 %
 % The following examples demonstrate basic usage.
 %

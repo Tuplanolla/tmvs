@@ -1,15 +1,16 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{aggr} =} tmvs_evaluate (@var{interp}, @var{t})
 %
-% Does things.
-% Mention: all vars.
+% Converts the interpolator @var{interp} into the aggregate @var{aggr}
+% by evaluating each function at each @var{t}.
+% This is dual to @code{tmvs_interpolate}.
 %
 % The following examples demonstrate basic usage.
 %
 % @example
 % @code{fieldnames (aggr)}
 % @result{} @{'id', 'meta', 'pairs'@}
-% @code{eaggr = tmvs_evaluate (interp);}
+% @code{eaggr = tmvs_evaluate (interp, 734869);}
 % @code{fieldnames (eaggr)}
 % @result{} @{'id', 'meta', 'pairs'@}
 % @end example
@@ -17,8 +18,6 @@
 % @seealso{tmvs, tmvs_interpolate, tmvs_discretize}
 %
 % @end deftypefn
-
-% tmvs_evaluate (tmvs_interpolate (maggr), 734.7e+3)
 
 function aggr = tmvs_evaluate (interp, t)
 

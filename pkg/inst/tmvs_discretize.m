@@ -2,8 +2,10 @@
 % @deftypefn {Function File} {@var{aggr} =} tmvs_discretize (@var{interp})
 % @deftypefnx {Function File} {@var{aggr} =} tmvs_discretize (@var{interp}, @var{n})
 %
-% Does things.
-% Mention: all vars.
+% Converts the interpolator @var{interp} into the aggregate @var{aggr}
+% by evaluating each function at @var{n} uniformly distributed points
+% in its domain.
+% By default @var{n} is @code{100}, as it is for @code{linspace}.
 %
 % The following examples demonstrate basic usage.
 %
@@ -24,7 +26,8 @@ aggr = struct ('id', {}, 'meta', {}, 'pairs', {});
 aggr = resize (aggr, size (interp));
 
 for i = 1 : numel (interp)
-  aggr(i) = tmvs_evaluate (interp(i), linspace (num2cell (interp(i).domain){:}, n)(:));
+  t = linspace (num2cell (interp(i).domain){:}, n);
+  aggr(i) = tmvs_evaluate (interp(i), t(:));
 end
 
 end

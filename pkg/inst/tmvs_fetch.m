@@ -1,9 +1,9 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {@var{aggr} =} tmvs_fetch (@var{fname}, @var{src})
-% @deftypefnx {Function File} {@var{aggr} =} tmvs_fetch (@var{fname}, @var{src}, @var{varargin})
+% @deftypefn {Function File} {@var{aggr} =} tmvs_fetch (@var{fname}, @var{src}, @var{varargin})
 %
-% Magic happens.
-% Mention: all vars.
+% Imports the aggregate @var{aggr} from the file @var{fname}
+% with the assumption that the data source is @var{src}.
+% The options in @var{varargin} are passed through to @code{tmvs_import}.
 %
 % The following examples demonstrate basic usage.
 %

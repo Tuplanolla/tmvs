@@ -1,8 +1,7 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{aggr} =} tmvs_work (@var{dname})
 %
-% This requires a certain direcotry structure!
-%
+% This requires a certain directory structure!
 % Mention: all vars.
 %
 % The following example demonstrates basic usage.

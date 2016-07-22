@@ -1,7 +1,9 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {} tmvs_purgeall (@var{pat})
 %
-% ??
+% Removes the cache files matching @var{pat} safely.
+% The pattern @var{pat} can be written
+% according the format supported by @code{glob}.
 %
 % The following examples demonstrate basic usage.
 %

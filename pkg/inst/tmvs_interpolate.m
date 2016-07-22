@@ -1,8 +1,8 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{interp} =} tmvs_interpolate (@var{aggr}, @var{varargin})
 %
-% Does things.
-% Mention: all vars.
+% Converts the aggregate @var{aggr} into the interpolator @var{interp}.
+% The possible options in @var{varargin} are those supported by @var{interp1}.
 %
 % The following examples demonstrate basic usage.
 %

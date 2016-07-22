@@ -1,5 +1,4 @@
 % -*- texinfo -*-
-%
 % @settitle GNU Octave TMVS Package
 %
 % @titlepage
@@ -763,7 +762,7 @@
 %
 % @example
 % @code{z = sortrows (horzcat (vertcat (vertcat (eaggr.meta).position), ...
-%                              vertcat (eaggr.pairs)(:, 2)));}
+%                                 vertcat (eaggr.pairs)(:, 2)));}
 % @end example
 %
 % Feed @qcode{pairs} into @code{plot} directly.

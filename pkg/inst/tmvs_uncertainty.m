@@ -2,7 +2,7 @@
 % @deftypefn {Function File} {@var{delta} =} tmvs_uncertainty (@var{id})
 % @deftypefnx {Function File} {@var{delta} =} tmvs_uncertainty (@var{id}, @var{x})
 %
-% Compute the uncertainty @var{delta} of the value @var{x}
+% Computes the uncertainty @var{delta} of the value @var{x}
 % measured by the sensor with the identity @var{id}.
 % If the uncertainty does not depend on value, @var{x} can be omitted.
 % An accidental omission results an uncertainty of @code{nan}.
