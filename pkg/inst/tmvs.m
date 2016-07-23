@@ -32,7 +32,7 @@
 % This text explains the structure and usage of TMVS.
 % If you are in a hurry or do not enjoy reading technical manuals,
 % jump straight to the examples at the end, try them out yourself and
-% explore the other procedures marked 'see also'.
+% explore the help pages for the relevant procedures.
 % You can come back here and read the details
 % in case you encounter something puzzling.
 %
@@ -489,7 +489,7 @@
 %                      tmvs_source ('Weather Observatory'), ...
 %                      tmvs_region ('Jyvaskyla'));
 % aggr = tmvs_merge (tlaggr(9), wsaggr(4), ...
-%                    modify (@@(z) z(1, :), woaggr(3), 'pairs'));}
+%                    overfield (@@(z) z(1, :), woaggr(3), 'pairs'));}
 % @end example
 %
 % @section Caching
@@ -577,8 +577,8 @@
 % faggr = filteru (f, aggr); % Temperatures only.
 % r = [(datenum (2012, 3, 1)), (datenum (2012, 6, 1))];
 % g = @@(z) z(withinc (z(1), r), :);
-% waggr = modify (g, faggr, 'pairs'); % Spring only.
-% foldl (@@(x, s) min ([x, s.pairs(:, 2)]), waggr, inf)}
+% gaggr = overfield (g, faggr, 'pairs'); % Spring only.
+% foldl (@@(x, s) min ([x, s.pairs(:, 2)]), gaggr, inf)}
 % @result{} 8
 % @end example
 %
@@ -745,7 +745,7 @@
 %
 % @example
 % @code{f = @@(z) z(withinc (z(:, 2), [20e+3, 200e+3]), :);
-% wpaggr = mapl (@@(s) modify (f, s, 'pairs'), paggr);}
+% fpaggr = mapl (@@(s) overfield (f, s, 'pairs'), paggr);}
 % ...
 % @end example
 %
@@ -755,7 +755,7 @@
 %
 % @example
 % @code{f = @@(z) z(chauvenet (z(:, 2)), :);
-% caggr = mapl (@@(s) modify (f, s, 'pairs'), aggr);}
+% caggr = mapl (@@(s) overfield (f, s, 'pairs'), aggr);}
 % @end example
 %
 % Primitively project fields out.
@@ -1090,4 +1090,4 @@
 %! test progress
 %! test withinc
 %! test withino
-%! test modify
+%! test overfield
