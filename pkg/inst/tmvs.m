@@ -603,21 +603,25 @@
 % aggr = tmvs_fetchall ('excerpt/*/118-0.csv', tmvs_source ('Test Lab'));
 % faggr = filteru (f, aggr);
 %
+% figure (1);
+% clf ();
+%
 % t = faggr.pairs(:, 1);
 % x = faggr.pairs(:, 2);
 % dx = tmvs_uncertainty (faggr.id, x);
 %
-% figure (1);
-% clf ();
 % errorbar (t, x, dx, '~1');
-% datefmt = 'yyyy-mm-dd';
-% xlabel (sprintf ('Date [%s]', datefmt));
-% datetick ('x', datefmt);
-% ylabel ('Temperature [^oC]');
-% axis ('tight');}
+%
+% datetick ('x', 'yyyy-mm-dd');
+% xlabel ('Date');
+% ylabel (tmvs_quantity (faggr.id.quantity));}
 % @end example
 %
-% This will be available as @code{tmvs_drawp}.
+% After the initial filtering the following shorthand works.
+%
+% @example
+% @code{tmvs_drawp (faggr)}
+% @end example
 %
 % It is quite easy to extend this program over all the ordinals and
 % draw a higher-dimensional plot of it.
@@ -631,29 +635,34 @@
 % faggr = filteru (f, aggr);
 %
 % a = vertcat (faggr.pairs);
-% a = a(sparsify (a(:, 1), 100), :);
+% a = a(sparsify (a(:, 1), 1000), :);
 %
 % t = sort (a(:, 1));
 %
 % interp = tmvs_interpolate (faggr, 'extrap');
-% eaggr = tmvs_evaluate (interp, t);
+% finterp = filteru (@@(s) ~isempty (s.domain), interp);
+% eaggr = tmvs_evaluate (finterp, t);
 %
 % y = foldl (@@(y, s) horzcat (y, s.meta.position), eaggr, []);
 % x = foldl (@@(x, s) horzcat (x, s.pairs(:, 2)), eaggr, []);
 %
-% figure (2);
+% figure (1);
 % clf ();
+%
 % surf (repmat (t, 1, columns (x)), repmat (y, rows (x), 1), x);
-% datefmt = 'yyyy-mm-dd';
-% xlabel (sprintf ('Date [%s]', datefmt));
-% datetick ('x', datefmt);
-% ylabel ('Position [m]');
-% zlabel ('Temperature [^oC]');
-% axis ('tight');
+%
+% datetick ('x', 'yyyy-mm-dd');
+% xlabel ('Date');
+% ylabel ('Position');
+% zlabel (tmvs_quantity (eaggr(1).id.quantity));
 % colormap ('hot');}
 % @end example
 %
-% This will be available as @code{tmvs_draws}.
+% After the initial filtering the following shorthand works.
+%
+% @example
+% @code{tmvs_draws (faggr)}
+% @end example
 %
 % With some effort the extra dimension can also be explored interactively.
 % Let us first draw a point cloud of all the ordinals.
@@ -672,14 +681,12 @@
 % t = a(:, 1);
 % x = a(:, 2);
 %
-% figure (3);
+% figure (1);
 % clf ();
 % plot (t, x, '.1');
-% datefmt = 'yyyy-mm-dd';
-% xlabel (sprintf ('Date [%s]', datefmt));
-% datetick ('x', datefmt);
-% ylabel ('Temperature [^oC]');
-% axis ('tight');}
+% datetick ('x', 'yyyy-mm-dd');
+% xlabel ('Date');
+% ylabel ('Temperature');}
 % @end example
 %
 % We can then add interactivity to the point cloud.
@@ -692,22 +699,23 @@
 %
 % @example
 % @code{interp = tmvs_interpolate (faggr, 'extrap');
+% finterp = filteru (@@(s) ~isempty (s.domain), interp);
 %
-% a = vertcat (interp.domain);
+% a = vertcat (finterp.domain);
 % dom = [(min (a(:, 1))), (max (a(:, 2)))];
 %
-% a = vertcat (interp.codomain);
+% a = vertcat (finterp.codomain);
 % codom = [(min (a(:, 1))), (max (a(:, 2)))];
 %
 % t = mean (dom);
 %
 % while true
-%   figure (3);
+%   figure (1);
 %   h = line ([t, t], codom);
 %
-%   eaggr = tmvs_evaluate (interp, t);
+%   eaggr = tmvs_evaluate (finterp, t);
 %
-%   y = vertcat (vertcat (eaggr.meta).position);
+%   y = arrayfun (@@(s) s.meta.position, eaggr);
 %   x = vertcat (eaggr.pairs)(:, 2);
 %
 %   f = @@(dx, s) max ([dx, (max (tmvs_uncertainty (s.id, x)))]);
@@ -716,13 +724,13 @@
 %   [y, k] = sort (y);
 %   x = x(k);
 %
-%   figure (4);
+%   figure (2);
 %   clf ();
 %   errorbar (y, x, dx, '~1');
-%   xlabel ('Position [m]');
-%   ylabel ('Temperature [^oC]');
+%   xlabel ('Position');
+%   ylabel ('Temperature');
 %
-%   figure (3);
+%   figure (1);
 %   t = ginput (1);
 %   if isempty (t) || ~withinc (t, dom)
 %     break
@@ -731,7 +739,11 @@
 % end}
 % @end example
 %
-% This will be available as @code{tmvs_drawi}.
+% After the initial filtering the following shorthand works.
+%
+% @example
+% @code{tmvs_drawi (faggr)}
+% @end example
 %
 % @section Working with Caches
 %

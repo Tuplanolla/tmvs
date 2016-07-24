@@ -15,8 +15,67 @@
 %
 % @end deftypefn
 
-function tmvs_drawi (aggr, varargin)
+function tmvs_drawi (aggr, n = [1, 2], datefmt = 'yyyy-mm-dd')
 
-error ('not implemented');
+if n(1) == n(2)
+  error ('images %d and %d not distinct', n(1), n(2));
+end
+
+a = vertcat (aggr.pairs);
+a = a(sparsify (a(:, 1), 1000), :);
+
+t = a(:, 1);
+x = a(:, 2);
+
+figure (n(1));
+clf ();
+plot (t, x, '.1');
+datetick ('x', datefmt);
+xlabel ('Date');
+if numel (aggr) > 1
+  ylabel (tmvs_quantity (aggr(1).id.quantity));
+end
+
+interp = tmvs_interpolate (aggr, 'extrap');
+finterp = filteru (@(s) ~isempty (s.domain), interp);
+
+a = vertcat (finterp.domain);
+dom = [(min (a(:, 1))), (max (a(:, 2)))];
+
+a = vertcat (finterp.codomain);
+codom = [(min (a(:, 1))), (max (a(:, 2)))];
+
+t = mean (dom);
+
+while true
+  figure (n(1));
+  h = line ([t, t], codom);
+
+  eaggr = tmvs_evaluate (finterp, t);
+
+  y = arrayfun (@(s) s.meta.position, eaggr);
+  x = vertcat (eaggr.pairs)(:, 2);
+
+  f = @(dx, s) max ([dx, (max (tmvs_uncertainty (s.id, x)))]);
+  dx = foldl (f, eaggr, 0);
+
+  [y, k] = sort (y);
+  x = x(k);
+
+  figure (n(2));
+  clf ();
+  errorbar (y, x, dx, '~1');
+  xlabel ('Position');
+  if numel (eaggr) > 1
+    ylabel (tmvs_quantity (eaggr(1).id.quantity));
+  end
+
+  figure (n(1));
+  t = ginput (1);
+  if isempty (t) || ~withinc (t, dom)
+    break
+  end
+  delete (h);
+end
 
 end

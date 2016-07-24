@@ -36,6 +36,51 @@
 % @result{} [2, 4; 1, 2; -1, 0; 0, 1]
 % @end example
 %
+% With the probability density function P and
+% the cumulative distribution function C,
+% the threshold probability
+%
+% @tex
+% $$
+% \eqalign{p
+% & = 1 - \int_{\mu - |x - \mu|}^{\mu + |x - \mu|} {\rm d} t P_\mu^\sigma(t) \cr
+% & = \int_{-\infty}^{\mu - |x - \mu|} {\rm d} t P_\mu^\sigma(t)
+% + \int_{\mu + |x - \mu|}^\infty {\rm d} t P_\mu^\sigma(t) \cr
+% & = 2 \int_{-\infty}^{\mu - |x - \mu|} {\rm d} t P_\mu^\sigma(t) \cr
+% & = 2 C_\mu^\sigma(\mu - |x - \mu|) \cr
+% & = 2 C_0^1\Bigl(-{|x - \mu| \over \sigma}\Bigr).}
+% $$
+% @end tex
+% @ifnottex
+% @example
+%             / mu + |x - mu|
+%             |       sigma
+% p  =  1  -  |  dt  P (t)
+%             |       mu
+%             / mu - |x - mu|
+%
+%       / mu - |x - mu|   / infty
+%       |       sigma     |       sigma
+%    =  |  dt  P  (t)  +  |  dt  P  (t)
+%       |       mu        |       mu
+%       / -infty          / mu + |x - mu|
+%
+%          / mu - |x - mu|
+%          |       sigma
+%    =  2  |  dt  P  (t)
+%          |       mu
+%          / -infty
+%
+%           sigma
+%    =  2  C  (mu  -  |x  -  mu|)
+%           mu
+%
+%           1 /    |x  -  mu| \
+%    =  2  C  | -  ---------- | .
+%           0 \      sigma    /
+% @end example
+% @end ifnottex
+%
 % @end deftypefn
 
 function [i, o] = chauvenet (v, mu = mean (v), sigma = std (v))

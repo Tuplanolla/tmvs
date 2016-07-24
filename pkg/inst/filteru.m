@@ -67,11 +67,11 @@ case {1, 3}
       y(end + 1) = x(i);
 
       if p
-        i = ones (1, ndims (x));
-        i(k) = 2;
-        y = reshape (y, i);
+        m = ones (1, ndims (x));
+        m(k) = 2;
+        y = reshape (y, m);
 
-        for i = 3 : n
+        for i = i + 1 : n
           if f (x(i))
             y(end + 1) = x(i);
           end
@@ -89,11 +89,11 @@ case 2
       y{end + 1} = x{i};
 
       if p
-        i = ones (1, ndims (x));
-        i(k) = 2;
-        y = reshape (y, i);
+        m = ones (1, ndims (x));
+        m(k) = 2;
+        y = reshape (y, m);
 
-        for i = 3 : n
+        for i = i + 1 : n
           if f (x{i})
             y{end + 1} = x{i};
           end

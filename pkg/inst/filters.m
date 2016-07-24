@@ -76,12 +76,12 @@ otherwise
 end
 
 if j == 0
-  i = zeros (1, ndims (x));
+  m = zeros (1, ndims (x));
 else
-  i = ones (1, ndims (x));
-  i(k) = j;
+  m = ones (1, ndims (x));
+  m(k) = j;
 end
-y = resize (y, i);
+y = resize (y, m);
 
 end
 

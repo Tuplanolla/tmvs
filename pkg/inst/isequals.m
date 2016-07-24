@@ -43,7 +43,7 @@ if n == numel (fieldnames (y))
   for i = 1 : n
     str = c{i};
 
-    if ~isfield (y, str) || x.(str) ~= y.(str)
+    if ~isfield (y, str) || y.(str) ~= x.(str)
       p = false;
 
       break
