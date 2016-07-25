@@ -1,7 +1,7 @@
 tmvs >> Temperature and Moisture Visualization System
 Meta
   tmvs
-Basic
+Analysis
   tmvs_import
   tmvs_uncertainty
   tmvs_sanitize
@@ -14,6 +14,8 @@ Basic
   tmvs_recall
   tmvs_fetch
   tmvs_purge
+Simulation
+  tmvs_simulate
 Visual
   tmvs_drawp
   tmvs_drawi
