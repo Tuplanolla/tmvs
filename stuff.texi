@@ -1,0 +1,193 @@
+@tex
+
+Chauvenet'n kriteeri
+\begin{align*}
+  p & = 1 - \intclap{\mu - |x - \mu|}{\mu + |x - \mu|} \full t P_\mu^\sigma(t)
+  = \intclap{-\infty}{\mu - |x - \mu|} \full t P_\mu^\sigma(t)
+  + \intclap{\mu + |x - \mu|} \infty \full t P_\mu^\sigma(t)
+  = 2 \intclap{-\infty}{\mu - |x - \mu|} \full t P_\mu^\sigma(t) \\
+  & = 2 C_\mu^\sigma(\mu - |x - \mu|)
+  = 2 C_0^1\Bigl(-\frac{|x - \mu|} \sigma\Bigr).
+\end{align*}
+
+Lattian mallintaminen onnistunee yksiulotteisena prosessina,
+joka noudattaa Fourier'n lakia
+\begin{align*}
+  % c_p \rho \partial_t T & = k \nabla^2 T \\
+  % \partial_t T & = \alpha \nabla^2 T
+  c_p \rho \partial_t T & = \nabla \cdot k \nabla T
+\end{align*}
+missä
+\begin{align*}
+  \alpha & = \frac k{c_p \rho}
+  = \frac U{c_p \rho L} &
+  k & = \frac U L
+\end{align*}
+ja dimensioille
+\begin{align*}
+  c_p & : L^2 T^{-2} K^{-1} \sim \si{\joule \per \kelvin \per \kilogram} \\
+  \rho & : M L^{-3} \sim \si{\kilogram \per \cubic \metre} \\
+  t & : T \sim \si \second \\
+  T & : K \sim \si \kelvin \\
+  L & : L \sim \si \metre \\
+  k & : M L T^{-3} K^{-1} \sim \si{\watt \per \kelvin \per \metre} \\
+  U & : M L^2 T^{-3} K^{-1} \sim \si{\square \watt \per \kelvin \per \metre} \\
+  \phi & : M T^{-3} \sim \si{\watt \per \square \metre} \\
+  \alpha & : L^2 T^{-1} \sim \si{\square \metre \per \second} \\
+\end{align*}
+
+The derivative of the unknown quantity with respect to time is
+\begin{align}
+  \partial_t T^j
+  & = \lim_{h \to 0} \frac{T_{i + h}^j - T_i^j} h
+  \label{derivative}
+\end{align}
+by definition.
+By replacing the limit with a finite time difference $\Delta t$, we get
+\begin{align}
+  \overset \rightarrow{\partial_t} T^j
+  & = \frac{T_{i + 1}^j - T_i^j}{\Delta t},
+  \label{forward}
+\end{align}
+which is called a forward difference approximation.
+Shifting the dependent variable one step backwards yields
+\begin{align}
+  \overset \leftarrow{\partial_t} T^j
+  & = \frac{T_i^j - T_{i - 1}^j}{\Delta t},
+  \label{backward}
+\end{align}
+which is then called a backward difference approximation.
+
+The second derivative of the unknown quantity with respect to position can be
+obtained simply by applying any assortment of the approximations twice.
+There are four ways to do that, but
+only two of them are reasonable due to symmetry.
+Either we can apply \eqref{backward} to \eqref{forward} for
+\begin{align}
+  \overset \leftarrow{\overset \rightarrow{\partial_y^2}} T_i
+  & = \frac{\overset \leftarrow{\partial_y} T_i^{j + 1}
+  - \overset \leftarrow{\partial_y} T_i^j}{\Delta y}
+  = \frac{(T_i^{j + 1} - T_i^j) / \Delta y
+  - (T_i^j - T_i^{j - 1}) / \Delta y}{\Delta y}
+  = \frac{T_i^{j - 1} - 2 T_i^j + T_i^{j + 1}}{(\Delta y)^2}
+  \label{central}
+\end{align}
+or the other way around for
+\begin{align}
+  \overset \rightarrow{\overset \leftarrow{\partial_y^2}} T_i
+  & = \frac{\overset \rightarrow{\partial_y} T_i^j
+  - \overset \rightarrow{\partial_y} T_i^{j - 1}}{\Delta y}
+  = \frac{(T_i^{j + 1} - T_i^j) / \Delta y
+  - (T_i^j - T_i^{j - 1}) / \Delta y}{\Delta y}
+  = \frac{T_i^{j - 1} - 2 T_i^j + T_i^{j + 1}}{(\Delta y)^2},
+\end{align}
+both of which are equal and called a central difference approximation.
+
+Yhdessä ulottuvuudessa
+\begin{align*}
+  \partial_t T & = \alpha \partial_y^2 T.
+\end{align*}
+Sitten finite differences
+\begin{align*}
+  \frac{T_{i + 1}^j - T_i^j}{\Delta t}
+  & = \alpha \frac{T_i^{j - 1} - 2 T_i^j + T_i^{j + 1}}{(\Delta y)^2} \\
+  T_{i + 1}^j & = c T_i^{j - 1} + (1 - 2 c) T_i^j + c T_i^{j + 1}
+\end{align*}
+missä
+\begin{align*}
+  c & = \frac{\alpha \Delta t}{(\Delta y)^2}.
+\end{align*}
+Vastaava konvoluutioydin
+\begin{align*}
+  C & =
+  \begin{bmatrix}
+    c \\ 1 - 2 c \\ c
+  \end{bmatrix},
+\end{align*}
+joskin $c$ ei ole aina välttämättä vakio.
+
+Vaaditaan $C > 0$ eli
+\begin{align*}
+  c & > 0 &
+  1 - 2 c & > 0 &
+  c & > 0
+\end{align*}
+eli
+\begin{align*}
+  0 & < c < \frac 1 2,
+\end{align*}
+jotta lasku on vakaa.
+Siispä voidaan valita jako siten, että
+\begin{align*}
+  c & = \frac 1 4.
+\end{align*}
+Seuraa
+\begin{align*}
+  \Delta y & = \sqrt{\frac{\alpha \Delta t} c}
+  = \sqrt{\frac{k \Delta t}{c c_p \rho}}
+  = \sqrt{\frac{U \Delta t}{c c_p \rho L}}
+  = 2 \sqrt{\frac{U \Delta t}{c_p \rho L}}.
+\end{align*}
+
+Yleisemmin
+\begin{align*}
+  c_p \rho \partial_t T & = \partial_y (k \partial_y T) \\
+  c_p \rho \partial_t T & = (\partial_y T) (\partial_y k) + k \partial_y^2 T.
+\end{align*}
+Sitten finite differences
+\begin{align*}
+  c_p^j \rho^j \Bigl(\frac{T_{i + 1}^j - T_i^j}{\Delta t}\Bigr)
+  & = \Bigl(\frac{T_i^{j + 1} - T_i^j}{\Delta y}\Bigr)
+  \Bigl(\frac{k^{j + 1} - k^j}{\Delta y}\Bigr)
+  + k^j \Bigl(\frac{T_i^{j - 1} - 2 T_i^j + T_i^{j + 1}}{(\Delta y)^2}\Bigr) \\
+  T_{i + 1}^j & = \frac 1{c_p^j \rho^j} \bigl(r k^j T_i^{j - 1}
+  + (c_p^j \rho^j - 3 r k^j + r k^{j + 1}) T_i^j
+  + (2 r k^j - r k^{j + 1}) T_i^{j + 1}\bigr)
+  \\
+  T_{i + 1}^j & = r \frac{k^j}{c_p^j \rho^j} T_i^{j - 1}
+  + \Bigl(1 - 3 r \frac{k^j}{c_p^j \rho^j} + r \frac{k^{j + 1}}{c_p^j \rho^j}\Bigr) T_i^j
+  + r \Bigl(2 \frac{k^j}{c_p^j \rho^j} - \frac{k^{j + 1}}{c_p^j \rho^j}\Bigr) T_i^{j + 1}
+\end{align*}
+missä
+\begin{align*}
+  r & = \frac{\Delta t}{(\Delta y)^2}.
+\end{align*}
+Vastaava konvoluutioydin
+\begin{align*}
+  C^j & = \frac 1{c_p^j \rho^j}
+  \begin{bmatrix}
+    r k^j \\
+    c_p^j \rho^j - 3 r k^j + r k^{j + 1} \\
+    2 r k^j - r k^{j + 1}
+  \end{bmatrix}.
+\end{align*}
+
+Vaaditaan $C^j > 0$ eli
+\begin{align*}
+  r k^j & > 0 &
+  c_p^j \rho^j - 3 r k^j + r k^{j + 1} & > 0 &
+  2 r k^j - r k^{j + 1} & > 0
+\end{align*}
+eli
+\begin{align*}
+  r & > 0 &
+  r & < \frac{c_p^j \rho^j}{3 k^j - k^{j + 1}} &
+  k^{j + 1} & < 2 k^j
+\end{align*}
+jotta lasku on vakaa.
+Lopulta
+\begin{align*}
+  0 & < r < \frac{c_p^j \rho^j}{3 k^j - k^{j + 1}}
+\end{align*}
+sekä voimakkaat epäjatkuvuudet on kielletty.
+Näin ollen
+\begin{align*}
+  \frac{\Delta t}{(\Delta y)^2} & < \frac{c_p^j \rho^j}{3 k^j - k^{j + 1}}
+\end{align*}
+ja seuraa
+\begin{align*}
+  \Delta y
+  & > \sqrt{\Bigl(\frac{3 k^j - k^{j + 1}}{c_p^j \rho^j}\Bigr) \Delta t}.
+\end{align*}
+
+@end tex
