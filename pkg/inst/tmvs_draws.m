@@ -24,13 +24,13 @@ interp = tmvs_interpolate (aggr, 'extrap');
 finterp = filteru (@(s) ~isempty (s.domain), interp);
 eaggr = tmvs_evaluate (finterp, t);
 
-y = foldl (@(y, s) horzcat (y, s.meta.position), eaggr, []);
-x = foldl (@(x, s) horzcat (x, s.pairs(:, 2)), eaggr, []);
+x = foldl (@(x, s) horzcat (x, s.meta.position), eaggr, []);
+q = foldl (@(q, s) horzcat (q, s.pairs(:, 2)), eaggr, []);
 
 figure (n);
 clf ();
 
-surf (repmat (t, 1, columns (x)), repmat (y, rows (x), 1), x);
+surf (repmat (t, 1, columns (q)), repmat (x, rows (q), 1), q);
 
 datefmt = 'yyyy-mm-dd';
 datetick ('x', datefmt);

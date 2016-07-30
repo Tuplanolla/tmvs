@@ -21,7 +21,7 @@
 
 function str = tmvs_dispmeta (meta)
 
-f = @(str, k, v) sprintf ('%s%20s: %s\n', str, k, v);
+f = @(str, k, x) sprintf ('%s%20s: %s\n', str, k, x);
 
 str = '';
 

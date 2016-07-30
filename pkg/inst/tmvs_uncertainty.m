@@ -1,10 +1,10 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{delta} =} tmvs_uncertainty (@var{id})
-% @deftypefnx {Function File} {@var{delta} =} tmvs_uncertainty (@var{id}, @var{x})
+% @deftypefnx {Function File} {@var{delta} =} tmvs_uncertainty (@var{id}, @var{q})
 %
-% Computes the uncertainty @var{delta} of the value @var{x}
+% Computes the uncertainty @var{delta} of the value @var{q}
 % measured by the sensor with the identity @var{id}.
-% If the uncertainty does not depend on value, @var{x} can be omitted.
+% If the uncertainty does not depend on value, @var{q} can be omitted.
 % An accidental omission results an uncertainty of @code{nan}.
 %
 % The following examples demonstrate basic usage.
@@ -25,24 +25,24 @@
 %
 % @end deftypefn
 
-function delta = tmvs_uncertainty (id, x = 0)
+function delta = tmvs_uncertainty (id, q = 0)
 
 qty = tmvs_quantity (id.quantity);
 
 % TODO Replace these educated guesses with accurate data.
 switch qty
 case 'Temperature'
-  delta = 1 + 0 * x;
+  delta = 1 + 0 * q;
 case 'Relative Humidity'
-  delta = 10 + 0 * x;
+  delta = 10 + 0 * q;
 case 'Absolute Humidity'
-  delta = 1 + 0 * x;
+  delta = 1 + 0 * q;
 case 'Pressure'
-  delta = 1 + 0 * x;
+  delta = 1 + 0 * q;
 case 'Wind Speed'
-  delta = 0.1 + 0 * x;
+  delta = 0.1 + 0 * q;
 case 'Precipitation'
-  delta = 1 + 0 * x;
+  delta = 1 + 0 * q;
 otherwise
   error ('uncertainty for physical quantity ''%s'' not known', qty);
 end

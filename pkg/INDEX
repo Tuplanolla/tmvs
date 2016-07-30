@@ -42,19 +42,21 @@ Auxiliary
   tmvs_parsecsv
   tmvs_parsename
   tmvs_readcache
-Generic
-  brsearch
-  chauvenet
-  diffuse
+Functional
   filters
   filteru
   foldl
   foldr
-  globr
-  isequals
   mapl
   mapr
   overfield
+Utility
+  axislim
+  brsearch
+  chauvenet
+  diffuse
+  globr
+  isequals
   plota
   progress
   sparsify

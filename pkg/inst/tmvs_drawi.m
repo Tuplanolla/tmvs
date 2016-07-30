@@ -25,11 +25,11 @@ a = vertcat (aggr.pairs);
 a = a(sparsify (a(:, 1), 1000), :);
 
 t = a(:, 1);
-x = a(:, 2);
+q = a(:, 2);
 
 figure (n(1));
 clf ();
-plot (t, x, '.1');
+plot (t, q, '.1');
 datetick ('x', datefmt);
 xlabel ('Date');
 if numel (aggr) > 1
@@ -53,18 +53,18 @@ while true
 
   eaggr = tmvs_evaluate (finterp, t);
 
-  y = arrayfun (@(s) s.meta.position, eaggr);
-  x = vertcat (eaggr.pairs)(:, 2);
+  x = arrayfun (@(s) s.meta.position, eaggr);
+  q = vertcat (eaggr.pairs)(:, 2);
 
-  f = @(dx, s) max ([dx, (max (tmvs_uncertainty (s.id, x)))]);
+  f = @(dx, s) max ([dx, (max (tmvs_uncertainty (s.id, q)))]);
   dx = foldl (f, eaggr, 0);
 
-  [y, k] = sort (y);
-  x = x(k);
+  [x, k] = sort (x);
+  q = q(k);
 
   figure (n(2));
   clf ();
-  errorbar (y, x, dx, '~1');
+  errorbar (x, q, dx, '~1');
   xlabel ('Position');
   if numel (eaggr) > 1
     ylabel (tmvs_quantity (eaggr(1).id.quantity));

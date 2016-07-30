@@ -91,20 +91,20 @@ case {'Test Lab', 'Weather Station'}
 
       switch tmvs_quantity (aggr(k).id.quantity)
       case 'Temperature'
-        x = str2double (csv{3});
+        q = str2double (csv{3});
       case 'Relative Humidity'
-        x = str2double (csv{3}) * 1e-2;
+        q = str2double (csv{3}) * 1e-2;
       case 'Absolute Humidity'
-        x = str2double (csv{3}) * 1e-3;
+        q = str2double (csv{3}) * 1e-3;
       case 'Pressure'
-        x = str2double (csv{3}) * 100;
+        q = str2double (csv{3}) * 100;
       case 'Wind Speed'
-        x = str2double (csv{3});
+        q = str2double (csv{3});
       case 'Precipitation'
-        x = str2double (csv{3}) * 1e-3;
+        q = str2double (csv{3}) * 1e-3;
       end
 
-      aggr(k).pairs(end + 1, :) = [t, x];
+      aggr(k).pairs(end + 1, :) = [t, q];
 
       header = false;
     catch err
@@ -141,10 +141,10 @@ case 'Weather Observatory'
 
       T = str2double (csv{3});
       R = str2double (csv{6}) * 1e-2;
-      % TODO Should this be csv{10} instead?
+      % TODO Should this be @code{csv{10}} instead?
       v = str2double (csv{8});
       p = str2double (csv{17}) * 100;
-      % TODO Should this be csv{19} instead?
+      % TODO Should this be @code{csv{19}} instead?
       h = str2double (csv{18}) * 1e-3;
 
       aggr(1).pairs(end + 1, :) = [t, T];

@@ -23,11 +23,11 @@ clf ();
 hold ('on');
 for i = 1 : k
   t = aggr(i).pairs(:, 1);
-  x = aggr(i).pairs(:, 2);
-  dx = tmvs_uncertainty (aggr(i).id, x);
+  q = aggr(i).pairs(:, 2);
+  dq = tmvs_uncertainty (aggr(i).id, q);
 
   fmt = sprintf ('~%d', mod (i, 6));
-  errorbar (t, x, dx, fmt);
+  errorbar (t, q, dq, fmt);
 end
 hold ('off');
 
@@ -36,7 +36,7 @@ xlabel (sprintf ('Date [%s]', datefmt));
 if k == 1
   ylabel (tmvs_quantity (aggr.id.quantity));
 elseif k > 1
-  legend (foldl (@(y, s) horzcat (y, tmvs_quantity (s.id.quantity)), aggr, {}));
+  legend (foldl (@(c, s) horzcat (c, tmvs_quantity (s.id.quantity)), aggr, {}));
 end
 
 end

@@ -1,11 +1,10 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {[@var{y}, @var{T}] =} diffuse (@var{x})
+% @deftypefn {Function File} {[@var{qn}, @var{tn}, @var{xn}] =} diffuse (@var{varargin})
 %
-% Simulates a diffusion process inside a wall.
+% Simulates a diffusion process inside a wall or floor.
 % Note: time is given in days.
 % Note: cprho = cp * rho.
 % Note: k = U / L.
-% Note: Dy = y / ny.
 % Note: Dt = t / nt.
 %
 % The following examples demonstrate basic usage.
@@ -55,7 +54,7 @@ for ik = 1 : kt
   qkjp1 = qk(3 : end);
 
   if ~(Bijp1 < 2 * Bij && s < Cij ./ (3 * Bij - Bijp1))
-    error ('divergent simulation');
+    error ('simulation diverged');
   end
 
   qk(2 : end - 1) = ...
@@ -76,9 +75,7 @@ end
 
 end
 
-% TODO Replace x with q and y with x.
-% TODO Make this procedure suitable for general diffusion (uncoupled).
-% TODO Write an example using real data.
+% TODO Write an example using real data and get rid of this shit.
 
 rt = [0, 100];
 rx = [0, 500] * 1e-3;

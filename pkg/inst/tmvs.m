@@ -449,14 +449,14 @@
 %
 % @example
 % @code{aggr = struct (fields@{:@}, ...
-%   'pairs', [t, x]);}
+%   'pairs', [t, q]);}
 % @end example
 %
 % @example
 % @code{interp = struct (fields@{:@}, ...
-%   'function', @@(xi) interp1 (t, x, xi), ...
+%   'function', @@(x) interp1 (t, q, x), ...
 %   'domain', [t(1), t(end)], ...
-%   'codomain', [x(1), x(end)]);}
+%   'codomain', [q(1), q(end)]);}
 % @end example
 %
 % Within the domain the interpolator works as the name suggests:
@@ -578,7 +578,7 @@
 % r = [(datenum (2012, 3, 1)), (datenum (2012, 6, 1))];
 % g = @@(z) z(withinc (z(1), r), :);
 % gaggr = overfield (g, faggr, 'pairs'); % Spring only.
-% foldl (@@(x, s) min ([x, s.pairs(:, 2)]), gaggr, inf)}
+% foldl (@@(q, s) min ([q, s.pairs(:, 2)]), gaggr, inf)}
 % @result{} 8
 % @end example
 %
@@ -607,10 +607,10 @@
 % clf ();
 %
 % t = faggr.pairs(:, 1);
-% x = faggr.pairs(:, 2);
-% dx = tmvs_uncertainty (faggr.id, x);
+% q = faggr.pairs(:, 2);
+% dq = tmvs_uncertainty (faggr.id, q);
 %
-% errorbar (t, x, dx, '~1');
+% errorbar (t, q, dq, '~1');
 %
 % datetick ('x', 'yyyy-mm-dd');
 % xlabel ('Date');
@@ -643,13 +643,13 @@
 % finterp = filteru (@@(s) ~isempty (s.domain), interp);
 % eaggr = tmvs_evaluate (finterp, t);
 %
-% y = foldl (@@(y, s) horzcat (y, s.meta.position), eaggr, []);
-% x = foldl (@@(x, s) horzcat (x, s.pairs(:, 2)), eaggr, []);
+% x = foldl (@@(x, s) horzcat (x, s.meta.position), eaggr, []);
+% q = foldl (@@(q, s) horzcat (q, s.pairs(:, 2)), eaggr, []);
 %
 % figure (1);
 % clf ();
 %
-% surf (repmat (t, 1, columns (x)), repmat (y, rows (x), 1), x);
+% surf (repmat (t, 1, columns (q)), repmat (x, rows (q), 1), q);
 %
 % datetick ('x', 'yyyy-mm-dd');
 % xlabel ('Date');
@@ -679,12 +679,12 @@
 % a = a(sparsify (a(:, 1), 1000), :);
 %
 % t = a(:, 1);
-% x = a(:, 2);
+% q = a(:, 2);
 %
 % figure (1);
 % clf ();
-% plot (t, x, '.1');
-% datetick ('x', 'yyyy-mm-dd');
+% plot (t, q, '.1');
+% datetick ('q', 'yyyy-mm-dd');
 % xlabel ('Date');
 % ylabel ('Temperature');}
 % @end example
@@ -715,18 +715,18 @@
 %
 %   eaggr = tmvs_evaluate (finterp, t);
 %
-%   y = arrayfun (@@(s) s.meta.position, eaggr);
-%   x = vertcat (eaggr.pairs)(:, 2);
+%   x = arrayfun (@@(s) s.meta.position, eaggr);
+%   q = vertcat (eaggr.pairs)(:, 2);
 %
-%   f = @@(dx, s) max ([dx, (max (tmvs_uncertainty (s.id, x)))]);
-%   dx = foldl (f, eaggr, 0);
+%   f = @@(dq, s) max ([dq, (max (tmvs_uncertainty (s.id, q)))]);
+%   dq = foldl (f, eaggr, 0);
 %
-%   [y, k] = sort (y);
-%   x = x(k);
+%   [x, k] = sort (x);
+%   q = q(k);
 %
 %   figure (2);
 %   clf ();
-%   errorbar (y, x, dx, '~1');
+%   errorbar (x, q, dq, '~1');
 %   xlabel ('Position');
 %   ylabel ('Temperature');
 %
@@ -848,7 +848,7 @@
 % @item the variables @var{f}, @var{g} and @var{h} are functions or procedures,
 % @item the variables @var{i}, @var{j} and @var{k}
 % are index scalars or vectors and
-% @item the variables @var{x}, @var{y} and @var{z} are generic.
+% @item the variables @var{x}, @var{y}, @var{z} and @var{q} are generic.
 % @end itemize
 %
 % The @code{true} and @code{false} functions are also used
@@ -1090,16 +1090,20 @@
 %! test tmvs_region
 
 %!test
-%! test brsearch
-%! test chauvenet
 %! test filters
 %! test filteru
 %! test foldl
 %! test foldr
-%! test isequals
 %! test mapl
 %! test mapr
+%! test overfield
+
+%!test
+%! test brsearch
+%! test chauvenet
+%! test isequals
+%! test plota
 %! test progress
+%! test sparsify
 %! test withinc
 %! test withino
-%! test overfield
