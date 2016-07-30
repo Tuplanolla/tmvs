@@ -1,5 +1,5 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {[@var{y}, @var{T}] =} tmvs_simulate (@var{x})
+% @deftypefn {Function File} {[@var{y}, @var{T}] =} diffuse (@var{x})
 %
 % Simulates a heat-and-moisture process inside a wall?
 % Note: time is given in days.
@@ -19,7 +19,7 @@
 %
 % @end deftypefn
 
-function [y, T] = tmvs_simulate (cprho, k, L, t, ny, nt, T0)
+function a = diffuse (C, B, rx, rt, nx, nt, ix, it)
 
 warning ('this is unreliable');
 
@@ -58,7 +58,10 @@ if ~(r > 0 && r < cprhos(1 : end - 1) ./ (3 * ks(1 : end - 1) - ks(2 : end)))
   error ('combination of position step ''Dy'' and time step ''Dt'' unstable');
 end
 
-% TODO Work this out properly.
+% TODO Replace x with q and y with x.
+% TODO Make this procedure suitable for general diffusion (uncoupled).
+% TODO Write an example using real data.
+% TODO Do the dew properly.
 tmvs_cc = @(A, T) 0.263e-3 * 101325 * A .* exp (-(17.67 * (T - 273.15)) ./ (T - 29.65));
 
 figure (1);

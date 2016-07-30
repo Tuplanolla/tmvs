@@ -140,44 +140,44 @@ Sitten finite differences
   & = \Bigl(\frac{T_i^{j + 1} - T_i^j}{\Delta y}\Bigr)
   \Bigl(\frac{k^{j + 1} - k^j}{\Delta y}\Bigr)
   + k^j \Bigl(\frac{T_i^{j - 1} - 2 T_i^j + T_i^{j + 1}}{(\Delta y)^2}\Bigr) \\
-  T_{i + 1}^j & = \frac 1{c_p^j \rho^j} \bigl(r k^j T_i^{j - 1}
-  + (c_p^j \rho^j - 3 r k^j + r k^{j + 1}) T_i^j
-  + (2 r k^j - r k^{j + 1}) T_i^{j + 1}\bigr)
+  T_{i + 1}^j & = \frac 1{c_p^j \rho^j} \bigl(s k^j T_i^{j - 1}
+  + (c_p^j \rho^j - 3 s k^j + s k^{j + 1}) T_i^j
+  + (2 s k^j - s k^{j + 1}) T_i^{j + 1}\bigr)
   \\
-  T_{i + 1}^j & = r \frac{k^j}{c_p^j \rho^j} T_i^{j - 1}
-  + \Bigl(1 - 3 r \frac{k^j}{c_p^j \rho^j} + r \frac{k^{j + 1}}{c_p^j \rho^j}\Bigr) T_i^j
-  + r \Bigl(2 \frac{k^j}{c_p^j \rho^j} - \frac{k^{j + 1}}{c_p^j \rho^j}\Bigr) T_i^{j + 1}
+  T_{i + 1}^j & = s \frac{k^j}{c_p^j \rho^j} T_i^{j - 1}
+  + \Bigl(1 - 3 s \frac{k^j}{c_p^j \rho^j} + s \frac{k^{j + 1}}{c_p^j \rho^j}\Bigr) T_i^j
+  + s \Bigl(2 \frac{k^j}{c_p^j \rho^j} - \frac{k^{j + 1}}{c_p^j \rho^j}\Bigr) T_i^{j + 1}
 \end{align*}
 missä
 \begin{align*}
-  r & = \frac{\Delta t}{(\Delta y)^2}.
+  s & = \frac{\Delta t}{(\Delta y)^2}.
 \end{align*}
 Vastaava konvoluutioydin
 \begin{align*}
   C^j & = \frac 1{c_p^j \rho^j}
   \begin{bmatrix}
-    r k^j \\
-    c_p^j \rho^j - 3 r k^j + r k^{j + 1} \\
-    2 r k^j - r k^{j + 1}
+    s k^j \\
+    c_p^j \rho^j - 3 s k^j + s k^{j + 1} \\
+    2 s k^j - s k^{j + 1}
   \end{bmatrix}.
 \end{align*}
 
 Vaaditaan $C^j > 0$ eli
 \begin{align*}
-  r k^j & > 0 &
-  c_p^j \rho^j - 3 r k^j + r k^{j + 1} & > 0 &
-  2 r k^j - r k^{j + 1} & > 0
+  s k^j & > 0 &
+  c_p^j \rho^j - 3 s k^j + s k^{j + 1} & > 0 &
+  2 s k^j - s k^{j + 1} & > 0
 \end{align*}
 eli
 \begin{align*}
-  r & > 0 &
-  r & < \frac{c_p^j \rho^j}{3 k^j - k^{j + 1}} &
+  s & > 0 &
+  s & < \frac{c_p^j \rho^j}{3 k^j - k^{j + 1}} &
   k^{j + 1} & < 2 k^j
 \end{align*}
 jotta lasku on vakaa.
 Lopulta
 \begin{align*}
-  0 & < r < \frac{c_p^j \rho^j}{3 k^j - k^{j + 1}}
+  0 & < s < \frac{c_p^j \rho^j}{3 k^j - k^{j + 1}}
 \end{align*}
 sekä voimakkaat epäjatkuvuudet on kielletty.
 Näin ollen
@@ -188,6 +188,78 @@ ja seuraa
 \begin{align*}
   \Delta y
   & > \sqrt{\Bigl(\frac{3 k^j - k^{j + 1}}{c_p^j \rho^j}\Bigr) \Delta t}.
+\end{align*}
+
+Porositeetti tekee diffuusiosta kovin monimutkaista!
+Lelumalli ei taivu paljon pidemmälle, mutta vielä hieman yleisemmin
+\begin{align*}
+  c_p \rho \partial_t T & = \nabla \cdot (k \nabla T) &
+  \partial_t p & = \nabla \cdot (D \nabla p) \\
+  c_p \rho \partial_t T & = \partial_y (k \partial_y T) &
+  \partial_t p & = \partial_y (D \partial_y p) \\
+  c_p \rho \partial_t T & = (\partial_y T) (\partial_y k) + k \partial_y^2 T &
+  \partial_t p & = (\partial_y p) (\partial_y D) + D \partial_y^2 p \\
+  D & : L^2 T^{-1} \sim \si{\square \metre \per \second} \\
+\end{align*}
+Molemmille pätee
+\begin{align*}
+  C \partial_t q & = \nabla \cdot (B \nabla q) \\
+  C \partial_t q & = \partial_y (B \partial_y q) \\
+  C \partial_t q & = (\partial_y q) (\partial_y B) + B \partial_y^2 q
+\end{align*}
+Sitten finite differences
+\begin{align*}
+  C_i^j \Bigl(\frac{q_{i + 1}^j - q_i^j}{\Delta t}\Bigr)
+  & = \Bigl(\frac{q_i^{j + 1} - q_i^j}{\Delta y}\Bigr)
+  \Bigl(\frac{B_i^{j + 1} - B_i^j}{\Delta y}\Bigr)
+  + B_i^j \Bigl(\frac{q_i^{j - 1} - 2 q_i^j + q_i^{j + 1}}{(\Delta y)^2}\Bigr) \\
+  q_{i + 1}^j & = \frac 1{C_i^j} \bigl(s B_i^j q_i^{j - 1}
+  + (C_i^j - 3 s B_i^j + s B_i^{j + 1}) q_i^j
+  + (2 s B_i^j - s B_i^{j + 1}) q_i^{j + 1}\bigr)
+\end{align*}
+missä
+\begin{align*}
+  s & = \frac{\Delta t}{(\Delta y)^2}.
+\end{align*}
+Vastaava konvoluutioydin
+\begin{align*}
+  K^j & = \frac 1{C_i^j}
+  \begin{bmatrix}
+    s B_i^j \\
+    C_i^j - 3 s B_i^j + s B_i^{j + 1} \\
+    2 s B_i^j - s B_i^{j + 1}
+  \end{bmatrix}.
+\end{align*}
+
+Vaaditaan $C_i^j > 0$ eli
+\begin{align*}
+  s B_i^j & > 0 &
+  C_i^j - 3 s B_i^j + s B_i^{j + 1} & > 0 &
+  2 s B_i^j - s B_i^{j + 1} & > 0
+\end{align*}
+eli
+\begin{align*}
+  s & > 0 &
+  s & < \frac{C_i^j}{3 B_i^j - B_i^{j + 1}} &
+  B_i^{j + 1} & < 2 B_i^j
+\end{align*}
+jotta lasku on vakaa.
+Lopulta
+\begin{align*}
+  0 & < s < \frac{C_i^j}{3 B_i^j - B_i^{j + 1}}
+\end{align*}
+sekä voimakkaat epäjatkuvuudet on kielletty.
+Näin ollen
+\begin{align*}
+  \frac{\Delta t}{(\Delta y)^2} & < \frac{C_i^j}{3 B_i^j - B_i^{j + 1}}
+\end{align*}
+ja seuraa
+\begin{align*}
+  \Delta y & > \sqrt{\Bigl(\frac{3 B_i^j - B_i^{j + 1}}{C_i^j}\Bigr) \Delta t}.
+\end{align*}
+Tämän pitää olla vakio, joten vaaditaan
+\begin{align*}
+  \Delta y & > \max_{i, j} \sqrt{\Bigl(\frac{3 B_i^j - B_i^{j + 1}}{C_i^j}\Bigr) \Delta t}.
 \end{align*}
 
 @end tex

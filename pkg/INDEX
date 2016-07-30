@@ -1,7 +1,7 @@
 tmvs >> Temperature and Moisture Visualization System
 Meta
   tmvs
-Analysis
+Basic
   tmvs_import
   tmvs_uncertainty
   tmvs_sanitize
@@ -14,17 +14,15 @@ Analysis
   tmvs_recall
   tmvs_fetch
   tmvs_purge
-Simulation
-  tmvs_simulate
-Visual
-  tmvs_drawp
-  tmvs_drawi
-  tmvs_draws
-Convenient
+Convenience
   tmvs_exportall
   tmvs_fetchall
   tmvs_purgeall
   tmvs_work
+Visual
+  tmvs_drawp
+  tmvs_drawi
+  tmvs_draws
 Enumerating
   tmvs_source
   tmvs_quantity
@@ -47,6 +45,7 @@ Auxiliary
 Generic
   brsearch
   chauvenet
+  diffuse
   filters
   filteru
   foldl
@@ -56,6 +55,7 @@ Generic
   mapl
   mapr
   overfield
+  plota
   progress
   sparsify
   withinc
