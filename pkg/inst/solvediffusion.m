@@ -1,5 +1,5 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {[@var{qn}, @var{tn}, @var{xn}] =} diffuse (@var{varargin})
+% @deftypefn {Function File} {[@var{qn}, @var{tn}, @var{xn}] =} solvediffusion (@var{varargin})
 %
 % Simulates a diffusion process inside a wall or floor.
 % Note: time is given in days.
@@ -18,7 +18,7 @@
 %
 % @end deftypefn
 
-function [qn, tn, xn] = diffuse (q, ...
+function [qn, tn, xn] = solvediffusion (q, ...
   C = @(t, x) 1 + 0 * t * x, ...
   B = @(t, x) 1 + 0 * t * x, ...
   rt = [0, 1], rx = [0, 1], nt = 100, nx = 100, mt = 1, mx = 1)
@@ -84,5 +84,5 @@ B = @(t, x) interp1 (rx, [100, 10] * 1e-3, x, 'nearest');
 q = @(t, x) ifelse (t == 0, ...
   interp1 (rx, [260 + 20 * (sin (t / 20)), 280], x, 'linear'), ...
   [260 + 20 * (sin (t / 20)), nan * x(2 : end - 1), 280]);
-[qn, tn, xn] = diffuse (q, C, B, rt, rx, 100, 10, 10, 1);
+[qn, tn, xn] = solvediffusion (q, C, B, rt, rx, 100, 10, 10, 1);
 plota (10, xn, qn);

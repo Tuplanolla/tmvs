@@ -57,11 +57,11 @@ Utility
   axislim
   brsearch
   chauvenet
-  diffuse
   globr
   isequals
   plota
   progress
+  solvediffusion
   sparsify
   withinc
   withino

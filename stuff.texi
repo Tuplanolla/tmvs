@@ -226,8 +226,8 @@ Vastaava konvoluutioydin
   K^j & = \frac 1{C_i^j}
   \begin{bmatrix}
     s B_i^j \\
-    C_i^j - 3 s B_i^j + s B_i^{j + 1} \\
-    2 s B_i^j - s B_i^{j + 1}
+    C_i^j - s (3 B_i^j - B_i^{j + 1}) \\
+    s (2 B_i^j - B_i^{j + 1})
   \end{bmatrix}.
 \end{align*}
 

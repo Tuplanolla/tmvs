@@ -45,7 +45,7 @@
 % gathered from a test lab and some weather stations, covering measurements of
 % temperature, humidity, pressure, precipitation and more.
 % It was originally built by Sampsa "Tuplanolla" Kiiskinen
-% between 2016-06-01 and 2016-07-31 and
+% between 2016-06-01 and 2016-08-09 and
 % supported by the funding of the JAMK University of Applied Sciences.
 %
 % Even though TMVS itself is quite pedestrian,
