@@ -43,10 +43,13 @@ Auxiliary
   tmvs_parsename
   tmvs_readcache
 Functional
+  composel
+  composer
   filters
   filteru
   foldl
   foldr
+  identity
   mapl
   mapr
   overfield
