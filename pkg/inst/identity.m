@@ -23,3 +23,8 @@
 function x = identity (x)
 
 end
+
+%!test
+%! assert (identity (false), false);
+%!test
+%! assert (identity (true), true);

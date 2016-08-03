@@ -54,14 +54,15 @@ Functional
   mapr
   overfield
 Utility
-  axislim
   brsearch
   chauvenet
+  diffuse1
   globr
   isequals
-  plota
-  progress
-  solvediffusion
   sparsify
   withinc
   withino
+Effectful
+  axislim
+  plota
+  progress

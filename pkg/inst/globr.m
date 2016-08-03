@@ -37,3 +37,6 @@ for i = 1 : numel (str)
 end
 
 end
+
+%!error
+%! globr ();

@@ -6,14 +6,20 @@
 % The following examples demonstrate basic usage.
 %
 % @example
-% @code{axislim ([1, 2, 3, 4], 'x')}
+% @code{t = 2*pi * rand (64, 1);
+% h = plot (2 * cos (t), 2 * sin (t));
+% set (h, 'XData', cos (t));
+% axislim (2 * sin (t), 'y');
+% set (h, 'YData', sin (t));}
 % @end example
 %
 % @seealso{axis, xlim, ylim, zlim}
 %
 % @end deftypefn
 
-function axislim (a, axis)
+function r = axislim (a, axis)
+
+r = [];
 
 v = a(:);
 
@@ -22,13 +28,15 @@ if ~isempty (v)
   b = max (v);
 
   if a < b
+    r = [a, b];
+
     switch axis
     case {'x', 1}
-      xlim ([a, b]);
+      xlim (r);
     case {'y', 2}
-      xlim ([a, b]);
+      ylim (r);
     case {'z', 3}
-      xlim ([a, b]);
+      zlim (r);
     otherwise
       error ('unknown axis');
     end
@@ -36,3 +44,24 @@ if ~isempty (v)
 end
 
 end
+
+%!shared x, y
+%! x = [5, 2, 3, 4, 1, 4, 3, 2, 5];
+%! y = [3, 4, 1, 4, 3, 2, 5, 2, 3];
+
+%!error
+%! axislim (x);
+
+%!test
+%! assert (axislim ([], 'x'), []);
+%!test
+%! assert (axislim ([], 'y'), []);
+%!test
+%! assert (axislim ([], 'z'), []);
+
+%!test
+%! figure (1);
+%! clf ();
+%! plot (x, y);
+%! assert (axislim (x, 'x'), [1, 5]);
+%! assert (axislim (y, 'y'), [1, 5]);

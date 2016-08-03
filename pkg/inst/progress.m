@@ -59,4 +59,7 @@ end
 end
 
 %!test
+%! progress ();
+
+%!test
 %! progress (1, 2);

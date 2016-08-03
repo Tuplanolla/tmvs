@@ -1,5 +1,5 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {[@var{qn}, @var{tn}, @var{xn}] =} solvediffusion (@var{varargin})
+% @deftypefn {Function File} {[@var{qn}, @var{tn}, @var{xn}] =} diffuse1 (@var{q}, @var{C}, @var{B}, @var{rt}, @var{rx}, @var{nt}, @var{nx}, @var{dt}, @var{dx})
 %
 % Simulates a diffusion process inside a wall or floor.
 % Note: time is given in days.
@@ -18,23 +18,23 @@
 %
 % @end deftypefn
 
-function [qn, tn, xn] = solvediffusion (q, ...
+function [qn, tn, xn] = diffuse1 (q, ...
   C = @(t, x) 1 + 0 * t * x, ...
   B = @(t, x) 1 + 0 * t * x, ...
-  rt = [0, 1], rx = [0, 1], nt = 100, nx = 100, mt = 1, mx = 1)
+  rt = [0, 1], rx = [0, 1], nt = 100, nx = 100, dt = 1, dx = 1)
 
 qn = nan (nt, nx);
 tn = linspace (num2cell (rt){:}, nt)';
 xn = linspace (num2cell (rx){:}, nx);
 
-kt = mt * nt;
-kx = mx * nx;
+kt = dt * nt;
+kx = dx * nx;
 
 Dt = diff (rt) / kt;
 Dx = diff (rx) / kx;
 s = Dt / Dx ^ 2;
 
-xk = xn(1 : mx : end);
+xk = xn(1 : dx : end);
 qk = q (rt(1), xk);
 
 in = 1;
@@ -66,8 +66,8 @@ for ik = 1 : kt
   p = ~isnan (qi);
   qk(p) = qi(p);
 
-  if mod (ik - 1, mt) == 0
-    qn(in, :) = qk(1 : mx : end);
+  if mod (ik - 1, dt) == 0
+    qn(in, :) = qk(1 : dx : end);
 
     in = in + 1;
   end
@@ -77,12 +77,15 @@ end
 
 % TODO Write an example using real data and get rid of this shit.
 
-rt = [0, 100];
-rx = [0, 500] * 1e-3;
-C = @(t, x) interp1 (rx, [24, 16], x, 'linear');
-B = @(t, x) interp1 (rx, [100, 10] * 1e-3, x, 'nearest');
-q = @(t, x) ifelse (t == 0, ...
-  interp1 (rx, [260 + 20 * (sin (t / 20)), 280], x, 'linear'), ...
-  [260 + 20 * (sin (t / 20)), nan * x(2 : end - 1), 280]);
-[qn, tn, xn] = solvediffusion (q, C, B, rt, rx, 100, 10, 10, 1);
-plota (10, xn, qn);
+% rt = [0, 100];
+% rx = [0, 500] * 1e-3;
+% C = @(t, x) interp1 (rx, [24, 16], x, 'linear');
+% B = @(t, x) interp1 (rx, [100, 10] * 1e-3, x, 'nearest');
+% q = @(t, x) ifelse (t == 0, ...
+%   interp1 (rx, [260 + 20 * (sin (t / 20)), 280], x, 'linear'), ...
+%   [260 + 20 * (sin (t / 20)), nan * x(2 : end - 1), 280]);
+% [qn, tn, xn] = diffuse1 (q, C, B, rt, rx, 100, 10, 10, 1);
+% plota (10, xn, qn);
+
+%!error
+%! diffuse1 ();

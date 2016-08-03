@@ -1090,10 +1090,13 @@
 %! test tmvs_region
 
 %!test
+%! test composel
+%! test composer
 %! test filters
 %! test filteru
 %! test foldl
 %! test foldr
+%! test identity
 %! test mapl
 %! test mapr
 %! test overfield
@@ -1101,9 +1104,9 @@
 %!test
 %! test brsearch
 %! test chauvenet
+%! test diffuse1
+%! test globr
 %! test isequals
-%! test plota
-%! test progress
 %! test sparsify
 %! test withinc
 %! test withino
