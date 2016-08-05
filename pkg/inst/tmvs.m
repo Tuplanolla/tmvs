@@ -42,11 +42,16 @@
 % or TMVS among friends, because the name is not important,
 % is a simple data exploration and analysis tool.
 % Its purpose is to help work with a sizable chunk of data
-% gathered from a test lab and some weather stations, covering measurements of
-% temperature, humidity, pressure, precipitation and more.
-% It was originally built by Sampsa "Tuplanolla" Kiiskinen
-% between 2016-06-01 and 2016-08-09 and
-% supported by the funding of the JAMK University of Applied Sciences.
+% gathered from a test lab and some weather stations.
+% The measurements themselves cover
+% temperature and humidity inside building materials and
+% pressure, precipitation and more outside.
+%
+% TMVS was originally built by Sampsa "Tuplanolla" Kiiskinen
+% between 2016-06-01 and 2016-08-09.
+% It was the result of a project course at the University of Jyvaskyla and
+% was supported by the funding of JAMK University of Applied Sciences.
+% Further development and maintenance was passed on to interested parties.
 %
 % Even though TMVS itself is quite pedestrian,
 % the author has tried to impose some mathematical structure on it.
@@ -75,8 +80,9 @@
 % The following example does just that with the assumption that
 % the package file is in the current working directory of Octave.
 % If this is not the case, you can either
-% provide the full path to the file (use @code{help pkg} for details) or
-% navigate to the appropriate directory with @code{cd} first.
+% provide the full path to the file (see @code{help pkg} for details) or
+% navigate to the appropriate directory first
+% (see @code{help pwd} and @code{help cd}).
 % It is generally a good idea to skim the help pages
 % of all the commands you are about to run regardless.
 %
@@ -99,7 +105,7 @@
 % @end example
 %
 % After loading the package you can use
-% any of the procedures matching @file{tmvs_*},
+% any of the procedures listed by @code{pkg},
 % read their help pages with @code{help} or
 % even view this manual through Octave in the following fashion.
 %
@@ -112,13 +118,14 @@
 % There are a few things that can be configured for a better user experience.
 % The commands for doing so can either
 % be manually entered at the beginning of each session or
-% put into the @file{.octaverc} file inside your home directory.
+% put into the @file{.octaverc} file inside your home directory,
+% which is automatically sourced at the beginning of each session.
 %
 % @subsection Help Pages
 %
 % This manual notwithstanding,
 % TMVS is solely documented by the help pages of its procedures.
-% That is why it is essential to make heavy use of the @code{help} command.
+% That is why it is essential to make good use of the @code{help} command.
 %
 % By default @code{help} is unnecessarily verbose and
 % prints repetitive and unnecessary messages after each page that is requested.
@@ -142,11 +149,17 @@
 % setenv ('GNUTERM', 'x11')}
 % @end example
 %
-% It is worth experimenting with other options too,
-% such as the wxWidgets terminal without automatic focus.
+% It is worth experimenting with other options too.
+% For example the author favors
+% the wxWidgets terminal with automatic focus turned off and
+% occasionally uses the noninteractive text-only terminal too.
 %
 % @example
 % @code{setenv ('GNUTERM', 'wxt noraise')}
+% @example
+%
+% @end example
+% @code{setenv ('GNUTERM', 'dumb')}
 % @end example
 %
 % @subsection Number Format
@@ -166,39 +179,58 @@
 %
 % TMVS comes with a sample data set
 % that can be located with the following command.
+% The location naturally varies depending on the installation.
 %
 % @example
 % @code{which ('excerpt')}
 % @print{} 'excerpt' is the file /usr/share/octave/packages/tmvs-1.0.0/excerpt
 % @end example
 %
-% It is based on a real data set that has been sparsened and shuffled
+% It is based on a real data set that has been sparsened and shuffled,
 % enough to make it useless for data analysis,
 % but not too much to keep it sufficient for testing.
 % These steps have been taken for two reasons:
 % to keep the data set small and to not step on the toes of the rights owners.
 %
+% Note that by default TMVS stores cache files
+% in the same directory as the data files,
+% so it might be a good idea to copy the sample data set into another location
+% before working with it.
+% In the examples to follow the sample data set is assumed to be
+% in the current working directory.
+%
 % @node Source Data
 % @chapter Source Data
+%
+% First and foremost it is important to note that,
+% like any sensible data management system,
+% TMVS never modifies or deletes source data.
+% It may scatter cache files into the directory of the source files,
+% but does so very carefully, to prevent accidental data corruption or loss.
+% While all custom file management procedures have such safeguards,
+% Octave commands like @code{unlink} can still be destructive.
+%
+% @section Common Structure
 %
 % The source data comes from three different sources and
 % is stored in comma-separated value files.
 % The files are extracted from Excel files and
 % scattered in an indeterminate directory structure
 % without a consistent naming scheme.
-% Besides the field separator is actually @qcode{'|'} instead of @qcode{','},
-% so it would be more accurate to simply call them value files.
 %
 % Since there are a dozen subtly different yet incompatible value file formats,
 % it is important to be more specific.
-% The following regular ANTLR 4 grammar describes the structure of the files.
+% The field separator is actually @qcode{'|'} instead of @qcode{','} and
+% quotation is only possible with @qcode{'"'}.
+% The following regular ANTLR 4 grammar
+% describes the structure of the files precisely.
 %
 % @example
 % @verbatiminclude CSV.g4
 % @end example
 %
 % This grammar is the only thing the data sources have in common,
-% so let us go through each of them in turn.
+% so let us go through each of them in turn and highlight the differences.
 %
 % @section Test Labs
 %
@@ -251,7 +283,7 @@
 %
 % The data file format is the same as for test labs and
 % the header line is, in fact, exactly the same.
-% The following examples demonstrate the similarity.
+% The following example records demonstrate the similarity.
 %
 % @example
 % @code{Autiolahden s??asema - Ilmankosteus|2011/06/29 00:05:24|77|77|
@@ -259,7 +291,7 @@
 % @end example
 %
 % The names are sometimes corrupted by failed character set conversions,
-% because apparently using UTF-8 everywhere is too complicated for some people.
+% because apparently using UTF-8 everywhere is still too difficult.
 %
 % The available physical quantities are
 %
@@ -288,12 +320,12 @@
 %
 % @itemize
 % @item the @code{room} is sometimes present twice and
-% in a sane data set those two occurrences should not conflict,
+% in a sane data set those two occurrences should be equal,
 % @item the @code{position} is sometimes a few orders of magnitude too large,
 % although too few for a computer to be able to tell,
 % @item the @code{ordinal} is a random index and
 % not necessarily correlated with the @code{position} and
-% @item @code{meta} and @code{special} are strange.
+% @item @code{meta} and @code{special} are silly.
 % @end itemize
 %
 % It is possible that @code{special} is just a lazy name
@@ -439,11 +471,17 @@
 % @end example
 %
 % To perform computations, the aggregate can be converted into an interpolator.
+%
+% @example
+% @code{interp = tmvs_interpolate (aggr);}
+% @end example
+%
 % In an interpolator the @qcode{'pairs'} field
 % is simply replaced by a @qcode{'function'} function field,
 % along with its @qcode{'domain'} and @qcode{'codomain'}.
-% Assuming @code{fields} is a cell array
-% containing the definitions for @qcode{'id'} and @qcode{'meta'},
+% Assuming @var{fields} is a cell array
+% containing the definitions for @qcode{'id'} and @qcode{'meta'} and
+% @var{t} and @var{q} are arrays of times and measured values respectively,
 % the following structures illustrate the difference
 % between a singleton aggregate and the equivalent interpolator.
 %
@@ -459,10 +497,10 @@
 %   'codomain', [q(1), q(end)]);}
 % @end example
 %
-% Within the domain the interpolator works as the name suggests:
-% by interpolation.
-% Going outside the domain raises an error or, if so desired,
-% triggers extrapolation.
+% Within the domain of the function the interpolator works
+% as the name suggests: by interpolation.
+% Going outside the domain raises an error or,
+% if so desired, triggers extrapolation.
 %
 % @section Data Flow
 %
@@ -478,7 +516,7 @@
 % to fetch it from the data file via the cache mechanism.
 % Anything beyond that is up to your imagination.
 %
-% This reproduces the previous example.
+% This reproduces the first example from the previous section.
 %
 % @example
 % @code{tlaggr = tmvs_fetch ('excerpt/2012/118-0.csv', ...
@@ -503,7 +541,8 @@
 % would bump the required time investment up to 7 hours.
 % Since the data files are essentially static,
 % caching can be used to solve this performance problem
-% without causing a massive increase in development effort.
+% without causing a massive increase
+% in development effort or hardware requirements.
 %
 % With caching each file only needs to be parsed once,
 % after which a copy of the result is stored in a better format.
@@ -582,8 +621,8 @@
 % @result{} 8
 % @end example
 %
-% The imperative equivalent is a little more verbose,
-% as you can see by trying it yourself.
+% The imperative equivalent is somewhat more verbose.
+% The proof of this is left to the reader.
 %
 % @node Complete Examples
 % @chapter Complete Examples

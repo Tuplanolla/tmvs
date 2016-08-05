@@ -33,15 +33,15 @@ for i = 1 : numel (aggr)
   t = aggr(i).pairs(:, 1);
 
   if numel (t) < 2
-    interp(i).function = @(ti) nan;
+    interp(i).function = @(x) nan;
     interp(i).domain = [];
     interp(i).codomain = [];
   else
-    x = aggr(i).pairs(:, 2);
+    q = aggr(i).pairs(:, 2);
 
-    interp(i).function = @(ti) interp1 (t, x, ti, varargin{:});
+    interp(i).function = @(x) interp1 (t, q, x, varargin{:});
     interp(i).domain = [(min (t)), (max (t))];
-    interp(i).codomain = [(min (x)), (max (x))];
+    interp(i).codomain = [(min (q)), (max (q))];
   end
 end
 
