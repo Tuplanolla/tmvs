@@ -27,22 +27,24 @@
 
 function saggr = tmvs_sanitize (aggr)
 
-for i = 1 : numel (aggr)
-  z = aggr(i).pairs;
+saggr = aggr;
 
-  switch tmvs_quantity (aggr(i).id.quantity)
+for i = 1 : numel (saggr)
+  z = saggr(i).pairs;
+
+  switch tmvs_quantity (saggr(i).id.quantity)
   case 'Temperature'
-    aggr(i).pairs = z(withinc (z(:, 2), [-100, 100]), :);
+    saggr(i).pairs = z(withinc (z(:, 2), [-100, 100]), :);
   case 'Relative Humidity'
-    aggr(i).pairs = z(withinc (z(:, 2), [0, 0.99]), :);
+    saggr(i).pairs = z(withinc (z(:, 2), [0, 0.99]), :);
   case 'Absolute Humidity'
-    aggr(i).pairs = z(withinc (z(:, 2), [0, 1e+3]), :);
+    saggr(i).pairs = z(withinc (z(:, 2), [0, 1e+3]), :);
   case 'Pressure'
-    aggr(i).pairs = z(withinc (z(:, 2), [20e+3, 200e+3]), :);
+    saggr(i).pairs = z(withinc (z(:, 2), [20e+3, 200e+3]), :);
   case 'Wind Speed'
-    aggr(i).pairs = z(withinc (z(:, 2), [0, 100]), :);
+    saggr(i).pairs = z(withinc (z(:, 2), [0, 100]), :);
   case 'Precipitation'
-    aggr(i).pairs = z(withinc (z(:, 2), [0, 1]), :);
+    saggr(i).pairs = z(withinc (z(:, 2), [0, 1]), :);
   end
 end
 

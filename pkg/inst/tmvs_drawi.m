@@ -5,6 +5,16 @@
 % This is pushing the boundaries of what Octave and Gnuplot can do,
 % so the interaction is quite finicky.
 %
+% With some effort the extra dimension can also be explored interactively.
+% Let us first draw a point cloud of all the ordinals.
+% We can then add interactivity to the point cloud.
+% This requires the Gnuplot graphics toolkit mentioned previously,
+% because otherwise @code{ginput} does not work.
+% The interactive behavior also varies a little depending on the terminal used.
+% The X11 terminal, for example,
+% is activated with @emph{Right Mouse Button} and
+% cancelled with @emph{Return}.
+%
 % The following examples demonstrate basic usage.
 %
 % @example

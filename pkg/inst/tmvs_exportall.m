@@ -33,12 +33,12 @@ if numel (unique (c)) ~= numel (c)
   error ('naming function is not injective');
 end
 
-if ~isdir (fname)
-  error ('not a directory ''%s''', fname);
+if ~isdir (dname)
+  error ('not a directory ''%s''', dname);
 end
 
 for i = 1 : n
-  dlmwrite (sprintf ('%s/%s', fname, c{i}), aggr(i).pairs, '|');
+  dlmwrite (sprintf ('%s/%s', dname, c{i}), aggr(i).pairs, '|');
 end
 
 end

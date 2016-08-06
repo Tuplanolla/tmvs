@@ -627,222 +627,174 @@
 % @node Complete Examples
 % @chapter Complete Examples
 %
-% This chapter is still a bit incomplete.
+% This chapter presents some common uses of TMVS as literate programs.
+% Explanations are presented in the comments
+% to allow copying and running the programs as-is.
 %
 % @section Visualizing Interesting Things
 %
-% The following program plots the complete time evolution of a single sensor.
+% The following program draws three different visualizations.
 %
 % @example
-% @code{f = @@(s) s.id.quantity == tmvs_quantity ('Temperature') && ...
-%          s.id.site == tmvs_site ('Q') && ...
-%          s.id.surface == tmvs_surface ('Wall') && ...
-%          s.id.section == tmvs_section ('Bottom Corner') && ...
-%          s.id.ordinal == 3;
+% @code{% Load all the data points for room 118.
+% % This part relies on the source files
+% % following a certain directory structure and naming convention.
 % aggr = tmvs_fetchall ('excerpt/*/118-0.csv', tmvs_source ('Test Lab'));
-% faggr = filteru (f, aggr);
 %
-% figure (1);
-% clf ();
+% % Remove all the data points that exceed the permissible limits.
+% % The limits are very lenient,
+% % so some dubious data points may still be left.
+% saggr = tmvs_sanitize (aggr);
 %
-% t = faggr.pairs(:, 1);
-% q = faggr.pairs(:, 2);
-% dq = tmvs_uncertainty (faggr.id, q);
-%
-% errorbar (t, q, dq, '~1');
-%
-% datetick ('x', 'yyyy-mm-dd');
-% xlabel ('Date');
-% ylabel (tmvs_quantity (faggr.id.quantity));}
-% @end example
-%
-% After the initial filtering the following shorthand works.
-%
-% @example
-% @code{tmvs_drawp (faggr)}
-% @end example
-%
-% It is quite easy to extend this program over all the ordinals and
-% draw a higher-dimensional plot of it.
-%
-% @example
-% @code{f = @@(s) s.id.quantity == tmvs_quantity ('Temperature') && ...
+% % Only keep the data points from those sensors
+% % that meet the required criteria.
+% % The resulting aggregate corresponds to the complete history
+% % of a line passing through a certain wall.
+% f = @@(s) s.id.quantity == tmvs_quantity ('Temperature') && ...
 %          s.id.site == tmvs_site ('Q') && ...
 %          s.id.surface == tmvs_surface ('Wall') && ...
 %          s.id.section == tmvs_section ('Bottom Corner');
-% aggr = tmvs_fetchall ('excerpt/*/118-0.csv', tmvs_source ('Test Lab'));
-% faggr = filteru (f, aggr);
+% faggr = filteru (f, saggr);
 %
-% a = vertcat (faggr.pairs);
-% a = a(sparsify (a(:, 1), 1000), :);
+% % Pick one sensor from the line in particular.
+% % This produces an aggregate with only one identifier left.
+% ffaggr = filteru (@@(s) s.id.ordinal == 3, faggr);
 %
-% t = sort (a(:, 1));
+% % Visualize the complete time evolution
+% % of the temperature measured by the chosen sensor.
+% % The result is drawn into figure 1.
+% tmvs_drawp (ffaggr, 1);
 %
-% interp = tmvs_interpolate (faggr, 'extrap');
-% finterp = filteru (@@(s) ~isempty (s.domain), interp);
-% eaggr = tmvs_evaluate (finterp, t);
+% % Visualize the temperature as a sparse three-dimensional surface.
+% % Extrapolation may distort the edges of figure 2
+% % if some of the sensors are missing data points.
+% tmvs_draws (faggr, 2);
 %
-% x = foldl (@@(x, s) horzcat (x, s.meta.position), eaggr, []);
-% q = foldl (@@(q, s) horzcat (q, s.pairs(:, 2)), eaggr, []);
-%
-% figure (1);
-% clf ();
-%
-% surf (repmat (t, 1, columns (q)), repmat (x, rows (q), 1), q);
-%
-% datetick ('x', 'yyyy-mm-dd');
-% xlabel ('Date');
-% ylabel ('Position');
-% zlabel (tmvs_quantity (eaggr(1).id.quantity));
-% colormap ('hot');}
+% % Visualize the temperature interactively.
+% % The interactive point cloud is placed into figure 3 and
+% % the chosen projection is subsequently shown in figure 4.
+% tmvs_drawi (faggr, [3, 4]);}
 % @end example
 %
-% After the initial filtering the following shorthand works.
-%
-% @example
-% @code{tmvs_draws (faggr)}
-% @end example
-%
-% With some effort the extra dimension can also be explored interactively.
-% Let us first draw a point cloud of all the ordinals.
-%
-% @example
-% @code{f = @@(s) s.id.quantity == tmvs_quantity ('Temperature') && ...
-%          s.id.site == tmvs_site ('Q') && ...
-%          s.id.surface == tmvs_surface ('Wall') && ...
-%          s.id.section == tmvs_section ('Bottom Corner');
-% aggr = tmvs_fetchall ('excerpt/*/118-0.csv', tmvs_source ('Test Lab'));
-% faggr = filteru (f, aggr);
-%
-% a = vertcat (faggr.pairs);
-% a = a(sparsify (a(:, 1), 1000), :);
-%
-% t = a(:, 1);
-% q = a(:, 2);
-%
-% figure (1);
-% clf ();
-% plot (t, q, '.1');
-% datetick ('q', 'yyyy-mm-dd');
-% xlabel ('Date');
-% ylabel ('Temperature');}
-% @end example
-%
-% We can then add interactivity to the point cloud.
-% This requires the Gnuplot graphics toolkit mentioned previously,
+% Note that @code{tmvs_drawi} requires
+% the Gnuplot graphics toolkit that was mentioned previously,
 % because otherwise @code{ginput} does not work.
 % The interactive behavior also varies a little depending on the terminal used.
 % The X11 terminal, for example,
-% is activated with @kbd{@key{Right Mouse Button}} and
-% cancelled with @kbd{@key{Return}}.
+% is activated with @emph{Right Mouse Button} and cancelled with @emph{Return}.
+%
+% @section Inspecting and Exporting Data
+%
+% The following program
+% exports data points into several comma-separated value files and
+% prints a figure into a LaTeX file,
+% all within the temporary file directory @file{/tmp}.
 %
 % @example
-% @code{interp = tmvs_interpolate (faggr, 'extrap');
-% finterp = filteru (@@(s) ~isempty (s.domain), interp);
+% @code{% Fetch all the data points from a single source file.
+% aggr = tmvs_fetch ('excerpt/2012/118-0.csv', tmvs_source ('Test Lab'));
 %
-% a = vertcat (finterp.domain);
-% dom = [(min (a(:, 1))), (max (a(:, 2)))];
+% % Only keep the data points from temperature sensors.
+% f = @@(s) s.id.quantity == tmvs_quantity ('Temperature');
+% faggr = filteru (f, aggr);
 %
-% a = vertcat (finterp.codomain);
-% codom = [(min (a(:, 1))), (max (a(:, 2)))];
+% % Choose one of the identifiers.
+% % The index 3 is completely arbitrary.
+% id = faggr(3).id;
 %
-% t = mean (dom);
+% % Pretty print the chosen identifier.
+% fprintf (tmvs_dispid (id));
 %
-% while true
-%   figure (1);
-%   h = line ([t, t], codom);
+% % Find the index of the chosen identifier.
+% % The result is naturally 3.
+% i = tmvs_findid (faggr, id);
 %
-%   eaggr = tmvs_evaluate (finterp, t);
+% % Get the metadata related to the chosen identifier and pretty print it.
+% fprintf (tmvs_dispmeta (faggr(i).meta));
 %
-%   x = arrayfun (@@(s) s.meta.position, eaggr);
-%   q = vertcat (eaggr.pairs)(:, 2);
+% % Save the chosen measurements into a temporary file.
+% % The file is formatted like a comma-separated value file
+% % with the delimiter @qcode{'|'}, just like source files.
+% tmvs_export ('/tmp/tmvs.csv', faggr, id);
 %
-%   f = @@(dq, s) max ([dq, (max (tmvs_uncertainty (s.id, q)))]);
-%   dq = foldl (f, eaggr, 0);
+% % Create a temporary directory and
+% % save all the measurements into their own temporary files.
+% % By default the file names are derived
+% % from the indices of the aggregate.
+% mkdir ('/tmp/tmvs');
+% tmvs_exportall ('/tmp/tmvs', faggr);
 %
-%   [x, k] = sort (x);
-%   q = q(k);
+% % Manually extract and visualize the data points
+% % matching the chosen identifier.
+% % Figure 1 is first cleared and then used for the visualization.
+% z = faggr(i).pairs;
+% figure (1);
+% clf ();
+% plot (num2cell (z, 1)@{:@});
+% datefmt = 'yyyy-mm-dd';
+% datetick ('x', datefmt);
+% xlabel (sprintf ('Date [%s]', datefmt));
+% ylabel ('Temperature');
 %
-%   figure (2);
-%   clf ();
-%   errorbar (x, q, dq, '~1');
-%   xlabel ('Position');
-%   ylabel ('Temperature');
-%
-%   figure (1);
-%   t = ginput (1);
-%   if isempty (t) || ~withinc (t, dom)
-%     break
-%   end
-%   delete (h);
-% end}
+% % Save the figure into a temporary file
+% % for easy embedding into a LaTeX document.
+% print ('/tmp/tmvs.tex', '-depslatex', '-S400,300');}
 % @end example
 %
-% After the initial filtering the following shorthand works.
+% The exported figure can be inserted into a LaTeX document
+% with the following pieces of code.
 %
 % @example
-% @code{tmvs_drawi (faggr)}
+% @\usepackage@{tikz@}
+% @end example
+%
+% @example
+% @\begin@{figure@}
+%   @\centering
+%   @\begin@{tikzpicture@}
+%     @\input@{/tmp/tmvs.tex@}
+%   @\end@{tikzpicture@}
+%   @\caption@{Example from the manual of TMVS.@}
+% @\end@{figure@}
 % @end example
 %
 % @section Working with Caches
 %
-% Load a cache file directly.
+% The following program shuffles some cache files.
 %
 % @example
-% @code{aggr = tmvs_recall ('excerpt/2012/118-0.csv.tmp');}
+% @code{% Fetch all the data points from a single source file.
+% tlaggr = tmvs_fetch ('excerpt/2012/118-0.csv', ...
+%                      tmvs_source ('Test Lab'));
+%
+% % Fetch more points from a different kind of a source file.
+% woaggr = tmvs_fetch ('excerpt/2011-2013-0.csv', ...
+%                      tmvs_source ('Weather Observatory'), ...
+%                      tmvs_region ('Jyvaskyla'));
+%
+% % Combine the fetched aggregates.
+% aggr = tmvs_merge (tlaggr, woaggr);
+%
+% % Save the combined aggregate into a temporary cache file.
+% tmvs_store ('/tmp/tmvs.tmp', aggr);
+%
+% % Clear the aggregate from memory and
+% % reload it from the previously stored cache file.
+% % This does not accomplish anything useful
+% % besides showing off the cache mechanism.
+% clear ('aggr');
+% aggr = tmvs_recall ('/tmp/tmvs.tmp');
+%
+% % Remove the temporary cache file safely.
+% tmvs_purge ('/tmp/tmvs.tmp');
+%
+% % Recursively remove all the other cache files too.
+% tmvs_purgeall ('*.tmp', 'excerpt');}
 % @end example
 %
-% Remove dubious measurements.
+% @section Simulating Temperature Transfer
 %
-% @example
-% @code{f = @@(z) z(withinc (z(:, 2), [20e+3, 200e+3]), :);
-% fpaggr = mapl (@@(s) overfield (f, s, 'pairs'), paggr);}
-% ...
-% @end example
-%
-% This is available as @code{tmvs_sanitize} for all quantities.
-%
-% Remove statistical outliers automatically.
-%
-% @example
-% @code{f = @@(z) z(chauvenet (z(:, 2)), :);
-% caggr = mapl (@@(s) overfield (f, s, 'pairs'), aggr);}
-% @end example
-%
-% Primitively project fields out.
-%
-% @example
-% @code{z = sortrows (horzcat (vertcat (vertcat (eaggr.meta).position), ...
-%                                 vertcat (eaggr.pairs)(:, 2)));}
-% @end example
-%
-% Feed @qcode{pairs} into @code{plot} directly.
-%
-% @example
-% @code{plot (num2cell (z, 1)@{:@});}
-% @end example
-%
-% @section Printing and Exporting
-%
-% The following program saves figure 1 into a temporary file
-% for easy embedding into a TeX document.
-%
-% @example
-% @code{figure (1);
-% print ('/tmp/tmvs.tex', '-depslatex', '-S480,320');}
-% @end example
-%
-% Save measurements with the same identifier into a file.
-%
-% @example
-% @code{tmvs_export ('/tmp/tmvs.csv', aggr, aggr(9));}
-% @end example
-%
-% Save all measurements into their own value files.
-%
-% @example
-% @code{tmvs_exportall ('/tmp', aggr);}
-% @end example
+% Diffusion!
 %
 % @node Implementation Details
 % @chapter Implementation Details
@@ -887,7 +839,10 @@
 % @item the variables @var{f}, @var{g} and @var{h} are functions or procedures,
 % @item the variables @var{i}, @var{j} and @var{k}
 % are index scalars or vectors and
-% @item the variables @var{x}, @var{y}, @var{z} and @var{q} are generic.
+% @item the variables @var{x}, @var{y}, @var{z} and @var{q} are generic,
+% although @var{z} is often a pair and
+% @var{q} often emphasizes no coordinate system is involved
+% (or that it is free).
 % @end itemize
 %
 % The @code{true} and @code{false} functions are also used

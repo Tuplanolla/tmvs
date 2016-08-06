@@ -1,9 +1,12 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {} tmvs_purgeall (@var{pat})
+% @deftypefnx {Function File} {} tmvs_purgeall (@var{pat}, @var{dname})
 %
 % Removes the cache files matching @var{pat} safely.
 % The pattern @var{pat} can be written
 % according the format supported by @code{glob}.
+%
+% Recursive with two arguments.
 %
 % The following examples demonstrate basic usage.
 %
@@ -18,8 +21,12 @@
 %
 % @end deftypefn
 
-function tmvs_purgeall (pat)
+function tmvs_purgeall (pat, dname)
 
-cellfun (@tmvs_purge, glob (pat));
+if nargin >= 2
+  cellfun (@tmvs_purge, globr (pat, dname));
+else
+  cellfun (@tmvs_purge, glob (pat));
+end
 
 end
