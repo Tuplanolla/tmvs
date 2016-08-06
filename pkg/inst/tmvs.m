@@ -848,6 +848,24 @@
 % The @code{true} and @code{false} functions are also used
 % as if they were literal values to make the code more readable.
 %
+% @section Extra Dependencies
+%
+% All the bells and whistles used
+% during development depend on a few extra programs.
+% Their canonical names are
+%
+% @itemize
+% @item @file{make},
+% @item @file{octave-cli},
+% @item @file{tar},
+% @item @file{sed},
+% @item @file{makeinfo},
+% @item @file{dot},
+% @item @file{dot2tex},
+% @item @file{antlr4} and
+% @item @file{javac}.
+% @end itemize
+%
 % @section Testing
 %
 % TMVS comes with a small test suite for those procedures
