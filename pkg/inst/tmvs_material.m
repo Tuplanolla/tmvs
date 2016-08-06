@@ -2,7 +2,8 @@
 % @deftypefn {Function File} {@var{y} =} tmvs_material (@var{x})
 %
 % Enumerates the case-insensitive materials @qcode{'Mineral Wool'},
-% @qcode{'Polyurethane'} and @qcode{'Polystyrene'}.
+% @qcode{'Polyurethane'}, @qcode{'Polystyrene'} and
+% @qcode{'Reinforced Concrete'}.
 %
 % See @code{tmvs_quantity} for a detailed treatise on functions of this kind.
 %
@@ -23,6 +24,8 @@ else
       y = 2;
     case {'eps', 'polystyrene'}
       y = 3;
+    case {'rc', 'reinforced concrete'}
+      y = 3;
     otherwise
       error ('material ''%s'' not known', x);
     end
@@ -34,6 +37,8 @@ else
       y = 'Polyurethane';
     case 3
       y = 'Polystyrene';
+    case 4
+      y = 'Reinforced Concrete';
     otherwise
       error ('placement %d not known', x);
     end
@@ -46,7 +51,7 @@ end
 
 %!shared f, n
 %! f = @tmvs_material;
-%! n = 3;
+%! n = 4;
 
 %!test
 %! for i = 1 : n

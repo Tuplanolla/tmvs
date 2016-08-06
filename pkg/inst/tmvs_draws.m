@@ -20,7 +20,7 @@ a = a(sparsify (a(:, 1), 1000), :);
 
 t = sort (a(:, 1));
 
-interp = tmvs_interpolate (aggr, 'extrap');
+interp = tmvs_interpolate (aggr, nan);
 finterp = filteru (@(s) ~isempty (s.domain), interp);
 eaggr = tmvs_evaluate (finterp, t);
 

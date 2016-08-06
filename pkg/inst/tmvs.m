@@ -666,8 +666,7 @@
 % tmvs_drawp (ffaggr, 1);
 %
 % % Visualize the temperature as a sparse three-dimensional surface.
-% % Extrapolation may distort the edges of figure 2
-% % if some of the sensors are missing data points.
+% % The surface appears in figure 2.
 % tmvs_draws (faggr, 2);
 %
 % % Visualize the temperature interactively.
@@ -717,17 +716,22 @@
 % % with the delimiter @qcode{'|'}, just like source files.
 % tmvs_export ('/tmp/tmvs.csv', faggr, id);
 %
+% % Resample the data points smoothly and uniformly.
+% interp = tmvs_interpolate (faggr, 'spline');
+% daggr = tmvs_discretize (interp, 256);
+%
 % % Create a temporary directory and
-% % save all the measurements into their own temporary files.
+% % save all the resampled data points into their own files.
 % % By default the file names are derived
 % % from the indices of the aggregate.
 % mkdir ('/tmp/tmvs');
-% tmvs_exportall ('/tmp/tmvs', faggr);
+% tmvs_exportall ('/tmp/tmvs', daggr);
 %
-% % Manually extract and visualize the data points
+% % Manually extract the resampled data points
 % % matching the chosen identifier.
-% % Figure 1 is first cleared and then used for the visualization.
-% z = faggr(i).pairs;
+% z = daggr(i).pairs;
+%
+% % Visualize the manually extracted data points in figure 1.
 % figure (1);
 % clf ();
 % plot (num2cell (z, 1)@{:@});
@@ -794,7 +798,66 @@
 %
 % @section Simulating Temperature Transfer
 %
-% Diffusion!
+% @example
+% % Fetch the source data to set up the initial conditions.
+% % We are interested in modeling the temperature,
+% % because it is easier to use as an example;
+% % modeling the humidity would require working with
+% % partial pressures and complicated phenomena
+% % like capillary action in porous media.
+% aggr = tmvs_fetch ('excerpt/2012/118-0.csv', tmvs_source ('Test Lab'));
+% f = @@(s) s.id.quantity == tmvs_quantity ('Temperature') && ...
+%          s.id.site == tmvs_site ('Q') && ...
+%          s.id.surface == tmvs_surface ('Wall') && ...
+%          s.id.section == tmvs_section ('Bottom Corner');
+% faggr = filteru (f, aggr);
+% interp = tmvs_interpolate (faggr);
+%
+% % Choose the time interval and the extents of the wall.
+% rt = [(datenum (2012, 1, 1)), (datenum (2013, 1, 1))];
+% rx = [0, 350e-3];
+%
+% % Extract the positions from the metadata and
+% % find the actual data points via interpolation.
+% eaggr = tmvs_evaluate (interp, rt(1));
+% xs = arrayfun (@@(s) s.meta.position, eaggr);
+% qs = vertcat (eaggr.pairs)(:, 2);
+%
+% % Poorly mimic the US3 wall construction
+% % consisting of reinforced concrete and polyurethane.
+% CRC = 2.3e+3 * 750; % rho * cp
+% CPUR = 30 * 1.5e+3;
+% BRC = 1; % k
+% BPUR = 25e-3;
+% L = cumsum ([70e-3, 10e-3, 160e-3, 10e-3, 80e-3]);
+%
+% % Define the functions that both
+% % determine the properties of the materials and
+% % enforce the initial and boundary conditions.
+% C = @@(x) interp1 (L, [CRC, CPUR, CPUR, CRC, CRC], x, 'extrap');
+% B = @@(x) interp1 (L, [BRC, BPUR, BPUR, BRC, BRC], x, 'extrap');
+% q0 = @@(x) interp1 (xs, qs, x, 'extrap');
+% q = @@(t, x) [1, (nan (size (x))(2 : end - 1)), 1] .* ...
+%   interp1 (xs, qs, x, 'extrap');
+%
+% % Run the simulation.
+% % Even though this is a simple diffusion model,
+% % the computation can take a while to complete.
+% [qn, tn, xn] = diffuse1 (q0, q, C, B, rt, rx, 100, 100, 100, 10);
+%
+% % Visualize the result with an animation
+% % that advances 10 frames per second.
+% % Not much seems to happen inside the wall.
+% plota (10, xn, qn);
+% @end example
+%
+% While simulating temperature transfer as a one-dimensional
+% diffusion process produces nice results in controlled conditions,
+% it is quite a gross oversimplification
+% when humidity is involved and condensation may take place.
+% In fact, entire scientific journals have been devoted
+% to the study of such phenomena.
+% See, for instance, the International Journal of Heat and Mass Transfer.
 %
 % @node Implementation Details
 % @chapter Implementation Details
@@ -833,6 +896,7 @@
 % @item the variable @var{str} is a string,
 % @item the variable @var{c} is a cell array,
 % @item the variable @var{s} is a structure or structure array,
+% @item the variable @var{r} is an interval,
 % @item the variables @var{dom} and @var{codom} are nonempty intervals,
 % @item the variables @var{a} and @var{b} are matrices,
 % @item the variables @var{v}, @var{u} and @var{w} are vectors,
@@ -850,20 +914,22 @@
 %
 % @section Extra Dependencies
 %
-% All the bells and whistles used
-% during development depend on a few extra programs.
-% Their canonical names are
+% There are quite a few bells and whistles
+% that were used during the development of TMVS,
+% but are not necessary for its use.
+% The extra dependencies are
 %
 % @itemize
-% @item @file{make},
-% @item @file{octave-cli},
-% @item @file{tar},
-% @item @file{sed},
-% @item @file{makeinfo},
-% @item @file{dot},
-% @item @file{dot2tex},
-% @item @file{antlr4} and
-% @item @file{javac}.
+% @item GNU or any other Make (@file{make}),
+% @item command line interface for GNU Octave (@file{octave-cli}),
+% @item GNU or any other Tar (@file{tar}),
+% @item GNU or any other Sed (@file{sed}),
+% @item GNU Texinfo (@file{info} and @file{makeinfo}),
+% @item GraphViz (@file{dot} and optionally @file{xdot}),
+% @item GraphViz to LaTeX compiler (@file{dot2tex}),
+% @item ANTLR 4 and OpenJDK or any other Java development kit
+% (@file{antlr4}, @file{javac} and @file{java}) and
+% @item GHC or any other Haskell compiler (@file{ghc}).
 % @end itemize
 %
 % @section Testing

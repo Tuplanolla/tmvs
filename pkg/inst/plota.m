@@ -61,7 +61,7 @@ h = plot ([(mapl (f(i), x)); (mapl (f(i), y))]{:}, varargin{:});
 
 g = @(y, x) [y; x(:)];
 axislim (foldl (g, x, []), 'x');
-axislim (foldl (g, x, []), 'y');
+axislim (foldl (g, y, []), 'y');
 
 t0 = now ();
 

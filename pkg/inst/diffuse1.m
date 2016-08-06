@@ -1,5 +1,5 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {[@var{qn}, @var{tn}, @var{xn}] =} diffuse1 (@var{q}, @var{C}, @var{B}, @var{rt}, @var{rx}, @var{nt}, @var{nx}, @var{dt}, @var{dx})
+% @deftypefn {Function File} {[@var{qn}, @var{tn}, @var{xn}] =} diffuse1 (@var{q0}, @var{q}, @var{C}, @var{B}, @var{rt}, @var{rx}, @var{nt}, @var{nx}, @var{dt}, @var{dx})
 %
 % Simulates a diffusion process inside a wall or floor.
 % Note: time is given in days.
@@ -18,9 +18,8 @@
 %
 % @end deftypefn
 
-function [qn, tn, xn] = diffuse1 (q, ...
-  C = @(t, x) 1 + 0 * t * x, ...
-  B = @(t, x) 1 + 0 * t * x, ...
+function [qn, tn, xn] = diffuse1 (q0, q, ...
+  C = @(x) 1 + 0 * x, B = @(x) 1 + 0 * x, ...
   rt = [0, 1], rx = [0, 1], nt = 100, nx = 100, dt = 1, dx = 1)
 
 qn = nan (nt, nx);
@@ -34,37 +33,35 @@ Dt = diff (rt) / kt;
 Dx = diff (rx) / kx;
 s = Dt / Dx ^ 2;
 
-xk = xn(1 : dx : end);
-qk = q (rt(1), xk);
+xk = linspace (num2cell (rx){:}, kx);
+
+Ci = C (xk);
+Bi = B (xk);
+
+Cij = Ci(2 : end - 1);
+Cijp1 = Ci(3 : end);
+Bijm1 = Bi(1 : end - 2);
+Bij = Bi(2 : end - 1);
+Bijp1 = Bi(3 : end);
+
+if ~(Bijp1 < 2 * Bij && s < Cij ./ (3 * Bij - Bijp1))
+  error ('simulation is divergent');
+end
+
+qk = q0 (xk);
 
 in = 1;
 for ik = 1 : kt
-  t = interp1 ([1, kt], rt, ik);
-
-  Ci = C (t, xk);
-  Bi = B (t, xk);
-
-  Cij = Ci(2 : end - 1);
-  Cijp1 = Ci(3 : end);
-  Bijm1 = Bi(1 : end - 2);
-  Bij = Bi(2 : end - 1);
-  Bijp1 = Bi(3 : end);
-  qkjm1 = qk(1 : end - 2);
-  qkj = qk(2 : end - 1);
-  qkjp1 = qk(3 : end);
-
-  if ~(Bijp1 < 2 * Bij && s < Cij ./ (3 * Bij - Bijp1))
-    error ('simulation diverged');
-  end
+  t = interp1 ([1, kt], rt, ik, '*linear');
 
   qk(2 : end - 1) = ...
-    (s * Bij .* qkjm1 + ...
-     (Cij - s * (3 * Bij - Bijp1)) .* qkj + ...
-     s * (2 * Bij - Bijp1) .* qkjp1) ./ Cij;
+    (s * Bij .* qk(1 : end - 2) + ...
+     (Cij - s * (3 * Bij - Bijp1)) .* qk(2 : end - 1) + ...
+     s * (2 * Bij - Bijp1) .* qk(3 : end)) ./ Cij;
 
-  qi = q (t, xk);
-  p = ~isnan (qi);
-  qk(p) = qi(p);
+  qt = q (t, xk);
+  p = ~isnan (qt);
+  qk(p) = qt(p);
 
   if mod (ik - 1, dt) == 0
     qn(in, :) = qk(1 : dx : end);
@@ -79,12 +76,11 @@ end
 
 % rt = [0, 100];
 % rx = [0, 500] * 1e-3;
-% C = @(t, x) interp1 (rx, [24, 16], x, 'linear');
-% B = @(t, x) interp1 (rx, [100, 10] * 1e-3, x, 'nearest');
-% q = @(t, x) ifelse (t == 0, ...
-%   interp1 (rx, [260 + 20 * (sin (t / 20)), 280], x, 'linear'), ...
-%   [260 + 20 * (sin (t / 20)), nan * x(2 : end - 1), 280]);
-% [qn, tn, xn] = diffuse1 (q, C, B, rt, rx, 100, 10, 10, 1);
+% C = @(x) interp1 (rx, [24, 16], x, 'linear');
+% B = @(x) interp1 (rx, [100, 10] * 1e-3, x, 'nearest');
+% q0 = @(x) interp1 (rx, [260, 280], x, 'linear');
+% q = @(t, x) [260 + 20 * (sin (t / 20)), nan * x(2 : end - 1), 280];
+% [qn, tn, xn] = diffuse1 (q0, q, C, B, rt, rx, 100, 10, 10, 1);
 % plota (10, xn, qn);
 
 %!error

@@ -33,7 +33,7 @@ for i = 1 : numel (aggr)
   t = aggr(i).pairs(:, 1);
 
   if numel (t) < 2
-    interp(i).function = @(x) nan;
+    interp(i).function = @(x) nan (size (x));
     interp(i).domain = [];
     interp(i).codomain = [];
   else
