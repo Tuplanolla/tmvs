@@ -799,7 +799,7 @@
 % @section Simulating Temperature Transfer
 %
 % @example
-% % Fetch the source data to set up the initial conditions.
+% % Fetch the source data to set up the initial and boundary conditions.
 % % We are interested in modeling the temperature,
 % % because it is easier to use as an example;
 % % modeling the humidity would require working with
@@ -811,17 +811,16 @@
 %          s.id.surface == tmvs_surface ('Wall') && ...
 %          s.id.section == tmvs_section ('Bottom Corner');
 % faggr = filteru (f, aggr);
-% interp = tmvs_interpolate (faggr);
+% interp = tmvs_interpolate (faggr, nan);
 %
 % % Choose the time interval and the extents of the wall.
 % rt = [(datenum (2012, 1, 1)), (datenum (2013, 1, 1))];
-% rx = [0, 350e-3];
+% rx = [0, 330e-3];
 %
 % % Extract the positions from the metadata and
-% % find the actual data points via interpolation.
-% eaggr = tmvs_evaluate (interp, rt(1));
-% xs = arrayfun (@@(s) s.meta.position, eaggr);
-% qs = vertcat (eaggr.pairs)(:, 2);
+% % find the corresponding temperatures via interpolation.
+% xs = arrayfun (@@(s) s.meta.position, interp);
+% qt = @@(t) vertcat (tmvs_evaluate (interp, t).pairs)(:, 2)';
 %
 % % Poorly mimic the US3 wall construction
 % % consisting of reinforced concrete and polyurethane.
@@ -834,20 +833,26 @@
 % % Define the functions that both
 % % determine the properties of the materials and
 % % enforce the initial and boundary conditions.
+% % The extrapolation used here is harmless,
+% % because the functions are constant near the edges.
 % C = @@(x) interp1 (L, [CRC, CPUR, CPUR, CRC, CRC], x, 'extrap');
 % B = @@(x) interp1 (L, [BRC, BPUR, BPUR, BRC, BRC], x, 'extrap');
-% q0 = @@(x) interp1 (xs, qs, x, 'extrap');
+% q0 = @@(x) interp1 (xs, qt (rt(1)), x, 'extrap');
 % q = @@(t, x) [1, (nan (size (x))(2 : end - 1)), 1] .* ...
-%   interp1 (xs, qs, x, 'extrap');
+%   interp1 (xs, qt (t), x, 'extrap');
 %
 % % Run the simulation.
 % % Even though this is a simple diffusion model,
 % % the computation can take a while to complete.
+% % It is also worth pointing out that the result is garbage,
+% % because the sample data set is too sparse
+% % to provide realistic boundary conditions.
 % [qn, tn, xn] = diffuse1 (q0, q, C, B, rt, rx, 100, 100, 100, 10);
 %
 % % Visualize the result with an animation
 % % that advances 10 frames per second.
-% % Not much seems to happen inside the wall.
+% % Not much seems to happen,
+% % because the system is near equilibrium to begin with.
 % plota (10, xn, qn);
 % @end example
 %

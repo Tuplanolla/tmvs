@@ -6,6 +6,16 @@
 % Note: cprho = cp * rho.
 % Note: k = U / L.
 % Note: Dt = t / nt.
+% @example
+% rt = [0, 100];
+% rx = [0, 500] * 1e-3;
+% C = @@(x) interp1 (rx, [24, 16], x, 'linear');
+% B = @@(x) interp1 (rx, [100, 10] * 1e-3, x, 'nearest');
+% q0 = @@(x) interp1 (rx, [260, 280], x, 'linear');
+% q = @@(t, x) [260 + 20 * (sin (t / 20)), nan * x(2 : end - 1), 280];
+% [qn, tn, xn] = diffuse1 (q0, q, C, B, rt, rx, 100, 10, 10, 1);
+% plota (10, xn, qn);
+% @end example
 %
 % The following examples demonstrate basic usage.
 %
@@ -71,17 +81,6 @@ for ik = 1 : kt
 end
 
 end
-
-% TODO Write an example using real data and get rid of this shit.
-
-% rt = [0, 100];
-% rx = [0, 500] * 1e-3;
-% C = @(x) interp1 (rx, [24, 16], x, 'linear');
-% B = @(x) interp1 (rx, [100, 10] * 1e-3, x, 'nearest');
-% q0 = @(x) interp1 (rx, [260, 280], x, 'linear');
-% q = @(t, x) [260 + 20 * (sin (t / 20)), nan * x(2 : end - 1), 280];
-% [qn, tn, xn] = diffuse1 (q0, q, C, B, rt, rx, 100, 10, 10, 1);
-% plota (10, xn, qn);
 
 %!error
 %! diffuse1 ();
