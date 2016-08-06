@@ -20,7 +20,7 @@
 % @result{} true
 % @end example
 %
-% @seealso{withino}
+% @seealso{withino, withinl, withinr}
 %
 % @end deftypefn
 

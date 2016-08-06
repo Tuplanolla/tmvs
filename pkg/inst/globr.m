@@ -1,5 +1,5 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {@var{c} = } globr (@var{pat}, @var{dname})
+% @deftypefn {Function File} {@var{c} =} globr (@var{pat}, @var{dname})
 %
 % Runs @code{glob} by starting from the directory @var{dname} and
 % recursively collecting every match for @var{pat} into @var{c}.

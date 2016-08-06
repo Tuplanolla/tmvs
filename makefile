@@ -2,7 +2,7 @@ version=1.0.0
 
 build: verify package document
 
-document: data-flow.png data-flow.tex manual.pdf manual/index.html
+document: data-flow.png data-flow.tex manual/index.html manual.pdf
 
 package: tmvs-$(version).tar.gz
 
@@ -34,18 +34,22 @@ tmvs.tar.gz: pkg pkg/* pkg/inst/*
 	tar --auto-compress --create --file tmvs.tar.gz \
 	--transform 's|^\./|pkg/inst/|' pkg ./excerpt ./*.g4 ./*.txt
 
+manual.pdf: tmvs.texinfo data-flow.png
+	makeinfo --pdf --output manual.pdf $<
+
 manual/index.html: tmvs.texinfo data-flow.png
 	makeinfo --html --output manual $<
 	cp data-flow.png manual
 
-manual.pdf: tmvs.texinfo data-flow.png
-	makeinfo --pdf --output manual.pdf $<
-
-%.texinfo: pkg/inst/%.m
+tmvs.texinfo: pkg/inst/*.m
 	{ echo '\input texinfo' && \
 	  cat macros.texi && \
+	  echo '@set reference' && \
 	  a='-\*- texinfo -\*-' && b='^\([^%]\|\)$$' && \
-	  sed -n "/$$a/,/$$b/{/$$a/n;/$$b/q;s/^% \\?//p}" $< && \
+	  for x in $$(find pkg/inst -name 'tmvs.m' && \
+	  find pkg/inst -name '*.m' -not -name 'tmvs.m' | LC_ALL=C sort) ; \
+	  do sed -n "/$$a/,/$$b/{/$$a/n;/$$b/q;s/^% \\?//p}" "$$x" | \
+	  sed -e 's/@deftypefnx\? \({[^}]\+}\) \({}\|{.\+=}\) \([^ ]\+\) \(.\+\)/@noindent\n@r\1: @i\2 @b{\3} @i{\4}\n/' -e 's/@end deftypefn//' ; done && \
 	  echo '@bye' ; } > $@
 
 %.tex: %.dot

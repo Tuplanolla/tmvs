@@ -14,7 +14,7 @@
 % q0 = @@(x) interp1 (rx, [260, 280], x, 'linear');
 % q = @@(t, x) [260 + 20 * (sin (t / 20)), nan * x(2 : end - 1), 280];
 % [qn, tn, xn] = diffuse1 (q0, q, C, B, rt, rx, 100, 10, 10, 1);
-% plota (10, xn, qn);
+% plots (10, xn, qn);
 % @end example
 %
 % The following examples demonstrate basic usage.

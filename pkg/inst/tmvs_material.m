@@ -25,7 +25,7 @@ else
     case {'eps', 'polystyrene'}
       y = 3;
     case {'rc', 'reinforced concrete'}
-      y = 3;
+      y = 4;
     otherwise
       error ('material ''%s'' not known', x);
     end

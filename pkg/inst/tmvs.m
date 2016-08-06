@@ -23,6 +23,9 @@
 % * Complete Examples:: How to make use of TMVS?
 % * Implementation Details:: Why is TMVS the way it is and
 % how can it be developed TMVS further?
+% @ifset reference
+% * Reference:: What do the help pages contain?
+% @end ifset
 % @end menu
 % @end ifhtml
 %
@@ -49,7 +52,7 @@
 %
 % TMVS was originally built by Sampsa "Tuplanolla" Kiiskinen
 % between 2016-06-01 and 2016-08-09.
-% It was the result of a project course at the University of Jyvaskyla and
+% It was the result of a project course at the University of Jyv@"askyl@"a and
 % was supported by the funding of JAMK University of Applied Sciences.
 % Further development and maintenance was passed on to interested parties.
 %
@@ -749,17 +752,17 @@
 % with the following pieces of code.
 %
 % @example
-% @\usepackage@{tikz@}
+% @backslashchar{}usepackage@{tikz@}
 % @end example
 %
 % @example
-% @\begin@{figure@}
-%   @\centering
-%   @\begin@{tikzpicture@}
-%     @\input@{/tmp/tmvs.tex@}
-%   @\end@{tikzpicture@}
-%   @\caption@{Example from the manual of TMVS.@}
-% @\end@{figure@}
+% @backslashchar{}begin@{figure@}
+%   @backslashchar{}centering
+%   @backslashchar{}begin@{tikzpicture@}
+%     @backslashchar{}input@{/tmp/tmvs.tex@}
+%   @backslashchar{}end@{tikzpicture@}
+%   @backslashchar{}caption@{Example from the manual of TMVS.@}
+% @backslashchar{}end@{figure@}
 % @end example
 %
 % @section Working with Caches
@@ -797,6 +800,10 @@
 % @end example
 %
 % @section Simulating Temperature Transfer
+%
+% The following program simulates temperature transfer as a one-dimensional
+% diffusion process with initial and boundary conditions
+% pulled from actual source files.
 %
 % @example
 % % Fetch the source data to set up the initial and boundary conditions.
@@ -853,7 +860,7 @@
 % % that advances 10 frames per second.
 % % Not much seems to happen,
 % % because the system is near equilibrium to begin with.
-% plota (10, xn, qn);
+% plots (10, xn, qn);
 % @end example
 %
 % While simulating temperature transfer as a one-dimensional
@@ -1161,6 +1168,15 @@
 % While it would be possible to replace the inbuilt functions
 % with faster equivalents, it is not worth the effort.
 % Calling @code{jit_enable}, if possible, is a better time investment.
+%
+% @ifset reference
+% @node Reference
+% @chapter Reference
+%
+% This special chapter contains all the help pages in alphabetical order.
+%
+% @section Help Pages
+% @end ifset
 
 %!test
 %! test tmvs_source
@@ -1192,4 +1208,6 @@
 %! test isequals
 %! test sparsify
 %! test withinc
+%! test withinl
 %! test withino
+%! test withinr
