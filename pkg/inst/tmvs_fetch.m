@@ -5,6 +5,8 @@
 % with the assumption that the data source is @var{src}.
 % The options in @var{varargin} are passed through to @code{tmvs_import}.
 %
+% Mention potential race conditions.
+%
 % The following examples demonstrate basic usage.
 %
 % @example

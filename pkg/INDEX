@@ -43,28 +43,30 @@ Auxiliary
   tmvs_parsename
   tmvs_readcache
 Functional
+  identity
   composel
   composer
-  filters
-  filteru
-  foldl
-  foldr
-  identity
+  curry
+  uncurry
   mapl
   mapr
   overfield
+  foldl
+  foldr
+  filters
+  filteru
 Utility
-  brsearch
-  chauvenet
-  diffuse1
-  globr
-  isequals
-  sparsify
   withinc
   withinl
   withino
   withinr
+  isequals
+  sparsify
+  brsearch
+  chauvenet
+  diffuse1
 Effectful
   axislim
+  globr
   plots
   progress

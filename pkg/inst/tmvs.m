@@ -705,14 +705,14 @@
 % id = faggr(3).id;
 %
 % % Pretty print the chosen identifier.
-% fprintf (tmvs_dispid (id));
+% tmvs_dispid (id);
 %
 % % Find the index of the chosen identifier.
 % % The result is naturally 3.
 % i = tmvs_findid (faggr, id);
 %
 % % Get the metadata related to the chosen identifier and pretty print it.
-% fprintf (tmvs_dispmeta (faggr(i).meta));
+% tmvs_dispmeta (faggr(i).meta);
 %
 % % Save the chosen measurements into a temporary file.
 % % The file is formatted like a comma-separated value file
@@ -1189,25 +1189,26 @@
 %! test tmvs_region
 
 %!test
+%! test identity
 %! test composel
 %! test composer
-%! test filters
-%! test filteru
-%! test foldl
-%! test foldr
-%! test identity
+%! test curry
+%! test uncurry
 %! test mapl
 %! test mapr
 %! test overfield
+%! test foldl
+%! test foldr
+%! test filters
+%! test filteru
 
 %!test
-%! test brsearch
-%! test chauvenet
-%! test diffuse1
-%! test globr
-%! test isequals
-%! test sparsify
 %! test withinc
 %! test withinl
 %! test withino
 %! test withinr
+%! test isequals
+%! test sparsify
+%! test brsearch
+%! test chauvenet
+%! test diffuse1
