@@ -1,30 +1,44 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{aggr} =} tmvs_merge (@var{varargin})
 %
-% Combines the aggregates @var{varargin} into the single aggregate @var{aggr}.
+% Combine zero or more aggregates.
 %
-% If you simply want to load data from several files,
-% use @code{tmvs_fetchall} instead.
-% This procedure does not read files byitself and is thus quite inconvenient.
+% If you are loading data from several files and merging them by hand,
+% consider using @code{tmvs_fetchall} instead.
 %
-% Algebraic properties!
+% This function merges the aggregates in @var{varargin}
+% into the single aggregate @var{aggr}.
+% Since aggregates are essentially unordered maps,
+% they form a monoid with this function as the associative binary operator and
+% the empty aggregate as the identity element.
+% If common identifiers do not contain conflicting data points
+% (that is, there are never two different values for the same point in time),
+% the monoid is also commutative.
 %
 % The following examples demonstrate basic usage.
 %
 % @example
-% @code{aggr1 = tmvs_import ('excerpt/2012/118-0.csv', ...
-%                      tmvs_source ('Test Lab'));
-% aggr2 = tmvs_import ('excerpt/2011-2013-0.csv', ...
-%                      tmvs_source ('Weather Observatory'), ...
-%                      tmvs_region ('Jyvaskyla'));}
-% @code{aggr = tmvs_merge (aggr1, aggr2);}
+% @code{tlaggr = tmvs_fetch ( ...
+%   'excerpt/2012/118-0.csv', tmvs_source ('Test Lab'));
+% woaggr = tmvs_fetch ( ...
+%   'excerpt/2011-2013-0.csv', ...
+%   tmvs_source ('Weather Observatory'), tmvs_region ('Jyvaskyla'));
+% aggr = tmvs_merge (tlaggr, woaggr);}
 % @code{fieldnames (aggr)}
-% @result{} @{'id', 'meta', 'pairs'@}
+% @result{} @{'id', 'meta', 'pairs'@}(:)
 % @code{size (aggr)}
 % @result{} [1, 17]
 % @end example
 %
-% @seealso{tmvs, tmvs_fetch, tmvs_fetchall}
+% @example
+% @code{aggr = tmvs_merge ();}
+% @code{fieldnames (aggr)}
+% @result{} @{'id', 'meta', 'pairs'@}(:)
+% @code{size (aggr)}
+% @result{} [0, 0]
+% @end example
+%
+% @seealso{tmvs, tmvs_fetch}
 %
 % @end deftypefn
 
@@ -43,9 +57,8 @@ for i = 1 : numel (varargin)
     if k
       aggr(k).pairs = [aggr(k).pairs; aggri(j).pairs];
     else
-      aggr(end + 1) = struct ('id', id, ...
-                              'meta', aggri(j).meta, ...
-                              'pairs', aggri(j).pairs);
+      aggr(end + 1) = struct ( ...
+        'id', id, 'meta', aggri(j).meta, 'pairs', aggri(j).pairs);
     end
   end
 end

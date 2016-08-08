@@ -1,28 +1,35 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{aggr} =} tmvs_fetch (@var{fname}, @var{src}, @var{varargin})
 %
-% Imports the aggregate @var{aggr} from the file @var{fname}
-% with the assumption that the data source is @var{src}.
-% The options in @var{varargin} are passed through to @code{tmvs_import}.
+% Read an aggregate from a source file, using a cache file by need.
 %
-% Mention potential race conditions.
+% If you want to read several similarly named source files at once,
+% try @code{tmvs_fetchall} instead.
+%
+% This procedure either parses the source file @var{fname} or
+% reads its cache file to produce the aggregate @var{aggr}.
+% The data source @var{src} and the options in @var{varargin}
+% are passed through to @code{tmvs_import}.
 %
 % The following examples demonstrate basic usage.
 %
 % @example
-% @code{aggr = tmvs_fetch ('excerpt/2012/118-0.csv', ...
-%                    tmvs_source ('Test Lab'));}
+% @code{aggr = tmvs_fetch ( ...
+%   'excerpt/2012/118-0.csv', tmvs_source ('Test Lab'));}
 % @code{fieldnames (aggr)}
-% @result{} @{'id', 'meta', 'pairs'@}
+% @result{} @{'id', 'meta', 'pairs'@}(:)
 % @code{size (aggr)}
-% @result{} [1, 11]
-% @code{aggr = tmvs_fetch ('excerpt/2011-2013-0.csv', ...
-%                    tmvs_source ('Weather Observatory'), ...
-%                    tmvs_region ('Jyvaskyla'));}
+% @result{} [1, 12]
+% @end example
+%
+% @example
+% @code{aggr = tmvs_fetch ( ...
+%   'excerpt/2011-2013-0.csv', ...
+%   tmvs_source ('Weather Observatory'), tmvs_region ('Jyvaskyla'));}
 % @code{fieldnames (aggr)}
-% @result{} @{'id', 'meta', 'pairs'@}
+% @result{} @{'id', 'meta', 'pairs'@}(:)
 % @code{size (aggr)}
-% @result{} [1, 6]
+% @result{} [1, 5]
 % @end example
 %
 % @seealso{tmvs, tmvs_import, tmvs_store, tmvs_recall, tmvs_purge}
@@ -38,17 +45,17 @@ cached = true;
 [cacheinfo, err, msg] = stat (cname);
 if err == -1
   warning (sprintf ('cannot access cache file ''%s''', cname));
-  warning ('reading the original file (this can take a while)');
+  warning ('reading the source file (this can take a while)');
 
   cached = false;
 else
   [fileinfo, err, msg] = stat (fname);
   if err == -1
-    warning (sprintf ('cannot access original file ''%s''', fname));
+    warning (sprintf ('cannot access source file ''%s''', fname));
     warning ('falling back on the cache file');
   elseif cacheinfo.mtime < fileinfo.mtime
     warning ('cache file is stale');
-    warning ('rereading the original file (this can take a while)');
+    warning ('rereading the source file (this can take a while)');
 
     cached = false;
   end

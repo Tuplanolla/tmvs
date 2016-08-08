@@ -2,22 +2,28 @@
 % @deftypefn {Function File} {} tmvs_purgeall (@var{pat})
 % @deftypefnx {Function File} {} tmvs_purgeall (@var{pat}, @var{dname})
 %
-% Removes the cache files matching @var{pat} safely.
+% Remove several cache files safely.
+%
+% If you want to remove just one cache file, consider @code{tmvs_purge}.
+%
+% This procedure removes the cache files matching the pattern @var{pat},
+% but only if they are cache files in order to prevent accidental data loss.
 % The pattern @var{pat} can be written
 % according the format supported by @code{glob}.
-%
-% Recursive with two arguments.
+% If the directory @var{dname} is specified,
+% the removal starts from there and proceeds recursively.
 %
 % The following examples demonstrate basic usage.
 %
 % @example
-% @code{tmvs_readcache ('excerpt/2012/118-0.csv')}
-% @result{} false
-% @code{tmvs_readcache ('excerpt/2012/118-0.csv.tmp')}
-% @result{} true
+% @code{tmvs_purgeall ('excerpt/2012/*.tmp');}
 % @end example
 %
-% @seealso{tmvs, tmvs_cachename, tmvs_purge}
+% @example
+% @code{tmvs_purgeall ('*.tmp', 'excerpt');}
+% @end example
+%
+% @seealso{tmvs, tmvs_purge, glob, globr}
 %
 % @end deftypefn
 

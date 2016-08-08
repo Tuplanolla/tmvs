@@ -1,30 +1,22 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{aggr} =} tmvs_work (@var{dname})
 %
-% This requires a certain directory structure!
-% Mention: all vars.
+% Read an aggregate from several source files in a certain arrangement.
+%
+% This procedure reads every source file
+% in the sample data set and merges them together.
 %
 % The following example demonstrates basic usage.
 %
 % @example
-% @code{
-% fname = 'excerpt/2012/118-0.csv';
-% imported = tmvs_import (fname);
-% fetched = tmvs_fetch (fname);
-% merged = tmvs_merge (imported, fetched);
-% interpolated = tmvs_interpolate (merged);
-% discretized = tmvs_discretize (interpolated);
-% tmvs_visualize (discretized);
-% }
+% @code{aggr = tmvs_work ('excerpt');}
+% @code{fieldnames (aggr)}
+% @result{} @{'id', 'meta', 'pairs'@}(:)
+% @code{size (aggr)}
+% @result{} [1, 205]
 % @end example
 %
-% This procedure performs the commands shown in the previous example.
-%
-% @example
-% @code{tmvs ('excerpt')}
-% @end example
-%
-% @seealso{tmvs_import, tmvs_interpolate, tmvs_discretize, tmvs_merge, tmvs_visualize, tmvs_export, tmvs_store, tmvs_recall, tmvs_fetch, tmvs_purge}
+% @seealso{tmvs, tmvs_fetchall, tmvs_merge}
 %
 % @end deftypefn
 
@@ -34,13 +26,16 @@ if ~isdir (dname)
   error ('not a directory ''%s''', dname);
 end
 
-labs = tmvs_fetchall (sprintf ('%s/*/[0-9]*.csv', dname), ...
-                      tmvs_source ('Test Lab'));
-stations = tmvs_fetchall (sprintf ('%s/*/[a-z]*.csv', dname), ...
-                          tmvs_source ('Weather Station'));
-observatories = tmvs_fetchall (sprintf ('%s/*.csv', dname), ...
-                               tmvs_source ('Weather Observatory'), ...
-                               tmvs_region ('Jyvaskyla'));
+labs = tmvs_fetchall ( ...
+  sprintf ('%s/*/[0-9]*.csv', dname), tmvs_source ('Test Lab'));
+
+stations = tmvs_fetchall ( ...
+  sprintf ('%s/*/[a-z]*.csv', dname), tmvs_source ('Weather Station'));
+
+observatories = tmvs_fetchall ( ...
+  sprintf ('%s/*.csv', dname), ...
+  tmvs_source ('Weather Observatory'), tmvs_region ('Jyvaskyla'));
+
 aggr = tmvs_merge (labs, stations, observatories);
 
 end

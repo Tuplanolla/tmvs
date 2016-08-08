@@ -1,15 +1,22 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{c} =} tmvs_parsecsv (@var{str})
 %
-% Parses the string @var{str} containing a comma-separated value record
+% Parse a comma-separated value record into a cell array.
+%
+% This function parses the string @var{str}
+% containing a comma-separated value record
 % with the delimiter @qcode{'|'} and produces the cell array @var{c}.
-% A formal grammar is presented in the file @file{CSV.g4}.
+% A formal grammar for the parser
+% is presented in the ANTLR 4 grammar file @file{CSV.g4}.
 %
 % The following examples demonstrate basic usage.
 %
 % @example
 % @code{tmvs_parsecsv ('one|number two|"magic ""number"" three"')}
 % @result{} @{'one', 'number two', 'magic ""number"" three'@}
+% @end example
+%
+% @example
 % @code{tmvs_parsecsv ('one|||number two|')}
 % @result{} @{'one', @{@}, @{@}, 'number two', @{@}@}
 % @end example

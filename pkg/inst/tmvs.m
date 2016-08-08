@@ -23,8 +23,8 @@
 % * Complete Examples:: How to make use of TMVS?
 % * Implementation Details:: Why is TMVS the way it is and
 % how can it be developed TMVS further?
-% @ifset reference
-% * Reference:: What do the help pages contain?
+% @ifset helppages
+% * Help Pages:: What do the help pages contain?
 % @end ifset
 % @end menu
 % @end ifhtml
@@ -252,8 +252,7 @@
 %
 % @example
 % @code{KoeRakQS118 - RH118 A1 180mm 160 PUR|2011/06/29 00:05:24|46.4|46.4|
-% KoeRakQS118 - T118 A1 180mm 160 PUR|2011/08/27 11:21:15|20.4|20.4|
-% KoeRakAS146 Meta - AH146 A1 195mm 190EPS|2011/07/10 14:25:24|13|13.0 g/m3|}
+% KoeRakQS118 - T118 A1 180mm 160 PUR|2011/08/27 11:21:15|20.4|20.4|}
 % @end example
 %
 % The first field is called the name of the data point and
@@ -426,13 +425,14 @@
 % @item the field @qcode{'meta'},
 % which may contain metadata relating to the identifier and
 % @item the field @qcode{'pairs'},
-% which contains an array of the data points for to the identifier,
-% in basic and unprefixed SI units (metres, pascals, what have you).
+% which contains an array of the data points for the identifier.
 % @end itemize
 %
-% Further, each row of the data point array has time on the first column and
-% a measured value on the second column.
-% The rows are sorted chronologically and there are no conflicting rows
+% Further, each row of the data point array has time in days
+% (because that is also what Octave uses internally) on the first column, and
+% a physical quantity in basic and unprefixed SI units
+% (metres, pascals, what have you) on the second column.
+% The rows are sorted chronologically and conflicting rows are not allowed
 % (that is, there are never two different values for the same point in time).
 %
 % The following aggregate containing values from various data sources
@@ -929,10 +929,11 @@
 % There are quite a few bells and whistles
 % that were used during the development of TMVS,
 % but are not necessary for its use.
-% The extra dependencies are
+% The extra dependencies, mostly used in Make targets, are
 %
 % @itemize
 % @item GNU or any other Make (@file{make}),
+% @item Bourne shell (@file{sh}),
 % @item command line interface for GNU Octave (@file{octave-cli}),
 % @item GNU or any other Tar (@file{tar}),
 % @item GNU or any other Sed (@file{sed}),
@@ -992,6 +993,7 @@
 %
 % The call tree comes out roughly as follows.
 %
+% @smallformat
 % @example
 % @code{Top
 %   1) tmvs_work: 1 calls, 17.366 total, 0.001 self
@@ -1046,6 +1048,7 @@
 %     7) prefix !: 1 calls, 0.000 total, 0.000 self
 %   2) profile: 1 calls, 0.000 total, 0.000 self}
 % @end example
+% @end smallformat
 %
 % This result is obviously inaccurate,
 % because the sample data set is so small,
@@ -1057,6 +1060,7 @@
 %
 % The following call tree was produced with a complete 3 year data set.
 %
+% @smallformat
 % @example
 % @code{Top
 %   1) tmvs_work: 1 calls, 15307.944 total, 0.002 self
@@ -1159,6 +1163,7 @@
 %     7) prefix !: 1 calls, 0.000 total, 0.000 self
 %   2) profile: 1 calls, 0.000 total, 0.000 self}
 % @end example
+% @end smallformat
 %
 % Most of the time seems to be spent inside the inbuilt parsing functions
 % @code{datevec}, @code{datenum} and @code{regexp}.
@@ -1169,13 +1174,13 @@
 % with faster equivalents, it is not worth the effort.
 % Calling @code{jit_enable}, if possible, is a better time investment.
 %
-% @ifset reference
-% @node Reference
-% @chapter Reference
+% @ifset helppages
+%
+% @node Help Pages
+% @chapter Help Pages
 %
 % This special chapter contains all the help pages in alphabetical order.
 %
-% @section Help Pages
 % @end ifset
 
 %!test
@@ -1212,3 +1217,9 @@
 %! test brsearch
 %! test chauvenet
 %! test diffuse1
+
+%?test
+%? test axislim
+%? test globr
+%? test plots
+%? test progress

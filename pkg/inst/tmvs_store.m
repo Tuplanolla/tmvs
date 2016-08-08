@@ -1,21 +1,34 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {} tmvs_store (@var{cname}, @var{aggr}, @var{varargin})
 %
-% Writes the aggregate @var{aggr} into the cache file @var{cname}.
-% The optional storage parameters @var{varargin} can be chosen
-% from the options supported by @code{save}.
-% They default to the free HDF5 format @qcode{'-hdf5'},
-% because partial loading is really fast.
-% To save space also use @qcode{'-zip'}.
+% Write an aggregate into a cache file.
 %
-% This procedure is safe to use in the sense that
+% This procedure writes the aggregate @var{aggr}
+% into the cache file @var{cname}.
+% Optional storage parameters can be passed in @var{varargin},
+% are the same as those supported by @var{save}.
+% They default to specifying the HDF5 storage format @qcode{'-hdf5'},
+% because it makes partial loading really fast.
+% Use @qcode{'-mat'} instead for MATLAB compatibility or
+% @qcode{'-zip'} to save space (and waste time).
+%
+% This is safe to use in the sense that
 % it will not overwrite cache files it does not recognize.
-% Use @code{unlink} to get rid of existing files if they are in the way.
+% Use @code{unlink} to get rid of unsuitable files if they get in the way.
 %
 % The following examples demonstrate basic usage.
 %
 % @example
-% @code{tmvs_store ('/tmp/tmvs.tmp', tmvs_fetch ('excerpt/2012/118-0.csv'))}
+% @code{aggr = tmvs_fetch ( ...
+%   'excerpt/2012/118-0.csv', tmvs_source ('Test Lab'));}
+% @code{tmvs_store ('/tmp/tmvs.tmp', aggr);}
+% @end example
+%
+% @example
+% @code{aggr = tmvs_fetch ( ...
+%   'excerpt/2011-2013-0.csv', ...
+%   tmvs_source ('Weather Observatory'), tmvs_region ('Jyvaskyla'));}
+% @code{tmvs_store ('/tmp/tmvs.tmp', aggr, '-binary', '-zip');}
 % @end example
 %
 % @seealso{tmvs, tmvs_recall, tmvs_fetch, tmvs_purge, save}

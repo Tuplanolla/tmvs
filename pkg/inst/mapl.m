@@ -1,6 +1,8 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{y} =} mapl (@var{f}, @var{x})
 %
+% Apply a function to every element in a collection from left to right.
+%
 % Map, also known as collect, apply or for-each,
 % applies the function @var{f} to every element of the data structure @var{x}.
 % If @var{f} has side effects, as it may, the application order also matters.
@@ -16,6 +18,9 @@
 % @example
 % @code{mapl (@@sqrt, [1, 4, 9])}
 % @result{} [1, 2, 3]
+% @end example
+%
+% @example
 % @code{mapl (@@(x) mod (x, 2), [1, 2, 3])}
 % @result{} [1, 0, 1]
 % @end example
@@ -25,19 +30,28 @@
 % @example
 % @code{mapl (@@sqrt, @{1, 4, 9@})}
 % @result{} @{1, 2, 3@}
-% @code{mapl (@@(s) setfield (s, 'two', 2 * s.one), ...
-%            struct ('one', 1, 'two', 4))}
+% @end example
+%
+% @example
+% @code{mapl ( ...
+%   @@(s) setfield (s, 'two', 2 * s.one), ...
+%   struct ('one', 1, 'two', 4))}
 % @result{} struct ('one', 1, 'two', 2)
-% @code{mapl (@@(s) setfield (s, 'two', 2 * s.one), ...
-%            struct ('one', @{1, 1@}, 'two', @{4, 4@}))}
+% @end example
+%
+% @example
+% @code{mapl ( ...
+%   @@(s) setfield (s, 'two', 2 * s.one), ...
+%   struct ('one', @{1, 1@}, 'two', @{4, 4@}))}
 % @result{} struct ('one', @{1, 1@}, 'two', @{2, 2@})
 % @end example
 %
 % Mapping is structure-preserving, so the following is not allowed.
 %
 % @example
-% @code{mapl (@@(s) rmfield (s, 'two'), ...
-%            struct ('one', @{1, 1@}, 'two', @{4, 4@}))}
+% @code{mapl ( ...
+%   @@(s) rmfield (s, 'two'), ...
+%   struct ('one', @{1, 1@}, 'two', @{4, 4@}))}
 % @end example
 %
 % Programming note: This is slightly faster than @code{mapr}.
@@ -112,16 +126,20 @@ end
 %! assert (mapl (g, struct ('1', {})), struct ('1', {}));
 
 %!test
-%! assert (mapl (g, struct ('1', {-1}, '2', {1})), ...
-%!         struct ('1', {-1}, '2', {1}));
+%! assert ( ...
+%!   mapl (g, struct ('1', {-1}, '2', {1})), ...
+%!   struct ('1', {-1}, '2', {1}));
 
 %!test
-%! assert (mapl (g, struct ('1', {-2, -1}, '2', {1, 2})), ...
-%!         struct ('1', {-2, -1}, '2', {2, 1}));
+%! assert ( ...
+%!   mapl (g, struct ('1', {-2, -1}, '2', {1, 2})), ...
+%!   struct ('1', {-2, -1}, '2', {2, 1}));
 %!test
-%! assert (mapl (g, struct ('1', {-2; -1}, '2', {1; 2})), ...
-%!         struct ('1', {-2; -1}, '2', {2; 1}));
+%! assert ( ...
+%!   mapl (g, struct ('1', {-2; -1}, '2', {1; 2})), ...
+%!   struct ('1', {-2; -1}, '2', {2; 1}));
 
 %!test
-%! assert (mapl (g, struct ('1', {-4, -3; -2, -1}, '2', {1, 2; 3, 4})), ...
-%!         struct ('1', {-4, -3; -2, -1}, '2', {4, 3; 2, 1}));
+%! assert ( ...
+%!   mapl (g, struct ('1', {-4, -3; -2, -1}, '2', {1, 2; 3, 4})), ...
+%!   struct ('1', {-4, -3; -2, -1}, '2', {4, 3; 2, 1}));

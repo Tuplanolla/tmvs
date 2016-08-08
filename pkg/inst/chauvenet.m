@@ -3,6 +3,8 @@
 % @deftypefnx {Function File} {[@var{i}, @var{o}] =} chauvenet (@var{v}, @var{mu})
 % @deftypefnx {Function File} {[@var{i}, @var{o}] =} chauvenet (@var{v}, @var{mu}, @var{sigma})
 %
+% Remove outliers with Chauvenet's criterion.
+%
 % Chauvenet's criterion separates the outliers @var{o} from the inliers @var{i}
 % in the normally distributed data set @var{v}.
 % If known, the mean @var{mu} and the standard deviation @var{sigma}
@@ -23,7 +25,7 @@
 % @code{v = [4, 2, 1024, 0, 1];}
 % @code{[i, o] = chauvenet (v)}
 % @result{} i = [1, 2, 4, 5]
-%    o = [3]
+% @result{} o = [3]
 % @code{v(chauvenet (v))}
 % @result{} [4, 2, 0, 1]
 % @end example

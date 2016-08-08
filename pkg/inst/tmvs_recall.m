@@ -2,23 +2,25 @@
 % @deftypefn {Function File} {@var{aggr} =} tmvs_recall (@var{cname})
 % @deftypefnx {Function File} {@var{aggr} =} tmvs_recall (@var{cname}, @var{force})
 %
-% Reads the aggregate @var{aggr} from the cache file @var{cname}.
+% Read an aggregate from a cache file.
+%
+% This procedure reads the aggregate @var{aggr}
+% from the cache file @var{cname}.
 % The storage format is detected automatically and
 % the cache version is checked for compatibility.
 % If the @var{force} parameter is supplied and nonzero,
 % loading incompatible versions is also attempted.
 %
-% The following examples demonstrate basic usage.
+% The following example demonstrates basic usage.
 %
 % @example
-% @code{tmvs_store ('/tmp/tmvs.tmp', tmvs_fetch ('excerpt/2012/118-0.csv'))}
+% @code{aggr = tmvs_fetch ( ...
+%   'excerpt/2012/118-0.csv', tmvs_source ('Test Lab'));
+% tmvs_store ('/tmp/tmvs.tmp', aggr);}
 % @code{aggr = tmvs_recall ('/tmp/tmvs.tmp');}
-% @code{aggr = tmvs_recall ('/tmp/tmvs.tmp', true);}
 % @end example
 %
-% Programming note: Race conditions!
-%
-% @seealso{tmvs, tmvs_store, tmvs_fetch, tmvs_purge, load}
+% @seealso{tmvs, tmvs_store, tmvs_fetch, tmvs_purge, tmvs_version, load}
 %
 % @end deftypefn
 

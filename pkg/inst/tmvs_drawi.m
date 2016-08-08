@@ -1,27 +1,26 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {} tmvs_drawi (@var{aggr}, @var{varargin})
+% @deftypefn {Function File} {} tmvs_drawi (@var{aggr})
+% @deftypefnx {Function File} {} tmvs_drawi (@var{aggr}, @var{n})
+% @deftypefnx {Function File} {} tmvs_drawi (@var{aggr}, @var{n}, @var{datefmt})
 %
-% Mention: all vars.
-% This is pushing the boundaries of what Octave and Gnuplot can do,
-% so the interaction is quite finicky.
+% Visualize an aggregate with an interactive plot.
 %
-% With some effort the extra dimension can also be explored interactively.
-% Let us first draw a point cloud of all the ordinals.
-% We can then add interactivity to the point cloud.
-% This requires the Gnuplot graphics toolkit mentioned previously,
-% because otherwise @code{ginput} does not work.
-% The interactive behavior also varies a little depending on the terminal used.
-% The X11 terminal, for example,
-% is activated with @emph{Right Mouse Button} and
-% cancelled with @emph{Return}.
+% This procedure draws an interactive plot of the data points
+% for all the identifiers in the aggregate @var{aggr}.
+% First a point cloud of all the ordinals is drawn into figure @var{n(1)}
+% with the date format @code{datefmt}.
+% Once a point in time is selected from it,
+% a projection over all the ordinals is drawn into figure @var{n(2)}.
+% This process is repeated until the interaction is cancelled or
+% an impossible point in time is selected.
 %
-% The following examples demonstrate basic usage.
+% This interaction really pushes the boundaries
+% of what Octave can do and relies on @code{ginput},
+% so the interaction can be quite finicky.
 %
-% @example
-% @code{tmvs_visualize (aggr, ...);}
-% @end example
+% See @code{tmvs} for complete examples.
 %
-% @seealso{tmvs, tmvs_fetch}
+% @seealso{tmvs, tmvs_drawp, tmvs_draws, ginput}
 %
 % @end deftypefn
 

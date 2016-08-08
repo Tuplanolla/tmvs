@@ -1,7 +1,10 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{f} =} composel (@var{varargin})
 %
-% Produces the function @var{f} by composing the functions in @var{varargin}
+% Compose several functions from left to right.
+%
+% This function produces the function @var{f}
+% by composing the functions in @var{varargin}
 % from left to right (from the first argument to the last argument).
 % Therefore @code{composel (f, g) (x) == g (f (x))} and
 % @code{composel () (x) == x}.
@@ -11,6 +14,9 @@
 % @example
 % @code{composel (@@isscalar, @@not) (1)}
 % @result{} false
+% @end example
+%
+% @example
 % @code{composel (@@isscalar, @@not) ([1, 2])}
 % @result{} true
 % @end example

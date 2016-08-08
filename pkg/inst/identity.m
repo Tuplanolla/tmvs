@@ -1,15 +1,20 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{x} =} identity (@var{x})
 %
-% Does not do anything to @var{x}.
+% Do nothing.
+%
+% This function passes the given @var{x} through as-is.
 % While not doing anything seems pointless,
-% this is occasionally useful when working with higher-order functions.
+% it is occasionally useful when working with higher-order functions.
 %
 % The following examples demonstrate basic usage.
 %
 % @example
 % @code{identity (2)}
 % @result{} 2
+% @end example
+%
+% @example
 % @code{identity (identity (2))}
 % @result{} 2
 % @end example

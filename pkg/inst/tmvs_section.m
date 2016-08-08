@@ -1,8 +1,14 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{y} =} tmvs_section (@var{x})
 %
-% Enumerates the case-insensitive sections @qcode{'Bottom Corner'} and
-% @qcode{'Top Corner'}.
+% Enumerate sections.
+%
+% This function enumerates the case-insensitive sections
+%
+% @itemize
+% @item @qcode{'Bottom Corner'} and
+% @item @qcode{'Top Corner'}.
+% @end itemize
 %
 % See @code{tmvs_quantity} for a detailed treatise on functions of this kind.
 %

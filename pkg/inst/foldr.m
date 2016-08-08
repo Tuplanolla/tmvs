@@ -2,6 +2,8 @@
 % @deftypefn {Function File} {@var{y} =} foldr (@var{f}, @var{x})
 % @deftypefnx {Function File} {@var{y} =} foldr (@var{f}, @var{x}, @var{z})
 %
+% Apply a binary function through a collection from right to left.
+%
 % Fold, also known as reduce, inject, accumulate, aggregate or
 % cata (for catamorphism), breaks the data structure @var{x} down
 % by applying the function @var{f} to each of its elements
@@ -22,8 +24,14 @@
 % @example
 % @code{foldr (@@plus, [1, 2, 3])}
 % @result{} 6
+% @end example
+%
+% @example
 % @code{foldr (@@plus, [1, 2, 3], 4)}
 % @result{} 10
+% @end example
+%
+% @example
 % @code{foldr (@@(x, y) y / x, [3, 6, 36])}
 % @result{} 2
 % @end example
@@ -33,8 +41,12 @@
 % @example
 % @code{foldr (@@plus, @{1, 2, 3@})}
 % @result{} 6
-% @code{foldl (@@(s, y) y + s.one, ...
-%             struct ('one', @{1, 2, 3@}, 'two', @{4, 5, 6@}), 0)}
+% @end example
+%
+% @example
+% @code{foldl ( ...
+%   @@(s, y) y + s.one, ...
+%   struct ('one', @{1, 2, 3@}, 'two', @{4, 5, 6@}), 0)}
 % @result{} 6
 % @end example
 %
@@ -162,5 +174,6 @@ end
 %! assert (foldr (g, struct ('1', {3; 6}, '2', {6; 12}), 36), 2);
 
 %!test
-%! assert (foldr (g, struct ('1', {3, 6; 36, 1296}, ...
-%!                                '2', {6, 12; 72, 2592}), 1679616), 2);
+%! assert (foldr (g, struct ( ...
+%!   '1', {3, 6; 36, 1296}, ...
+%!   '2', {6, 12; 72, 2592}), 1679616), 2);

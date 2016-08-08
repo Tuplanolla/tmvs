@@ -1,7 +1,10 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{y} =} tmvs_room (@var{x})
 %
-% Enumerates the case-insensitive rooms from @code{118} to @code{146}.
+% Enumerate rooms.
+%
+% This function enumerates the case-insensitive rooms
+% from @code{118} to @code{146}.
 %
 % See @code{tmvs_quantity} for a detailed treatise on functions of this kind.
 %

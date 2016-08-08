@@ -1,6 +1,8 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{y} =} filteru (@var{f}, @var{x})
 %
+% Unstably remove elements from a collection based on a predicate.
+%
 % Filter, also known as select, find or copy-if,
 % produces the data structure @var{y}
 % by choosing those elements from the data structure @var{x}
@@ -19,9 +21,13 @@
 % @example
 % @code{filteru (@@(x) mod (x, 2) == 0, @{1, 2, 3, 4, 5, 6@})}
 % @result{} @{2, 6, 4@}
-% @code{filteru (@@(s) mod (s.one, 2) == 0, ...
-%               struct ('one', @{1, 2, 3, 4, 5, 6@}, ...
-%                       'two', @{7, 8, 9, 10, 11, 12@}))}
+% @end example
+%
+% @example
+% @code{filteru ( ...
+%   @@(s) mod (s.one, 2) == 0, struct ( ...
+%     'one', @{1, 2, 3, 4, 5, 6@}, ...
+%     'two', @{7, 8, 9, 10, 11, 12@}))}
 % @result{} struct ('one', @{2, 6, 4@}, 'two', @{8, 12, 10@})
 % @end example
 %

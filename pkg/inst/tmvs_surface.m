@@ -1,8 +1,15 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{y} =} tmvs_surface (@var{x})
 %
-% Enumerates the case-insensitive surfaces @qcode{'Wall'},
-% @qcode{'Floor'} and @qcode{'Ceiling'}.
+% Enumerate surfaces.
+%
+% This function enumerates the case-insensitive surfaces
+%
+% @itemize
+% @item @qcode{'Wall'},
+% @item @qcode{'Floor'} and
+% @item @qcode{'Ceiling'}.
+% @end itemize
 %
 % See @code{tmvs_quantity} for a detailed treatise on functions of this kind.
 %

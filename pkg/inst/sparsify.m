@@ -1,6 +1,8 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{i} =} sparsify (@var{x}, @var{n})
 %
+% Uniformly remove elements from a vector if it has too many elements.
+%
 % Constructs such vector @var{i}
 % that uniformly indexes at most @var{n} elements from @var{x},
 % effectively making @var{x} sparser if it is too large.
@@ -11,6 +13,9 @@
 % @example
 % @code{sparsify ([-2, -1, 0, 1, 2], 2)}
 % @result{} [1, 3]
+% @end example
+%
+% @example
 % @code{x = linspace (0, 99, 100);}
 % @code{x(sparsify (x, 10))}
 % @result{} [0, 10, 20, 30, 40, 50, 60, 70, 80, 90]

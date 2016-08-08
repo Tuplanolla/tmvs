@@ -1,6 +1,8 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{c} =} globr (@var{pat}, @var{dname})
 %
+% Find files that match a pattern recursively.
+%
 % Runs @code{glob} by starting from the directory @var{dname} and
 % recursively collecting every match for @var{pat} into @var{c}.
 % If @var{dname} is omitted,
@@ -11,11 +13,18 @@
 % @example
 % @code{globr ('*.csv', 'excerpt')(1 : 3)}
 % @result{} @{'excerpt/2011-2013-0.csv', ...
-%     'excerpt/2010/118-0.csv', ...
-%     'excerpt/2010/120-0.csv'@}
+% @result{}  'excerpt/2010/118-0.csv', ...
+% @result{}  'excerpt/2010/120-0.csv'@}
+% @end example
+%
+% @example
 % @code{str = cd ('excerpt');
 % c = globr ('*.csv');
 % cd (str);}
+% @code{c(1 : 3)}
+% @result{} @{'excerpt/2011-2013-0.csv', ...
+% @result{}  'excerpt/2010/118-0.csv', ...
+% @result{}  'excerpt/2010/120-0.csv'@}
 % @end example
 %
 % @seealso{glob}

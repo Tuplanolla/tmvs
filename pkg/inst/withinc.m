@@ -2,6 +2,8 @@
 % @deftypefn {Function File} {@var{p} =} withinc (@var{x}, @var{r})
 % @deftypefnx {Function File} {@var{p} =} withinc (@var{x})
 %
+% Check whether a value is in a closed interval.
+%
 % Checks whether @var{x} is in the closed interval @var{r}.
 % If @var{r} is omitted, the unit interval @code{[0, 1]} is assumed.
 % The invocation @code{withinc (x, [a, b])}
@@ -12,10 +14,19 @@
 % @example
 % @code{withinc (0, [-1, 1])}
 % @result{} true
+% @end example
+%
+% @example
 % @code{withinc (1, [-1, 1])}
 % @result{} true
+% @end example
+%
+% @example
 % @code{withinc ([-2, -1, 0, 1, 2], [-1, 1])}
 % @result{} [false, true, true, true, false]
+% @end example
+%
+% @example
 % @code{withinc (0)}
 % @result{} true
 % @end example
@@ -42,8 +53,9 @@ end
 %! assert (withinc (2, [-1, 1]), false);
 
 %!test
-%! assert (withinc ([-2, -1, 0, 1, 2], [-1, 1]), ...
-%!         [false, true, true, true, false]);
+%! assert ( ...
+%!   withinc ([-2, -1, 0, 1, 2], [-1, 1]), ...
+%!   [false, true, true, true, false]);
 
 %!test
 %! assert (withinc (0), true);

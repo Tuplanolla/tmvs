@@ -2,37 +2,46 @@
 % @deftypefn {Function File} {@var{aggr} =} tmvs_import (@var{fname}, @var{src})
 % @deftypefnx {Function File} {@var{aggr} =} tmvs_import (@var{fname}, @var{src}, @var{varargin})
 %
-% Parses the comma-separated value file @var{fname}
-% with the delimiter @qcode{'|'} and
-% and produces the aggregate @var{aggr}.
-% A formal grammar for the superstructure
-% is presented in the file @file{CSV.g4}
-% with the exception that quoted fields in records may not contain line breaks.
-% The record format is expected to be
-% suitable for the data source @var{src} and
-% any other specifications passed within @var{varargin}.
-% A formal grammar for some of the substructures
-% is presented in the file @file{Name.g4}.
+% Read a source file into an aggregate without caching.
 %
-% If you simply want to load data from a file, use @code{tmvs_fetch} instead.
-% This procedure does not cache its results and is thus quite slow.
+% If you simply want to load data from a file, use @code{tmvs_fetch} instead,
+% because it leverages the cache mechanism and is thus faster.
+%
+% This procedure parses the comma-separated value file @var{fname}
+% with the delimiter @qcode{'|'} and produces the aggregate @var{aggr}.
+% The structure of the file is expected the follow the regular grammar
+% from the ANTLR 4 grammar file @file{CSV.g4}
+% with the exception that quoted fields in records may not contain line breaks.
+% The structure of the records is expected to be
+% suitable for the data source @var{src} and
+% any other specifications passed in @var{varargin}.
+% A formal grammar for parts of the records is presented
+% in the ANTLR 4 grammar file @file{Name.g4}.
+%
+% The data sources @qcode{'Test Lab'} and @qcode{'Weather Station'}
+% allow @var{varargin} to be empty
+% while @qcode{'Weather Observatory'}
+% requires @var{varargin} to contain the region of the observatory.
 %
 % The following examples demonstrate basic usage.
 %
 % @example
-% @code{aggr = tmvs_import ('excerpt/2012/118-0.csv', ...
-%                     tmvs_source ('Test Lab'));}
+% @code{aggr = tmvs_import ( ...
+%   'excerpt/2012/118-0.csv', tmvs_source ('Test Lab'));}
 % @code{fieldnames (aggr)}
-% @result{} @{'id', 'meta', 'pairs'@}
+% @result{} @{'id', 'meta', 'pairs'@}(:)
 % @code{size (aggr)}
-% @result{} [1, 11]
-% @code{aggr = tmvs_import ('excerpt/2011-2013-0.csv', ...
-%                     tmvs_source ('Weather Observatory'), ...
-%                     tmvs_region ('Jyvaskyla'));}
+% @result{} [1, 12]
+% @end example
+%
+% @example
+% @code{aggr = tmvs_import ( ...
+%   'excerpt/2011-2013-0.csv', ...
+%   tmvs_source ('Weather Observatory'), tmvs_region ('Jyvaskyla'));}
 % @code{fieldnames (aggr)}
-% @result{} @{'id', 'meta', 'pairs'@}
+% @result{} @{'id', 'meta', 'pairs'@}(:)
 % @code{size (aggr)}
-% @result{} [1, 6]
+% @result{} [1, 5]
 % @end example
 %
 % Programming note: While the data source could be detected automatically,
@@ -40,7 +49,7 @@
 % making an educated guess based on the first few records.
 % This is forgone to keep the parser simple and robust.
 %
-% @seealso{tmvs, tmvs_fetch, tmvs_source, progress, csvread}
+% @seealso{tmvs, tmvs_fetch, tmvs_source, tmvs_region}
 %
 % @end deftypefn
 
@@ -108,6 +117,7 @@ case {'Test Lab', 'Weather Station'}
 
       header = false;
     catch err
+      % TODO Should this stop after too many header lines have been skipped?
       if ~header
         fclose (fid);
 
@@ -119,14 +129,16 @@ case 'Weather Observatory'
   reg = varargin{:};
 
   f = @(qty) struct ('source', src, 'quantity', qty, 'region', reg);
-  c = {(f (tmvs_quantity ('Temperature'))), ...
-       (f (tmvs_quantity ('Relative Humidity'))), ...
-       (f (tmvs_quantity ('Wind Speed'))), ...
-       (f (tmvs_quantity ('Pressure'))), ...
-       (f (tmvs_quantity ('Precipitation')))};
-  aggr = struct ('id', c, ...
-                 'meta', repmat ({(struct ())}, size (c)), ...
-                 'pairs', repmat ({[]}, size (c)));
+  c = { ...
+    (f (tmvs_quantity ('Temperature'))), ...
+    (f (tmvs_quantity ('Relative Humidity'))), ...
+    (f (tmvs_quantity ('Pressure'))), ...
+    (f (tmvs_quantity ('Wind Speed'))), ...
+    (f (tmvs_quantity ('Precipitation')))};
+  aggr = struct ( ...
+    'id', c, ...
+    'meta', repmat ({(struct ())}, size (c)), ...
+    'pairs', repmat ({[]}, size (c)));
 
   header = true;
   while (line = fgetl (fid)) ~= -1
@@ -142,15 +154,15 @@ case 'Weather Observatory'
       T = str2double (csv{3});
       R = str2double (csv{6}) * 1e-2;
       % TODO Should this be @code{csv{10}} instead?
-      v = str2double (csv{8});
       p = str2double (csv{17}) * 100;
+      v = str2double (csv{8});
       % TODO Should this be @code{csv{19}} instead?
       h = str2double (csv{18}) * 1e-3;
 
       aggr(1).pairs(end + 1, :) = [t, T];
       aggr(2).pairs(end + 1, :) = [t, R];
-      aggr(3).pairs(end + 1, :) = [t, v];
-      aggr(4).pairs(end + 1, :) = [t, p];
+      aggr(3).pairs(end + 1, :) = [t, p];
+      aggr(4).pairs(end + 1, :) = [t, v];
       aggr(5).pairs(end + 1, :) = [t, h];
 
       header = false;

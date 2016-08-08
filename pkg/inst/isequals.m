@@ -1,6 +1,8 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{p} =} isequals (@var{x}, @var{y})
 %
+% Check whether two structures are equal in a shallow way.
+%
 % Sets @var{p} to a nonzero value
 % if the structures @var{x} and @var{y} satisfy shallow equality, that is,
 % if they have the same fields with equal values.
@@ -11,17 +13,30 @@
 % The following examples demonstrate basic usage.
 %
 % @example
-% @code{isequals (struct ('one', 1, 'two', 2), ...
-%                struct ('one', 1, 'two', 2))}
+% @code{isequals ( ...
+%   struct ('one', 1, 'two', 2), ...
+%   struct ('one', 1, 'two', 2))}
 % @result{} true
-% @code{isequals (struct ('one', 1, 'two', 2), ...
-%                struct ('one', 1, 'two', 3))}
+% @end example
+%
+% @example
+% @code{isequals ( ...
+%   struct ('one', 1, 'two', 2), ...
+%   struct ('one', 1, 'two', 3))}
 % @result{} false
-% @code{isequals (struct ('one', 1, 'two', 2), ...
-%                struct ('one', 1, 'three', 3))}
+% @end example
+%
+% @example
+% @code{isequals ( ...
+%   struct ('one', 1, 'two', 2), ...
+%   struct ('one', 1, 'three', 3))}
 % @result{} false
-% @code{isequals (struct ('one', 1, 'two', 2), ...
-%                struct ('one', 1))}
+% @end example
+%
+% @example
+% @code{isequals ( ...
+%   struct ('one', 1, 'two', 2), ...
+%   struct ('one', 1))}
 % @result{} false
 % @end example
 %
@@ -60,11 +75,13 @@ end
 %!test
 % assert (isequals (struct ('1', 1), struct ('1', 1)), true);
 %!test
-% assert (isequals (struct ('1', 1, '2', 2), ...
-%                        struct ('1', 1, '2', 2)), true);
+% assert (isequals ( ...
+%   struct ('1', 1, '2', 2), ...
+%   struct ('1', 1, '2', 2)), true);
 %!test
-% assert (isequals (struct ('1', 1, '2', 2, '3', 3), ...
-%                        struct ('1', 1, '2', 2, '3', 3)), true);
+% assert (isequals ( ...
+%   struct ('1', 1, '2', 2, '3', 3), ...
+%   struct ('1', 1, '2', 2, '3', 3)), true);
 
 %!test
 % assert (isequals (struct (), struct ('1', 1)), false);

@@ -1,9 +1,13 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {} axislim (@var{a}, @var{axis})
 %
-% Adjusts the @var{axis} axis for all @var{a}.
+% Adjust an axis based on a collection of values.
 %
-% The following examples demonstrate basic usage.
+% This procedure adjusts the axis @var{axis} in a way
+% that makes every value in @var{a} is visible.
+% This is useful for locking the axes during an animation.
+%
+% The following example demonstrates basic usage.
 %
 % @example
 % @code{t = 2*pi * rand (64, 1);

@@ -1,15 +1,17 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {} tmvs_draws (@var{aggr}, @var{varargin})
+% @deftypefn {Function File} {} tmvs_draws (@var{aggr})
+% @deftypefnx {Function File} {} tmvs_draws (@var{aggr}, @var{n})
+% @deftypefnx {Function File} {} tmvs_draws (@var{aggr}, @var{n}, @var{datefmt})
 %
-% Mention: all vars.
+% Visualize an aggregate with a three-dimensional surface.
 %
-% The following examples demonstrate basic usage.
+% This procedure draws an three-dimensional surface of the data points
+% for all the identifiers in the aggregate @var{aggr}.
+% The third dimension spans the ordinals just like in @code{tmvs_drawi}.
 %
-% @example
-% @code{tmvs_visualize (aggr, ...);}
-% @end example
+% See @code{tmvs} for complete examples.
 %
-% @seealso{tmvs, tmvs_fetch}
+% @seealso{tmvs, tmvs_drawp, tmvs_drawi, surf}
 %
 % @end deftypefn
 

@@ -1,9 +1,16 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{y} =} tmvs_material (@var{x})
 %
-% Enumerates the case-insensitive materials @qcode{'Mineral Wool'},
-% @qcode{'Polyurethane'}, @qcode{'Polystyrene'} and
-% @qcode{'Reinforced Concrete'}.
+% Enumerate materials.
+%
+% This function enumerates the case-insensitive materials
+%
+% @itemize
+% @item @qcode{'Mineral Wool'},
+% @item @qcode{'Polyurethane'},
+% @item @qcode{'Polystyrene'} and
+% @item @qcode{'Reinforced Concrete'}.
+% @end itemize
 %
 % See @code{tmvs_quantity} for a detailed treatise on functions of this kind.
 %

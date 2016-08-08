@@ -1,28 +1,59 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {[@var{qn}, @var{tn}, @var{xn}] =} diffuse1 (@var{q0}, @var{q}, @var{C}, @var{B}, @var{rt}, @var{rx}, @var{nt}, @var{nx}, @var{dt}, @var{dx})
 %
-% Simulates a diffusion process inside a wall or floor.
-% Note: time is given in days.
-% Note: cprho = cp * rho.
-% Note: k = U / L.
-% Note: Dt = t / nt.
-% @example
-% rt = [0, 100];
-% rx = [0, 500] * 1e-3;
-% C = @@(x) interp1 (rx, [24, 16], x, 'linear');
-% B = @@(x) interp1 (rx, [100, 10] * 1e-3, x, 'nearest');
-% q0 = @@(x) interp1 (rx, [260, 280], x, 'linear');
-% q = @@(t, x) [260 + 20 * (sin (t / 20)), nan * x(2 : end - 1), 280];
-% [qn, tn, xn] = diffuse1 (q0, q, C, B, rt, rx, 100, 10, 10, 1);
-% plots (10, xn, qn);
-% @end example
+% Simulate a one-dimensional diffusion process.
 %
-% The following examples demonstrate basic usage.
+% This function uses the finite difference method
+% to solve the one-dimensional diffusion equation
 %
+% @tex
+% $$
+% \eqalign{C \partial_t q & = \partial_x (B \partial_x q).}
+% $$
+% @end tex
+% @ifnottex
 % @example
-% @code{false}
-% @result{} false
+% C  d_t  (q)  =  d_x  (B  d_x  (q)).
 % @end example
+% @end ifnottex
+%
+% Here @var{C} and @var{B} are position-dependent and
+% @var{q} is both position-dependent and time-dependent.
+%
+% The parameters are determined by
+%
+% @itemize
+% @item the initial value function @var{q0},
+% @item the boundary value function @var{q},
+% @item the density coefficient function @var{C},
+% @item the diffusion coefficient function @var{B},
+% @item the timespan @var{rt} and
+% @item the extents @var{rx}.
+% @end itemize
+%
+% Initial conditions are applied by calling @var{q0} at the beginning and
+% forcing the whole configuration to the returned values.
+% Boundary conditions are applied by calling @var{q} on every iteration and
+% only forcing those parts of the configuration to the returned values
+% for which the returned values are not @code{nan}.
+%
+% The solution is saved into the matrix @var{qn} with
+% @var{nt} rows for the points in time @var{tn} and
+% @var{nx} columns for positions @var{xn}.
+%
+% Since the solver may temporarily require more space to not diverge,
+% @var{dt} and @var{dx} control the densities (or multiplicities)
+% of the temporary row and column numbers.
+% If, for instance, @var{B} is almost discontinuous,
+% increasing @var{dx} will help tremendously.
+%
+% This solver is useful for, say, approximating temperature transfer
+% inside a planar hetergenous object such as a wall or a floor.
+%
+% See @code{tmvs} for complete examples.
+%
+% Programming note: Time is measured in days,
+% as is common with @code{datenum} and other such functions.
 %
 % @seealso{tmvs}
 %
@@ -62,7 +93,8 @@ qk = q0 (xk);
 
 in = 1;
 for ik = 1 : kt
-  t = interp1 ([1, kt], rt, ik, '*linear');
+  % This is equivalent to @code{t = interp1 ([1, kt], rt, ik, 'linear')}.
+  t = rt(1) + (rt(2) - rt(1)) * (ik - 1) / (kt - 1);
 
   qk(2 : end - 1) = ...
     (s * Bij .* qk(1 : end - 2) + ...

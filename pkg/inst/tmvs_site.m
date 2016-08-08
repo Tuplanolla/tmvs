@@ -1,7 +1,9 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{y} =} tmvs_site (@var{x})
 %
-% Enumerates the case-insensitive measuring sites
+% Enumerate measuring sites.
+%
+% This functions enumerates the case-insensitive measuring sites
 % from @qcode{'A'} to @qcode{'Z'}.
 %
 % See @code{tmvs_quantity} for a detailed treatise on functions of this kind.

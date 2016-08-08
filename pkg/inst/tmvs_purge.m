@@ -1,20 +1,27 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {} tmvs_purge (@var{cname})
 %
-% Removes the cache file @var{cname} or
-% the cache file corresponding to the original file @var{fname}.
-% If the given file is not a cache file or
-% appears to be a corrupted cache file, it will not be removed
-% (this is a safety mechanism that should prevent accidental data loss).
-% To remove a corrupted cache file use @code{unlink} instead.
+% Remove a cache file safely.
+%
+% If you want to remove several cache file, consider @code{tmvs_purgeall}.
+%
+% This procedure removes the cache file @var{cname}
+% only if it is a cache file in order to prevent accidental data loss.
+% To remove corrupted cache files or anything else that gets in the way,
+% @code{unlink} will do nicely.
 %
 % The following examples demonstrate basic usage.
 %
 % @example
-% @code{c = tmvs_fetch ('excerpt/2012/118-0.csv');}
-% @code{tmvs_purge ('excerpt/2012/118-0.csv')}
-% @code{tmvs_store ('/tmp/tmvs.tmp', c)
-% tmvs_purge ('/tmp/tmvs.tmp')}
+% @code{aggr = tmvs_fetch ( ...
+%   'excerpt/2012/118-0.csv', tmvs_source ('Test Lab'));}
+% @code{tmvs_store ('/tmp/tmvs.tmp', aggr);
+% tmvs_purge ('/tmp/tmvs.tmp');}
+% @end example
+%
+% @example
+% @code{tmvs_purge ('/tmp');}
+% @error{} not a removable cache file '/tmp'
 % @end example
 %
 % @seealso{tmvs, tmvs_store, tmvs_recall, tmvs_fetch, unlink}

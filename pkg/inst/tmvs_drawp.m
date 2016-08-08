@@ -1,15 +1,17 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {} tmvs_drawp (@var{aggr}, @var{varargin})
+% @deftypefn {Function File} {} tmvs_drawp (@var{aggr})
+% @deftypefnx {Function File} {} tmvs_drawp (@var{aggr}, @var{n})
+% @deftypefnx {Function File} {} tmvs_drawp (@var{aggr}, @var{n}, @var{datefmt})
 %
-% Mention: all vars.
+% Visualize an aggregate with a simple plot.
 %
-% The following examples demonstrate basic usage.
+% This procedure draws a simple plot of the data points
+% for all the identifiers in the aggregate @var{aggr}.
+% The plot is drawn into figure @var{n} with the date format @code{datefmt}.
 %
-% @example
-% @code{tmvs_visualize (aggr, ...);}
-% @end example
+% See @code{tmvs} for complete examples.
 %
-% @seealso{tmvs, tmvs_fetch}
+% @seealso{tmvs, tmvs_drawi, tmvs_draws, plot}
 %
 % @end deftypefn
 

@@ -1,8 +1,15 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{y} =} tmvs_source (@var{x})
 %
-% Enumerates the case-insensitive data sources @qcode{'Test Lab'},
-% @qcode{'Weather Station'} and @qcode{'Weather Observatory'}.
+% Enumerate data sources.
+%
+% This function enumerates the case-insensitive data sources
+%
+% @itemize
+% @item @qcode{'Test Lab'},
+% @item @qcode{'Weather Station'} and
+% @item @qcode{'Weather Observatory'}.
+% @end itemize
 %
 % See @code{tmvs_quantity} for a detailed treatise on functions of this kind.
 %

@@ -1,7 +1,10 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{f} =} composer (@var{varargin})
 %
-% Produces the function @var{f} by composing the functions in @var{varargin}
+% Compose several functions from right to left.
+%
+% This function produces the function @var{f}
+% by composing the functions in @var{varargin}
 % from right to left (from the last argument to the first argument).
 % Therefore @code{composer (f, g) (x) == f (g (x))} and
 % @code{composer () (x) == x}.
@@ -11,6 +14,9 @@
 % @example
 % @code{composer (@@not, @@isscalar) (1)}
 % @result{} false
+% @end example
+%
+% @example
 % @code{composer (@@not, @@isscalar) ([1, 2])}
 % @result{} true
 % @end example

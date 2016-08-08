@@ -44,12 +44,12 @@ manual/index.html: tmvs.texinfo data-flow.png
 tmvs.texinfo: pkg/inst/*.m
 	{ echo '\input texinfo' && \
 	  cat macros.texi && \
-	  echo '@set reference' && \
+	  echo '@set helppages' && \
 	  a='-\*- texinfo -\*-' && b='^\([^%]\|\)$$' && \
 	  for x in $$(find pkg/inst -name 'tmvs.m' && \
 	  find pkg/inst -name '*.m' -not -name 'tmvs.m' | LC_ALL=C sort) ; \
 	  do sed -n "/$$a/,/$$b/{/$$a/n;/$$b/q;s/^% \\?//p}" "$$x" | \
-	  sed -e 's/@deftypefnx\? \({[^}]\+}\) \({}\|{.\+=}\) \([^ ]\+\) \(.\+\)/@noindent\n@r\1: @i\2 @b{\3} @i{\4}\n/' -e 's/@end deftypefn//' ; done && \
+	  sed -e 's/@deftypefnx\? \({[^}]\+}\) \({}\|{.\+=}\) \([^ ]\+\) \(.\+\)/@noindent\n@r\1: @i\2 @code{\3} @i{\4}\n/' -e 's/@end deftypefn//' ; done && \
 	  echo '@bye' ; } > $@
 
 %.tex: %.dot

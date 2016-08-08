@@ -2,26 +2,32 @@
 % @deftypefn {Function File} {@var{delta} =} tmvs_uncertainty (@var{id})
 % @deftypefnx {Function File} {@var{delta} =} tmvs_uncertainty (@var{id}, @var{q})
 %
-% Computes the uncertainty @var{delta} of the value @var{q}
+% Find the uncertainties of measurements.
+%
+% This function computes the uncertainties @var{delta} of the values @var{q}
 % measured by the sensor with the identity @var{id}.
-% If the uncertainty does not depend on value, @var{q} can be omitted.
-% An accidental omission results an uncertainty of @code{nan}.
+% If the uncertainties do not depend on the values, @var{q} can be omitted.
+% An accidental omission may result in an uncertainty
+% that is unnecessarily large or even @code{nan}.
 %
 % The following examples demonstrate basic usage.
 %
 % @example
-% @code{tmvs_uncertainty (struct ('quantity', ...
-%                           tmvs_quantity ('Relative Humidity')))}
-% @result{} 10
-% @code{aggr = tmvs_fetch (tmvs_source ('Test Lab'), ...
-%                    'excerpt/2012/118-0.csv');}
+% @code{tmvs_uncertainty ( ...
+%   struct ('quantity', tmvs_quantity ('Relative Humidity')))}
+% @result{} 0.1
+% @end example
+%
+% @example
+% @code{aggr = tmvs_fetch ( ...
+%   'excerpt/2012/118-0.csv', tmvs_source ('Test Lab'));}
 % @code{tmvs_uncertainty (aggr(9).id, aggr(9).pairs(:, 2))}
 % @result{} [1; 1; 1]
 % @end example
 %
 % Programming note: The current uncertainties are educated guesses.
 %
-% @seealso{tmvs, tmvs_quantity, tmvs_fetch}
+% @seealso{tmvs, tmvs_quantity, tmvs_sanitize}
 %
 % @end deftypefn
 
@@ -34,17 +40,17 @@ switch qty
 case 'Temperature'
   delta = 1 + 0 * q;
 case 'Relative Humidity'
-  delta = 10 + 0 * q;
-case 'Absolute Humidity'
-  delta = 1 + 0 * q;
-case 'Pressure'
-  delta = 1 + 0 * q;
-case 'Wind Speed'
   delta = 0.1 + 0 * q;
-case 'Precipitation'
+case 'Absolute Humidity'
+  delta = 1e-3 + 0 * q;
+case 'Pressure'
+  delta = 10e+3 + 0 * q;
+case 'Wind Speed'
   delta = 1 + 0 * q;
+case 'Precipitation'
+  delta = 1e-3 + 0 * q;
 otherwise
-  error ('uncertainty for physical quantity ''%s'' not known', qty);
+  error ('unknown uncertainty for physical quantity ''%s''', qty);
 end
 
 end

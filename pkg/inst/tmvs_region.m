@@ -1,8 +1,14 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{y} =} tmvs_region (@var{x})
 %
-% Enumerates the case-insensitive regions @qcode{'Autiolahti'} and
-% @qcode{'Jyvaskyla'}.
+% Enumerate regions.
+%
+% This function enumerates the case-insensitive regions
+%
+% @itemize
+% @item @qcode{'Autiolahti'} and
+% @item @qcode{'Jyvaskyla'}.
+% @end itemize
 %
 % Special characters are accepted in inputs,
 % but in outputs they are represented by their ASCII approximations

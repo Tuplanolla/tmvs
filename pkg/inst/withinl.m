@@ -2,6 +2,8 @@
 % @deftypefn {Function File} {@var{p} =} withinl (@var{x}, @var{r})
 % @deftypefnx {Function File} {@var{p} =} withinl (@var{x})
 %
+% Check whether a value is in a left-open interval.
+%
 % Checks whether @var{x} is in the left-open interval @var{r}.
 % If @var{r} is omitted, the unit interval @code{[0, 1]} is assumed.
 % The invocation @code{withinl (x, [a, b])}
@@ -12,10 +14,19 @@
 % @example
 % @code{withinl (0, [-1, 1])}
 % @result{} true
+% @end example
+%
+% @example
 % @code{withinl (1, [-1, 1])}
 % @result{} true
+% @end example
+%
+% @example
 % @code{withinl ([-2, -1, 0, 1, 2], [-1, 1])}
 % @result{} [false, false, true, true, false]
+% @end example
+%
+% @example
 % @code{withinl (0)}
 % @result{} true
 % @end example
@@ -42,8 +53,9 @@ end
 %! assert (withinl (2, [-1, 1]), false);
 
 %!test
-%! assert (withinl ([-2, -1, 0, 1, 2], [-1, 1]), ...
-%!         [false, false, true, true, false]);
+%! assert ( ...
+%!   withinl ([-2, -1, 0, 1, 2], [-1, 1]), ...
+%!   [false, false, true, true, false]);
 
 %!test
 %! assert (withinl (0), false);

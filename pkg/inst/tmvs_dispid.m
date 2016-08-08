@@ -2,9 +2,12 @@
 % @deftypefn {Function File} {@var{str} =} tmvs_dispid (@var{id})
 % @deftypefnx {Function File} {} tmvs_dispid (@var{id})
 %
-% Formats the identifier @var{id} into the string @var{str}
+% Display an identifier.
+%
+% This procedure formats the identifier @var{id} into the string @var{str}
 % with keys in a 20-character column on the left and
 % values in an indefinitely wide column on the right.
+% The result is printed if it is not used, just like with @code{disp}.
 %
 % The following examples demonstrate basic usage.
 %
@@ -13,12 +16,12 @@
 %                    tmvs_source ('Test Lab'));}
 % @code{tmvs_dispid (aggr(9).id);}
 % @print{}         Data Source: Test Lab
-%      Physical Quantity: Temperature
-%         Measuring Site: Q
-%                Surface: Wall
-%              Room Name: 118
-%                Section: Bottom Corner
-%                Ordinal: 3
+% @print{}   Physical Quantity: Temperature
+% @print{}      Measuring Site: Q
+% @print{}             Surface: Wall
+% @print{}           Room Name: 118
+% @print{}             Section: Bottom Corner
+% @print{}             Ordinal: 3
 % @end example
 %
 % The result can also be assigned to a variable instead of being printed.
@@ -27,7 +30,7 @@
 % @code{str = tmvs_dispid (aggr(9).id);}
 % @end example
 %
-% @seealso{tmvs, tmvs_dispmeta}
+% @seealso{tmvs, tmvs_dispmeta, tmvs_findid, disp}
 %
 % @end deftypefn
 

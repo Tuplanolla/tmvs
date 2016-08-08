@@ -1,13 +1,21 @@
 % -*- texinfo -*-
 % @deftypefn {Function File} {@var{g} =} curry (@var{f})
 %
-% Produces the function @var{g} from the function @var{f}.
+% Convert a single multiparameter function into two nested functions.
+%
+% Currying, also known as sch@"onfinkeling or even fregeing,
+% produces the function @var{g} from the function @var{f}
+% in a way that satisfies @code{g (x) (y, z) == f (x, y, z)}.
+% Hence @code{uncurry (curry (f)) == f} is always extensionally true.
 %
 % The following examples demonstrate basic usage.
 %
 % @example
 % @code{curry (@@(x, y) x + y) (1) (2)}
 % @result{} 3
+% @end example
+%
+% @example
 % @code{curry (@@plus) (1) (2, 3)}
 % @result{} 6
 % @end example

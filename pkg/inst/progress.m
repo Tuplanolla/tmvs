@@ -4,6 +4,8 @@
 % @deftypefnx {Function File} {} progress (@var{i}, @var{n}, @var{fid})
 % @deftypefnx {Function File} {} progress ()
 %
+% Print a small progress indicator.
+%
 % When called in a loop with the index @var{i},
 % prints a progress indicator to the file @var{fid} every @var{n} iterations.
 % By default @var{n} is @code{1} and @var{fid} is @code{stdout}.
@@ -25,6 +27,9 @@
 %   sleep (1);
 %   progress (i);
 % end}
+% @end example
+%
+% @example
 % @code{for i = 1 : 50
 %   sleep (0.1);
 %   progress (i);

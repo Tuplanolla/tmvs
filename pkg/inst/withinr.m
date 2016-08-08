@@ -2,6 +2,8 @@
 % @deftypefn {Function File} {@var{p} =} withinr (@var{x}, @var{r})
 % @deftypefnx {Function File} {@var{p} =} withinr (@var{x})
 %
+% Check whether a value is in a right-open interval.
+%
 % Checks whether @var{x} is in the right-open interval @var{r}.
 % If @var{r} is omitted, the unit interval @code{[0, 1]} is assumed.
 % The invocation @code{withinr (x, [a, b])}
@@ -12,10 +14,19 @@
 % @example
 % @code{withinr (0, [-1, 1])}
 % @result{} true
+% @end example
+%
+% @example
 % @code{withinr (1, [-1, 1])}
 % @result{} true
+% @end example
+%
+% @example
 % @code{withinr ([-2, -1, 0, 1, 2], [-1, 1])}
 % @result{} [false, true, true, false, false]
+% @end example
+%
+% @example
 % @code{withinr (0)}
 % @result{} true
 % @end example
@@ -42,8 +53,9 @@ end
 %! assert (withinr (2, [-1, 1]), false);
 
 %!test
-%! assert (withinr ([-2, -1, 0, 1, 2], [-1, 1]), ...
-%!         [false, true, true, false, false]);
+%! assert ( ...
+%!   withinr ([-2, -1, 0, 1, 2], [-1, 1]), ...
+%!   [false, true, true, false, false]);
 
 %!test
 %! assert (withinr (0), true);

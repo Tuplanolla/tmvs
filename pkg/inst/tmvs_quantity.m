@@ -2,9 +2,18 @@
 % @deftypefn {Function File} {@var{y} =} tmvs_quantity (@var{x})
 % @deftypefnx {Function File} {@var{y} =} tmvs_quantity ()
 %
-% Enumerates the case-insensitive physical quantities @qcode{'Temperature'},
-% @qcode{'Relative Humidity'}, @qcode{'Absolute Humidity'},
-% @qcode{'Pressure'}, @qcode{'Wind Speed'} and @qcode{'Precipitation'}.
+% Enumerate physical quantities.
+%
+% This function enumerates the case-insensitive physical quantities
+%
+% @itemize
+% @item @qcode{'Temperature'},
+% @item @qcode{'Relative Humidity'},
+% @item @qcode{'Absolute Humidity'},
+% @item @qcode{'Pressure'},
+% @item @qcode{'Wind Speed'} and
+% @item @qcode{'Precipitation'}.
+% @end itemize
 %
 % Enumerations or tagged unions of unit types are a common and
 % useful technique for giving names to a fixed set of values.
@@ -38,6 +47,9 @@
 % @result{} 2
 % @code{tmvs_quantity (2)}
 % @result{} 'Relative Humidity'
+% @end example
+%
+% @example
 % @code{tmvs_quantity ()}
 % @result{} 'Physical Quantity'
 % @end example

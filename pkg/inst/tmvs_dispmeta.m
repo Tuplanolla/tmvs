@@ -2,18 +2,21 @@
 % @deftypefn {Function File} {@var{str} =} tmvs_dispmeta (@var{meta})
 % @deftypefnx {Function File} {} tmvs_dispmeta (@var{meta})
 %
-% Formats the metadata @var{meta} into the string @var{str}
+% Display a metadata container.
+%
+% This procedure formats the metadata @var{meta} into the string @var{str}
 % with keys in a 20-character column on the left and
 % values in an indefinitely wide column on the right.
+% The result is printed if it is not used, just like with @code{disp}.
 %
 % The following examples demonstrate basic usage.
 %
 % @example
-% @code{aggr = tmvs_fetch ('excerpt/2012/118-0.csv', ...
-%                    tmvs_source ('Test Lab'));}
+% @code{aggr = tmvs_fetch ( ...
+%   'excerpt/2012/118-0.csv', tmvs_source ('Test Lab'));}
 % @code{fprintf (tmvs_dispmeta (aggr(9).meta));}
 % @print{}            Position: 0.295 m
-%               Material: Polyurethane
+% @print{}            Material: Polyurethane
 % @end example
 %
 % The result can also be assigned to a variable instead of being printed.
@@ -22,7 +25,7 @@
 % @code{str = tmvs_dispmeta (aggr(9).meta);}
 % @end example
 %
-% @seealso{tmvs, tmvs_dispid}
+% @seealso{tmvs, tmvs_dispid, disp}
 %
 % @end deftypefn
 

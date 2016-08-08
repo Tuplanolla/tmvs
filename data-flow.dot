@@ -24,11 +24,11 @@ digraph {
 
         node [shape = oval]
         import [label = "Import"]
+        export [label = "Export"]
+        merge [label = "Merge"]
         interpolate [label = "Interpolate"]
         discretize [label = "Discretize"]
-        merge [label = "Merge"]
         draw [label = "Draw"]
-        export [label = "Export"]
       }
 
       subgraph cluster_cache {
@@ -48,16 +48,16 @@ digraph {
 
   xlsr -> gnumeric -> csvr
   csvr -> import -> aggr
+  aggr -> export -> csvw
+  aggr -> merge -> aggr
   aggr -> interpolate -> interp
   interp -> discretize -> aggr
-  aggr -> merge -> aggr
   aggr -> draw -> plot
   aggr -> store -> cache
   cache -> recall -> aggr
   csvr -> fetch -> aggr
   cache -> fetch -> cache
   null -> purge -> cache
-  aggr -> export -> csvw
 
   fetch -> import [style = invis]
   recall -> import [style = invis]

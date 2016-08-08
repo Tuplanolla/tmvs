@@ -3,13 +3,13 @@ Meta
   tmvs
 Basic
   tmvs_import
-  tmvs_uncertainty
-  tmvs_sanitize
+  tmvs_export
+  tmvs_merge
   tmvs_interpolate
   tmvs_discretize
   tmvs_evaluate
-  tmvs_merge
-  tmvs_export
+  tmvs_sanitize
+  tmvs_uncertainty
   tmvs_store
   tmvs_recall
   tmvs_fetch
@@ -36,12 +36,12 @@ Auxiliary
   tmvs_version
   tmvs_cachename
   tmvs_checkcache
+  tmvs_readcache
+  tmvs_findid
   tmvs_dispid
   tmvs_dispmeta
-  tmvs_findid
   tmvs_parsecsv
   tmvs_parsename
-  tmvs_readcache
 Functional
   identity
   composel

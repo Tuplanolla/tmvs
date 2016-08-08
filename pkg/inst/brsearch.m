@@ -2,6 +2,8 @@
 % @deftypefn {Function File} {[@var{i}, @var{j}] =} brsearch (@var{v}, @var{x})
 % @deftypefnx {Function File} {[@var{i}, @var{j}] =} brsearch (@var{v}, @var{x}, @var{f})
 %
+% Find elements in a sorted vector efficiently.
+%
 % Binary search, also known as half-interval search or logarithmic search,
 % is the most efficient way to find the index of an element in a sorted array.
 % Binary range search is a generalization of ordinary binary search and
@@ -25,22 +27,28 @@
 % @example
 % @code{[i, j] = brsearch ([0, 0, 1, 2], 0)}
 % @result{} i = 1
-%    j = 2
+% @result{} j = 2
+% @end example
+%
+% @example
 % @code{[i, j] = brsearch ([-1, 0, 1, 2], 0)}
 % @result{} i = 2
-%    j = 2
+% @result{} j = 2
+% @end example
+%
+% @example
 % @code{[i, j] = brsearch ([-2, -1, 1, 2], 0)}
 % @result{} i = 2
-%    j = 1
+% @result{} j = 1
 % @end example
 %
 % A custom comparator makes the search very versatile.
 %
 % @example
-% @code{[i, j] = brsearch ([-2, -1, 0, 1, 2], 0, ...
-%                         @@(x, y) (abs (x - y) > 1) * (x - y))}
+% @code{[i, j] = brsearch ( ...
+%   [-2, -1, 0, 1, 2], 0, @@(x, y) (abs (x - y) > 1) * (x - y))}
 % @result{} i = 2
-%    j = 4
+% @result{} j = 4
 % @end example
 %
 % @seealso{find}
