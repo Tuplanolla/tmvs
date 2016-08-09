@@ -701,27 +701,31 @@
 % f = @@(s) s.id.quantity == tmvs_quantity ('Temperature');
 % faggr = filteru (f, aggr);
 %
+% % Remove the data points beyond the summer of 2012.
+% g = @@(z) z(z(:, 1) < datenum (2012, 9, 1), :);
+% gaggr = overfield (g, faggr, 'pairs');
+%
 % % Choose one of the identifiers.
 % % The index 3 is completely arbitrary.
-% id = faggr(3).id;
+% id = gaggr(3).id;
 %
 % % Pretty print the chosen identifier.
 % tmvs_dispid (id);
 %
 % % Find the index of the chosen identifier.
 % % The result is naturally 3.
-% i = tmvs_findid (faggr, id);
+% i = tmvs_findid (gaggr, id);
 %
 % % Get the metadata related to the chosen identifier and pretty print it.
-% tmvs_dispmeta (faggr(i).meta);
+% tmvs_dispmeta (gaggr(i).meta);
 %
 % % Save the chosen measurements into a temporary file.
 % % The file is formatted like a comma-separated value file
-% % with the delimiter @qcode{'|'}, just like source files.
-% tmvs_export ('/tmp/tmvs.csv', faggr, id);
+% % with the delimiter @@qcode@{'|'@}, just like source files.
+% tmvs_export ('/tmp/tmvs.csv', gaggr, id);
 %
 % % Resample the data points smoothly and uniformly.
-% interp = tmvs_interpolate (faggr, 'spline');
+% interp = tmvs_interpolate (gaggr, 'spline');
 % daggr = tmvs_discretize (interp, 256);
 %
 % % Create a temporary directory and
@@ -731,8 +735,7 @@
 % mkdir ('/tmp/tmvs');
 % tmvs_exportall ('/tmp/tmvs', daggr);
 %
-% % Manually extract the resampled data points
-% % matching the chosen identifier.
+% % Manually extract the resampled data points for the chosen identifier.
 % z = daggr(i).pairs;
 %
 % % Visualize the manually extracted data points in figure 1.
