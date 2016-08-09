@@ -1,6 +1,8 @@
 *.class
+*.hi
 *.java
 *.log
+*.o
 *.pdf
 *.tar.gz
 *.tex
@@ -10,3 +12,4 @@
 *.tokens
 /*.png
 /manual
+/mock/Main
