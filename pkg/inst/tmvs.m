@@ -522,15 +522,15 @@
 % This reproduces the first example from the previous section.
 %
 % @example
-% @code{tlaggr = tmvs_fetch ('excerpt/2012/118-0.csv', ...
-%                      tmvs_source ('Test Lab'));
-% wsaggr = tmvs_fetch ('excerpt/2012/autiolahti-0.csv', ...
-%                      tmvs_source ('Weather Station'));
-% woaggr = tmvs_fetch ('excerpt/2011-2013-0.csv', ...
-%                      tmvs_source ('Weather Observatory'), ...
-%                      tmvs_region ('Jyvaskyla'));
-% aggr = tmvs_merge (tlaggr(9), wsaggr(4), ...
-%                    overfield (@@(z) z(1, :), woaggr(3), 'pairs'));}
+% @code{tlaggr = tmvs_fetch ( ...
+%   'excerpt/2012/118-0.csv', tmvs_source ('Test Lab'));
+% wsaggr = tmvs_fetch ( ...
+%   'excerpt/2012/autiolahti-0.csv', tmvs_source ('Weather Station'));
+% woaggr = tmvs_fetch ( ...
+%   'excerpt/2011-2013-0.csv', ...
+%   tmvs_source ('Weather Observatory'), tmvs_region ('Jyvaskyla'));
+% aggr = tmvs_merge ( ...
+%   tlaggr(9), wsaggr(4), overfield (@@(z) z(1, :), woaggr(3), 'pairs'));}
 % @end example
 %
 % @section Caching
@@ -613,8 +613,8 @@
 % of all the wall temperatures during the spring of 2012.
 %
 % @example
-% @code{aggr = tmvs_fetchall ('excerpt/2012/[0-9]*.csv', ...
-%                       tmvs_source ('Test Lab')); % Everything.
+% @code{aggr = tmvs_fetchall ( ...
+%   'excerpt/2012/[0-9]*.csv', tmvs_source ('Test Lab')); % Everything.
 % f = @@(s) s.id.quantity == tmvs_quantity ('Temperature');
 % faggr = filteru (f, aggr); % Temperatures only.
 % r = [(datenum (2012, 3, 1)), (datenum (2012, 6, 1))];
@@ -653,10 +653,11 @@
 % % that meet the required criteria.
 % % The resulting aggregate corresponds to the complete history
 % % of a line passing through a certain wall.
-% f = @@(s) s.id.quantity == tmvs_quantity ('Temperature') && ...
-%          s.id.site == tmvs_site ('Q') && ...
-%          s.id.surface == tmvs_surface ('Wall') && ...
-%          s.id.section == tmvs_section ('Bottom Corner');
+% f = @@(s) ...
+%   s.id.quantity == tmvs_quantity ('Temperature') && ...
+%   s.id.site == tmvs_site ('Q') && ...
+%   s.id.surface == tmvs_surface ('Wall') && ...
+%   s.id.section == tmvs_section ('Bottom Corner');
 % faggr = filteru (f, saggr);
 %
 % % Pick one sensor from the line in particular.
@@ -752,17 +753,21 @@
 % with the following pieces of code.
 %
 % @example
-% @backslashchar{}usepackage@{tikz@}
+% @verbatim
+% \usepackage{tikz}
+% @end verbatim
 % @end example
 %
 % @example
-% @backslashchar{}begin@{figure@}
-%   @backslashchar{}centering
-%   @backslashchar{}begin@{tikzpicture@}
-%     @backslashchar{}input@{/tmp/tmvs.tex@}
-%   @backslashchar{}end@{tikzpicture@}
-%   @backslashchar{}caption@{Example from the manual of TMVS.@}
-% @backslashchar{}end@{figure@}
+% @verbatim
+% \begin{figure}
+%   \centering
+%   \begin{tikzpicture}
+%     \input{/tmp/tmvs.tex}
+%   \end{tikzpicture}
+%   \caption{Example from the manual of TMVS.}
+% \end{figure}
+% @end verbatim
 % @end example
 %
 % @section Working with Caches
@@ -771,13 +776,13 @@
 %
 % @example
 % @code{% Fetch all the data points from a single source file.
-% tlaggr = tmvs_fetch ('excerpt/2012/118-0.csv', ...
-%                      tmvs_source ('Test Lab'));
+% tlaggr = tmvs_fetch ( ...
+%   'excerpt/2012/118-0.csv', tmvs_source ('Test Lab'));
 %
 % % Fetch more points from a different kind of a source file.
-% woaggr = tmvs_fetch ('excerpt/2011-2013-0.csv', ...
-%                      tmvs_source ('Weather Observatory'), ...
-%                      tmvs_region ('Jyvaskyla'));
+% woaggr = tmvs_fetch ( ...
+%   'excerpt/2011-2013-0.csv', ...
+%   tmvs_source ('Weather Observatory'), tmvs_region ('Jyvaskyla'));
 %
 % % Combine the fetched aggregates.
 % aggr = tmvs_merge (tlaggr, woaggr);
@@ -813,10 +818,11 @@
 % % partial pressures and complicated phenomena
 % % like capillary action in porous media.
 % aggr = tmvs_fetch ('excerpt/2012/118-0.csv', tmvs_source ('Test Lab'));
-% f = @@(s) s.id.quantity == tmvs_quantity ('Temperature') && ...
-%          s.id.site == tmvs_site ('Q') && ...
-%          s.id.surface == tmvs_surface ('Wall') && ...
-%          s.id.section == tmvs_section ('Bottom Corner');
+% f = @@(s) ...
+%   s.id.quantity == tmvs_quantity ('Temperature') && ...
+%   s.id.site == tmvs_site ('Q') && ...
+%   s.id.surface == tmvs_surface ('Wall') && ...
+%   s.id.section == tmvs_section ('Bottom Corner');
 % faggr = filteru (f, aggr);
 % interp = tmvs_interpolate (faggr, nan);
 %

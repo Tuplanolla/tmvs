@@ -48,8 +48,7 @@ tmvs.texinfo: pkg/inst/*.m
 	  a='-\*- texinfo -\*-' && b='^\([^%]\|\)$$' && \
 	  for x in $$(find pkg/inst -name 'tmvs.m' && \
 	  find pkg/inst -name '*.m' -not -name 'tmvs.m' | LC_ALL=C sort) ; \
-	  do sed -n "/$$a/,/$$b/{/$$a/n;/$$b/q;s/^% \\?//p}" "$$x" | \
-	  sed -e 's/@deftypefnx\? \({[^}]\+}\) \({}\|{.\+=}\) \([^ ]\+\) \(.\+\)/@noindent\n@r\1: @i\2 @code{\3} @i{\4}\n/' -e 's/@end deftypefn//' ; done && \
+	  do sed -n "/$$a/,/$$b/{/$$a/n;/$$b/q;s/^% \\?//p}" "$$x" ; done && \
 	  echo '@bye' ; } > $@
 
 %.tex: %.dot

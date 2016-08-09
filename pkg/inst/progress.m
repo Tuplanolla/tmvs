@@ -14,7 +14,7 @@
 % Printing is first triggered on @code{0} and then on @var{n},
 % so that very short loops that start from @code{1} do not print anything.
 % Since printed lines are terminated
-% by @qcode{"@backslashchar{}r"} instead of @qcode{"@backslashchar{}n"},
+% by carriage return characters instead of line feed characters,
 % the progress indicator will disappear
 % if something is later printed on the same line.
 % To clear the line and keep the indicator visible,
