@@ -6,7 +6,7 @@ import TMVS.Common
 
 type Aggregate = Map Id (Aggregated (Uncertain Double))
 
-newtype Aggregated a = Aggregated
+data Aggregated a = Aggregated
   {aggrMeta :: Meta,
    aggrPairs :: Array (Int, Int) (a, a)}
   deriving (Eq, Ord, Read, Show)

@@ -662,12 +662,12 @@
 %
 % % Pick one sensor from the line in particular.
 % % This produces an aggregate with only one identifier left.
-% ffaggr = filteru (@@(s) s.id.ordinal == 3, faggr);
+% gaggr = filteru (@@(s) s.id.ordinal == 3, faggr);
 %
 % % Visualize the complete time evolution
 % % of the temperature measured by the chosen sensor.
 % % The result is drawn into figure 1.
-% tmvs_drawp (ffaggr, 1);
+% tmvs_drawp (gaggr, 1);
 %
 % % Visualize the temperature as a sparse three-dimensional surface.
 % % The surface appears in figure 2.

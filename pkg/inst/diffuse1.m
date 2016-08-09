@@ -27,8 +27,8 @@
 % @item the boundary value function @var{q},
 % @item the density coefficient function @var{C},
 % @item the diffusion coefficient function @var{B},
-% @item the timespan @var{rt} and
-% @item the extents @var{rx}.
+% @item the time interval @var{rt} and
+% @item the position interval @var{rx}.
 % @end itemize
 %
 % Initial conditions are applied by calling @var{q0} at the beginning and
@@ -41,9 +41,9 @@
 % @var{nt} rows for the points in time @var{tn} and
 % @var{nx} columns for positions @var{xn}.
 %
-% Since the solver may temporarily require more space to not diverge,
+% Since the solver may temporarily require more time or space to not diverge,
 % @var{dt} and @var{dx} control the densities (or multiplicities)
-% of the temporary row and column numbers.
+% of the temporary numbers of rows and columns.
 % If, for instance, @var{B} is almost discontinuous,
 % increasing @var{dx} will help tremendously.
 %

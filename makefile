@@ -1,15 +1,15 @@
 version=1.0.0
 
-build: verify package document
+build: check package document
 
 document: data-flow.png data-flow.tex manual/index.html manual.pdf
 
 package: tmvs-$(version).tar.gz
 
-verify: CSVParser.class NameParser.class
+check: CSVParser.class NameParser.class mock/Main
 
 clean:
-	$(RM) *.java *.tokens
+	$(RM) *.java *.tokens mock/*.hi mock/*.o mock/Main
 	$(RM) *.log *.texinfo *.toc
 	$(RM) tmvs.tar.gz
 
@@ -57,6 +57,9 @@ tmvs.texinfo: pkg/inst/*.m
 %.png: %.dot
 	dot -Efontname=sans -Gfontname=sans -Nfontname=sans \
 	-Tpng -Gsize=6,12 $< > $@
+
+mock/Main: mock/Main.hs
+	ghc -imock Main
 
 %.class: %.java
 	javac $<
