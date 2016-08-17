@@ -34,7 +34,7 @@ end
 hold ('off');
 
 datetick ('x', datefmt);
-xlabel (sprintf ('Date [%s]', datefmt));
+xlabel ('Date');
 if k == 1
   ylabel (tmvs_quantity (aggr.id.quantity));
 elseif k > 1

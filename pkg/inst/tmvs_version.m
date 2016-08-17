@@ -17,7 +17,7 @@
 %
 % @example
 % @code{tmvs_version ()}
-% @result{} [1, 0, 0]
+% @result{} [1, 0, 1]
 % @end example
 %
 % @seealso{tmvs, tmvs_checkcache, tmvs_store, tmvs_recall, tmvs_purge}
@@ -26,6 +26,6 @@
 
 function v = tmvs_version ()
 
-v = [1, 0, 0];
+v = [1, 0, 1];
 
 end

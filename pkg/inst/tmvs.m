@@ -90,7 +90,7 @@
 % of all the commands you are about to run regardless.
 %
 % @example
-% @code{pkg install tmvs-1.0.0.tar.gz}
+% @code{pkg install tmvs-1.0.1.tar.gz}
 % @end example
 %
 % To verify that the installation was successful and
@@ -186,7 +186,7 @@
 %
 % @example
 % @code{which ('excerpt')}
-% @print{} 'excerpt' is the file /usr/share/octave/packages/tmvs-1.0.0/excerpt
+% @print{} 'excerpt' is the file /usr/share/octave/packages/tmvs-1.0.1/excerpt
 % @end example
 %
 % It is based on a real data set that has been sparsened and shuffled,

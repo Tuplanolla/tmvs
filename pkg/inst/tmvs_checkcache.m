@@ -17,7 +17,7 @@
 % @example
 % @code{[p, v] = tmvs_checkcache ('excerpt/2012/118-0.csv.tmp')}
 % @result{} p = true
-% @result{} v = [1, 0, 0]
+% @result{} v = [1, 0, 1]
 % @end example
 %
 % @seealso{tmvs, tmvs_cachename, tmvs_readcache, tmvs_store, tmvs_recall, tmvs_purge}

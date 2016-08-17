@@ -23,7 +23,7 @@
 % @result{} struct ('one', @{1, 1@}, 'two', @{2, 2@}, 'three', @{9, 9@})
 % @end example
 %
-% @seealso{mapl, structfun}
+% @seealso{getfield, setfield, mapl, structfun}
 %
 % @end deftypefn
 
