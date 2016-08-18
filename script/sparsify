@@ -11,9 +11,9 @@ then
   echo
   echo 'The following examples demonstrate various sampling options.'
   echo
-  echo '    $ sample data/2010/118-0.csv > excerpt/2010/118-0.csv'
-  echo '    $ sample data/2010/118-0.csv 100 > excerpt/2010/118-0.csv'
-  echo '    $ sample data/2010/118-0.csv 100 2 > excerpt/2010/118-0.csv'
+  echo '    $ sparsify data/2010/118-0.csv > excerpt/2010/118-0.csv'
+  echo '    $ sparsify data/2010/118-0.csv 100 > excerpt/2010/118-0.csv'
+  echo '    $ sparsify data/2010/118-0.csv 100 2 > excerpt/2010/118-0.csv'
   echo
   exit 22 # EINVAL
 elif test -r "$1"
