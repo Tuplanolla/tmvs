@@ -1,9 +1,16 @@
 % -*- texinfo -*-
-% @deftypefn {Function File} {[@var{qn}, @var{tn}, @var{xn}] =} diffuse1 (@var{q0}, @var{q}, @var{C}, @var{B}, @var{rt}, @var{rx}, @var{nt}, @var{nx}, @var{dt}, @var{dx})
+% @deftypefn {Function File} {[@var{qn}, @var{tn}, @var{xn}] =} diffuse1 (@var{q0}, @var{q})
+% @deftypefnx {Function File} {[@var{qn}, @var{tn}, @var{xn}] =} diffuse1 (@var{q0}, @var{q}, @var{B})
+% @deftypefnx {Function File} {[@var{qn}, @var{tn}, @var{xn}] =} diffuse1 (@var{q0}, @var{q}, @var{B}, @var{C})
+% @deftypefnx {Function File} {[@var{qn}, @var{tn}, @var{xn}] =} diffuse1 (@var{q0}, @var{q}, @var{B}, @var{C}, @var{rt}, @var{rx})
+% @deftypefnx {Function File} {[@var{qn}, @var{tn}, @var{xn}] =} diffuse1 (@var{q0}, @var{q}, @var{B}, @var{C}, @var{rt}, @var{rx}, @var{nt}, @var{nx})
+% @deftypefnx {Function File} {[@var{qn}, @var{tn}, @var{xn}] =} diffuse1 (@var{q0}, @var{q}, @var{B}, @var{C}, @var{rt}, @var{rx}, @var{nt}, @var{nx}, @var{dt}, @var{dx})
 %
 % Simulate a one-dimensional diffusion process.
 %
-% This function uses the finite difference method
+% Assuming @var{C} and @var{B} are known position-dependent functions and
+% @var{q} is the unknown position-dependent and time-dependent function,
+% this function uses the finite difference method
 % to solve the one-dimensional diffusion equation
 %
 % @tex
@@ -17,24 +24,12 @@
 % @end example
 % @end ifnottex
 %
-% Here @var{C} and @var{B} are position-dependent and
-% @var{q} is both position-dependent and time-dependent.
-%
-% The parameters are determined by
-%
-% @itemize
-% @item the initial value function @var{q0},
-% @item the boundary value function @var{q},
-% @item the density coefficient function @var{C},
-% @item the diffusion coefficient function @var{B},
-% @item the time interval @var{rt} and
-% @item the position interval @var{rx}.
-% @end itemize
-%
-% Initial conditions are applied by calling @var{q0} at the beginning and
-% forcing the whole configuration to the returned values.
+% The simulation discretizes the position interval @var{rx} and
+% the calculates the timespan from the time interval @var{rt}.
+% Initial conditions are applied by calling @var{q0} once and
+% forcing the whole space to the returned values.
 % Boundary conditions are applied by calling @var{q} on every iteration and
-% only forcing those parts of the configuration to the returned values
+% only forcing those parts of the space to the returned values
 % for which the returned values are not @code{nan}.
 %
 % The solution is saved into the matrix @var{qn} with
@@ -60,7 +55,7 @@
 % @end deftypefn
 
 function [qn, tn, xn] = diffuse1 (q0, q, ...
-  C = @(x) 1 + 0 * x, B = @(x) 1 + 0 * x, ...
+  B = @(x) 1 + 0 * x, C = @(x) 1 + 0 * x, ...
   rt = [0, 1], rx = [0, 1], nt = 100, nx = 100, dt = 1, dx = 1)
 
 qn = nan (nt, nx);

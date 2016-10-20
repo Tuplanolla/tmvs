@@ -22,7 +22,7 @@
 % * The Big Picture:: How is TMVS structured and how does it work?
 % * Complete Examples:: How to make use of TMVS?
 % * Implementation Details:: Why is TMVS the way it is and
-% how can it be developed TMVS further?
+% how can it be developed further?
 % @ifset helppages
 % * Help Pages:: What do the help pages contain?
 % @end ifset
@@ -46,8 +46,8 @@
 % is a simple data exploration and analysis tool.
 % Its purpose is to help work with a sizable chunk of data
 % gathered from a test lab and some weather stations.
-% The measurements themselves cover
-% temperature and humidity inside building materials and
+% The measurements themselves cover temperature and humidity
+% inside the construction materials of the test lab and
 % pressure, precipitation and more outside.
 %
 % TMVS was originally built by Sampsa "Tuplanolla" Kiiskinen
@@ -497,7 +497,7 @@
 % @code{interp = struct (fields@{:@}, ...
 %   'function', @@(x) interp1 (t, q, x), ...
 %   'domain', [t(1), t(end)], ...
-%   'codomain', [q(1), q(end)]);}
+%   'codomain', [(min (q)), (max (q))]);}
 % @end example
 %
 % Within the domain of the function the interpolator works
@@ -840,10 +840,10 @@
 %
 % % Poorly mimic the US3 wall construction
 % % consisting of reinforced concrete and polyurethane.
-% CRC = 2.3e+3 * 750; % rho * cp
-% CPUR = 30 * 1.5e+3;
 % BRC = 1; % k
 % BPUR = 25e-3;
+% CRC = 2.3e+3 * 750; % rho * cp
+% CPUR = 30 * 1.5e+3;
 % L = cumsum ([70e-3, 10e-3, 160e-3, 10e-3, 80e-3]);
 %
 % % Define the functions that both
@@ -851,8 +851,8 @@
 % % enforce the initial and boundary conditions.
 % % The extrapolation used here is harmless,
 % % because the functions are constant near the edges.
-% C = @@(x) interp1 (L, [CRC, CPUR, CPUR, CRC, CRC], x, 'extrap');
 % B = @@(x) interp1 (L, [BRC, BPUR, BPUR, BRC, BRC], x, 'extrap');
+% C = @@(x) interp1 (L, [CRC, CPUR, CPUR, CRC, CRC], x, 'extrap');
 % q0 = @@(x) interp1 (xs, qt (rt(1)), x, 'extrap');
 % q = @@(t, x) [1, (nan (size (x))(2 : end - 1)), 1] .* ...
 %   interp1 (xs, qt (t), x, 'extrap');
@@ -863,7 +863,7 @@
 % % It is also worth pointing out that the result is garbage,
 % % because the sample data set is too sparse
 % % to provide realistic boundary conditions.
-% [qn, tn, xn] = diffuse1 (q0, q, C, B, rt, rx, 100, 100, 100, 10);
+% [qn, tn, xn] = diffuse1 (q0, q, B, C, rt, rx, 100, 100, 100, 10);
 %
 % % Visualize the result with an animation
 % % that advances 10 frames per second.
